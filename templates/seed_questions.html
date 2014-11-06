@@ -1,0 +1,73 @@
+
+{% extends 'base.html' %}
+{% block body %}
+
+<form class="seed-questions-form" action="/1" method="POST">
+    <h2 class="seed-question-header">Please Answer These Questions</h2>
+    Your answers will help Madame Foret clear your aura.<br><br>
+    Age
+    <input type="number" name="age" class="form-control" required />
+    <br>
+    Gender
+    <select class="form-control" name="sex" required>
+    	<option selected disabled hidden value=''></option>"
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+    <i>Note: Madame Foret appreciates fluid/multiple gender identities but her crystal ball only allows for Male and Female. Apologies.<br><br></i>
+
+    Race
+    <select class="form-control" name="race" required>
+    	<option selected disabled hidden value=''></option>"
+	    <option value="Asian">Asian</option>
+	    <option value="Black">Black or African American</option>
+	    <option value="Hispanic">Hispanic or Latino</option>
+	    <option value="White">White</option>
+	    <option value="Other">Other</option>
+    </select>
+    <i>Note: Again, Madame Foret apologizes on behalf of her narrow-minded crystall ball. It simply cannot accept multiple ethnic identies. How very 1950's of it.</i><br><br>
+
+    Region (Where you currently reside)
+    <select class="form-control" name="region" required >
+    	<option selected disabled hidden value=''></option>"
+	    <option value="ENC">East North Central (IL, IN, MI, OH, WI)</option>
+	    <option value="ESC">East South Central (AL, KY, MS, TN)</option>
+	    <option value="MA">Middle Atlantic (NJ, NY, PA)</option>
+	    <option value="Mtn">Mountain (AZ, CO, ID, MT, NV, NM, UT, WY)</option>
+	    <option value="NE">New England (CT, ME, MA, NH, RI, VT)</option>
+	    <option value="Pa">Pacific (AK, CA, HI, OR, WA)</option>
+	    <option value="SA">South Atlantic (DE, FL, GA, MD, NC, SC, VA, WV, DC)</option>
+	    <option value="WNC">West North Central (IA, KS, MN, MO, NE, ND, SD)</option>
+	    <option value="WSC">West South Central (AR, LA, OK, TX)</option>
+    </select>
+    <br>
+	Highest Grade Completed
+    <select class="form-control" name="highest-grade" required autofocus>
+    	<option selected disabled hidden value=''></option>"
+    	<option value="0">0</option>
+    	<option value="1">1</option>
+    	<option value="2">2</option>
+    	<option value="3">3</option>
+    	<option value="4">4</option>
+    	<option value="5">5</option>
+    	<option value="6">6</option>
+    	<option value="7">7</option>
+    	<option value="8">8</option>
+    	<option value="9">9</option>
+    	<option value="10">10</option>
+    	<option value="11">11</option>
+    	<option value="12">12 (High school degree)</option>
+    	<option value="13">13</option>
+    	<option value="14">14</option>
+    	<option value="15">15</option>
+    	<option value="16">16 (Undergraduate degree)</option>
+    	<option value="17">17</option>
+    	<option value="18">18</option>
+    	<option value="19">19</option>
+    	<option value="20">20 or higher</option>
+    </select><br>
+    <button type="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+</form>
+
+
+{% endblock %}

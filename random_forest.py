@@ -27,6 +27,8 @@ output = forest.predict(test_data[0::,0:-1:])
 #make output into list
 output = output.tolist()
 
+# print output
+
 #appending output to test data to see how I did
 for i in range(len(test_data)):
 	list_from_td = test_data[i].tolist()
