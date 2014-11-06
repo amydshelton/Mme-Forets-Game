@@ -2,6 +2,9 @@
 {% block body %}
 First question
 
-age: {{age}}, sex: {{sex}}, race: {{race}}, region: {{region}}, highest grade: {{highest_grade}}
+age: {{ playsession.age}}, sex: {{playsession.sex}}, highest grade: {{playsession.highest_grade}}, race: {{ playsession.race}}, region:  {{ playsession.region}}
+
+
+predicted employment status: {{predicted_employment_status_translated}}
 
 {% endblock %}
