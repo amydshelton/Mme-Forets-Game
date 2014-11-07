@@ -14,6 +14,7 @@ def index():
 @app.route("/1", methods = ["POST"])
 def first_question():
 	seed_questions = {'Male':1, 'Female':0, 'Asian':1, 'Black':2, 'Hispanic':3, 'Other':4, 'White':5, 'ENC':1, 'ESC':2, 'MA':3, 'Mtn':4, 'NE':5, 'Pa':6, 'SA':7, 'WNC':8, 'WSC':9}
+	#makes more sense to make this a nested dictionary
 
 	age = int(request.form.get("age"))
 	sex = seed_questions[str(request.form.get("sex"))]
@@ -30,19 +31,22 @@ def first_question():
 	forest = RandomForestClassifier(n_estimators = 100)
 
 	# # Fit the training data to the employment status labels and create the decision trees
-	forest = forest.fit(train_data[0::,0:-1:],train_data[0::,-1])
+	features_of_data = train_data[0::,0:-1:]
+	target_to_predict = train_data[0::,-1]
+	forest = forest.fit(features_of_data, target_to_predict)
 
 	test_data = [age, sex, race, region, highest_grade]
 
 	# # Take the same decision trees and run it on the test data
 	predicted_employment_status = forest.predict(test_data)[0]
 
-	employment_dict = {'1': "Keeping House", '2': "Other", '3': "Retired", '4': "School", '5':"Temp Not Working", '6':"Unemployed", '7':"Working Fulltime", '8': "Working Parttime", '9':"Unknown"}
+	employment_dict = {'1': "Keeping House", '2': "Other", '3': "Retired", '4': "Student", '5':"Temp Not Working", '6':"Unemployed", '7':"Working Fulltime", '8': "Working Parttime", '9':"Unknown"}
 	predicted_employment_status_translated = employment_dict[str(predicted_employment_status)]
 
 	playsession = PlaySession(age = age, sex = sex, race = race, region = region, highest_grade = highest_grade, predicted_employment_status = predicted_employment_status)
-	dbsession.add(playsession)
-	dbsession.commit()
+
+	playsession.add_play_session()
+
 
 	return render_template('first_question.html', playsession = playsession, predicted_employment_status_translated = predicted_employment_status_translated)
 

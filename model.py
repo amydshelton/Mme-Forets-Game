@@ -28,6 +28,9 @@ class PlaySession(Base):
 
     employment_status = Column(Integer, nullable = True)
 
+    def add_play_session(self):
+    	dbsession.add(self)
+    	dbsession.commit()
 
 
 def main():
