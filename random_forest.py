@@ -1,11 +1,16 @@
 import pandas as pd 
 # import numpy as np
+from data_cleaning import cleaning
 
-df = pd.read_csv('train.csv', header=0)
+df = pd.read_csv('Raw data/train3.csv', header=0)
+
+df = cleaning(df)
 
 train_data = df.values
 
-df2 = pd.read_csv('test.csv', header=0)
+df2 = pd.read_csv('Raw data/test3.csv', header=0)
+
+df2 = cleaning(df2)
 
 test_data = df2.values
 
@@ -19,10 +24,10 @@ from sklearn.ensemble import RandomForestClassifier
 forest = RandomForestClassifier(n_estimators = 100)
 
 # # Fit the training data to the Survived labels and create the decision trees
-forest = forest.fit(train_data[0::,0:-1:],train_data[0::,-1])
+forest = forest.fit(train_data[2::,1:-1:],train_data[2::,-1])
 
 # # Take the same decision trees and run it on the test data
-output = forest.predict(test_data[0::,0:-1:])
+output = forest.predict(test_data[2::,0:-1:])
 
 #make output into list
 output = output.tolist()
