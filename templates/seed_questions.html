@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<form class="seed-questions-form" action="/1" method="POST">
+<form class="seed-questions-form" action="/religious" method="POST">
     <h2 class="seed-question-header">Please Answer These Questions</h2>
     Your answers will help Madame Foret clear your aura.<br><br>
     Age
@@ -19,28 +19,39 @@
     Race
     <select class="form-control" name="race" required>
     	<option selected disabled hidden value=''></option>"
-	    <option value="Asian">Asian</option>
-	    <option value="Black">Black or African American</option>
-	    <option value="Hispanic">Hispanic or Latino</option>
+        <option value="American Indian or Alaska Native">American Indian or Alaska Native</option>
+        <option value="Asian Indian">Asian Indian</option>
+	    <option value="Black or African American">Black or African American</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Filipino">Filipino</option>
+	    <option value="Hispanic (Any race)">Hispanic (Any race)</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Korean">Korean</option>
+        <option value="Native Hawaiian">Native Hawaiian</option>
+        <option value="Other Asian">Other Asian</option>
+        <option value="Other Pacific Islander">Other Pacific Islander</option>
+        <option value="Samoan">Samoan</option>
 	    <option value="White">White</option>
-	    <option value="Other">Other</option>
-    </select>
-    <i>Note: Again, Madame Foret apologizes on behalf of her narrow-minded crystall ball. It simply cannot accept multiple ethnic identies. How very 1950's of it.</i><br><br>
+	    <option value="Some Other Race">Some Other Race</option>
+        <option value="Multiple">Multiple</option>
+
+    </select> <br>
 
     Region (Where you currently reside)
     <select class="form-control" name="region" required >
     	<option selected disabled hidden value=''></option>"
-	    <option value="ENC">East North Central (IL, IN, MI, OH, WI)</option>
-	    <option value="ESC">East South Central (AL, KY, MS, TN)</option>
-	    <option value="MA">Middle Atlantic (NJ, NY, PA)</option>
-	    <option value="Mtn">Mountain (AZ, CO, ID, MT, NV, NM, UT, WY)</option>
-	    <option value="NE">New England (CT, ME, MA, NH, RI, VT)</option>
-	    <option value="Pa">Pacific (AK, CA, HI, OR, WA)</option>
-	    <option value="SA">South Atlantic (DE, FL, GA, MD, NC, SC, VA, WV, DC)</option>
-	    <option value="WNC">West North Central (IA, KS, MN, MO, NE, ND, SD)</option>
-	    <option value="WSC">West South Central (AR, LA, OK, TX)</option>
+	    <option value="East North Central (IL, IN, MI, OH, WI)">East North Central (IL, IN, MI, OH, WI)</option>
+	    <option value="East South Central (AL, KY, MS, TN)">East South Central (AL, KY, MS, TN)</option>
+	    <option value="Middle Atlantic (NJ, NY, PA)">Middle Atlantic (NJ, NY, PA)</option>
+	    <option value="Mountain (AZ, CO, ID, MT, NV, NM, UT, WY)">Mountain (AZ, CO, ID, MT, NV, NM, UT, WY)</option>
+	    <option value="New England (CT, ME, MA, NH, RI, VT)">New England (CT, ME, MA, NH, RI, VT)</option>
+	    <option value="Pacific (AK, CA, HI, OR, WA)">Pacific (AK, CA, HI, OR, WA)</option>
+	    <option value="South Atlantic (DE, FL, GA, MD, NC, SC, VA, WV, DC)">South Atlantic (DE, FL, GA, MD, NC, SC, VA, WV, DC)</option>
+	    <option value="West North Central (IA, KS, MN, MO, NE, ND, SD)">West North Central (IA, KS, MN, MO, NE, ND, SD)</option>
+	    <option value="West South Central (AR, LA, OK, TX)">West South Central (AR, LA, OK, TX)</option>
     </select>
     <br>
+
 	Highest Grade Completed
     <select class="form-control" name="highest-grade" required autofocus>
     	<option selected disabled hidden value=''></option>"
@@ -65,6 +76,29 @@
     	<option value="18">18</option>
     	<option value="19">19</option>
     	<option value="20">20 or higher</option>
+    </select><br>
+    
+    Employment Status
+    <select class="form-control" name="employment-status" required autofocus>
+        <option selected disabled hidden value=''></option>"
+        <option value="Working Fulltime">Working Fulltime</option>
+        <option value="Working Parttime">Working Parttime</option>
+        <option value="School">In School</option>
+        <option value="Temp Not Working">Temporarily Not Working</option>
+        <option value="Unemployed, Laid Off">Unemployed, Laid Off</option>
+        <option value="Keeping House">Keeping House</option>
+        <option value="Retired">Retired</option>
+        <option value="Other">Other</option>
+    </select><br>
+
+    Marital Status
+    <select class="form-control" name="marital-status" required autofocus>
+        <option selected disabled hidden value=''></option>"
+        <option value="Divorced">Divorced</option>
+        <option value="Married">Married</option>
+        <option value="Never Married">Never Married</option>
+        <option value="Separated">Separated</option>
+        <option value="Widowed">Widowed</option>
     </select><br>
     <button type="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 </form>

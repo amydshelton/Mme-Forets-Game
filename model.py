@@ -18,15 +18,17 @@ Base.query = dbsession.query_property()
 class PlaySession(Base):
     __tablename__ = 'playsessions'
 
-    session_id =	Column(Integer, primary_key = True)
-    age =     		Column(Float, nullable = False)
-    sex =  		Column(Integer, nullable = False)
-    race =       	Column(Integer, nullable = False)
-    region =   		Column(Integer, nullable = False)
-    highest_grade =	Column(Float, nullable = False)
-    predicted_employment_status = Column(Integer, nullable = True)
+    session_id =        Column(Integer, primary_key = True)
+    age =     		    Column(Float, nullable = False)
+    sex =               Column(Integer, nullable = False)
+    race =              Column(Integer, nullable = False)
+    region =            Column(Integer, nullable = False)
+    highest_grade =	    Column(Float, nullable = False)
+    employment_status = Column(Integer, nullable = False)
+    marital_status =    Column(Integer, nullable = False)
+    predicted_religiosity = Column(Integer, nullable = True)
+    religiosity =       Column(Integer, nullable = True) 
 
-    employment_status = Column(Integer, nullable = True)
 
     def add_play_session(self):
     	dbsession.add(self)

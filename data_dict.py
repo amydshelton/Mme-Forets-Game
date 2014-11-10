@@ -22,4 +22,18 @@ data_dict= {
 	'standard_living': {'Much Worse':0, 'Somewhat Worse':1, 'About the Same':2,'Somewhat Better':3,'Much Better':4},
 	'tax_approp': {'Too Low':0, 'About Right':1,'Too High':2, "Don't Know":'NaN'},
 	'gun': {'No':0,'Yes':1},
-}
+	}
+
+
+# Reverse data dict so we can translate numbers back into words
+
+reversed_data_dict={}
+
+for key in data_dict:
+	second_level_dict = {}
+	for second_level_key in data_dict[key]: 
+		if data_dict[key][second_level_key] == 'NaN':
+			continue
+		else:
+			second_level_dict[data_dict[key][second_level_key]] = second_level_key
+	reversed_data_dict[key] = second_level_dict

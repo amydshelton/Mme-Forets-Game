@@ -1,54 +1,67 @@
 from flask import Flask, render_template, redirect, request, session as websession
-from model import PlaySession, dbsession
+from model import PlaySession
 import pandas as pd 
-from sklearn.ensemble import RandomForestClassifier 
+from sklearn.ensemble import RandomForestClassifier
+from data_dict import data_dict, reversed_data_dict 
 
 
 app = Flask(__name__)
 app.secret_key = 'PredictionFTW'
 
+forest = RandomForestClassifier(n_estimators = 100)
+
+df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0)
+
+df = df.ix[:,1:]
+
+
 @app.route("/")
 def index():
     return render_template('seed_questions.html')
 
-@app.route("/1", methods = ["POST"])
+@app.route("/religious", methods = ["POST"])
 def first_question():
-	seed_questions = {'Male':1, 'Female':0, 'Asian':1, 'Black':2, 'Hispanic':3, 'Other':4, 'White':5, 'ENC':1, 'ESC':2, 'MA':3, 'Mtn':4, 'NE':5, 'Pa':6, 'SA':7, 'WNC':8, 'WSC':9}
-	#makes more sense to make this a nested dictionary
+	global data_dict, reversed_data_dict, forest, df
 
 	age = int(request.form.get("age"))
-	sex = seed_questions[str(request.form.get("sex"))]
-	race = seed_questions[str(request.form.get("race"))]
-	region = seed_questions[str(request.form.get("region"))]
+	sex = data_dict['sex'][str(request.form.get("sex"))]
+	race = data_dict['race'][str(request.form.get("race"))]
+	region = data_dict['region'][str(request.form.get("region"))]
 	highest_grade = int(request.form.get("highest-grade"))
+	employment_status = data_dict['employment_status'][str(request.form.get("employment-status"))]
+	marital_status = data_dict['marital_status'][str(request.form.get("marital-status"))]
 
 
 	# run random forest, given current info, to preduct employment status
-	df = pd.read_csv('train.csv', header=0)
+	# removing first column because it's duplicative - it's just the index column and pandas will assign that again anyway
+	
 
-	train_data = df.values
+	column_of_var = 8
 
-	forest = RandomForestClassifier(n_estimators = 100)
+	train_data = df.ix[:,0:column_of_var] #trimming it down to just the columns up to and including the target variable
 
-	# # Fit the training data to the employment status labels and create the decision trees
-	features_of_data = train_data[0::,0:-1:]
-	target_to_predict = train_data[0::,-1]
-	forest = forest.fit(features_of_data, target_to_predict)
+	train_data_values = train_data.values #converting out of dataframe
 
-	test_data = [age, sex, race, region, highest_grade]
+	features_of_training_data = train_data_values[0::,0:-1:] #whole dataset minus last column, which is target variable
+	target_variable = train_data_values[0::,-1] # slices off the last column, which is the target variable 
+
+	# # Fit the training data to the target and create the decision trees
+	forest = forest.fit(features_of_training_data, target_variable)
+
+	test_data = [age, sex, race, region, highest_grade, employment_status, marital_status]
 
 	# # Take the same decision trees and run it on the test data
-	predicted_employment_status = forest.predict(test_data)[0]
+	predicted_religiosity = forest.predict(test_data)[0] #comes back as a one-item list.  sliced it down to a single number
 
-	employment_dict = {'1': "Keeping House", '2': "Other", '3': "Retired", '4': "Student", '5':"Temp Not Working", '6':"Unemployed", '7':"Working Fulltime", '8': "Working Parttime", '9':"Unknown"}
-	predicted_employment_status_translated = employment_dict[str(predicted_employment_status)]
 
-	playsession = PlaySession(age = age, sex = sex, race = race, region = region, highest_grade = highest_grade, predicted_employment_status = predicted_employment_status)
+	predicted_religiosity_translated = reversed_data_dict['religious'][int(predicted_religiosity)]
+
+	playsession = PlaySession(age = age, sex = sex, race = race, region = region, highest_grade = highest_grade, employment_status = employment_status, marital_status = marital_status, predicted_religiosity = predicted_religiosity)
 
 	playsession.add_play_session()
 
 
-	return render_template('first_question.html', playsession = playsession, predicted_employment_status_translated = predicted_employment_status_translated)
+	return render_template('first_question.html', playsession = playsession, predicted_religiosity_translated = predicted_religiosity_translated)
 
 if __name__ == "__main__":
     app.run(debug = True)
