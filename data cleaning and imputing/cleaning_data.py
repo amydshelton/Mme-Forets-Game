@@ -3,7 +3,7 @@ import sys
 
 sys.path.append("/Users/greglaughlin/Desktop/Hackbright/HB_Project")
 
-from data_dict import data_dict
+from universals import data_dict
 
 
 df = pd.read_csv("../GSS/2010 and 2012 results for variables of interest.csv", header=0)

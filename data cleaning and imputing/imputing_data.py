@@ -1,6 +1,10 @@
 import pandas as pd
-
 from sklearn.ensemble import RandomForestClassifier 
+import sys
+
+sys.path.append("/Users/greglaughlin/Desktop/Hackbright/HB_Project")
+
+from universals import column_order
 
 forest = RandomForestClassifier(n_estimators = 100)
 
@@ -9,13 +13,10 @@ df = pd.read_csv("cleaned.csv", header=0)
 # removing first column because it's duplicative - it's just the index column and pandas will assign that again anyway
 df = df.ix[:,1:]
 
-variables_to_impute = ['religious', 'spiritual', 'party', 'lib_cons', 'death_penalty', 'court_harsh','income', 'sex_partners', 'sex_freq', 'bar', 'tv', 'relatives', 'spanking', 'income_distribution', 'standard_living', 'birth_control', 'immigration', 'govt_help_poor','govt_help_sick', 'govt_more_less', 'govt_help_blacks', 'affirmative_action', 'gun', 'tax_approp', 'divorce_ease', 'numb_children'] 
-	# these are in order from lowest number of missing data points to highest number
 
+for i in range(len(column_order)):
 
-for i in range(len(variables_to_impute)):
-
-	variable = variables_to_impute[i]
+	variable = column_order[i]
 
 	column_of_var = i + 8 #because there are 8 columns before these columns with basic demographic info (age, sex, etc.) where I imputed based on the median/most common answer
 
