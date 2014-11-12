@@ -62,7 +62,7 @@ df['income'] = df['Inflation-adjusted Family Income Demographic Work Core '].ast
 
 df['sex_partners'] = df['Sex Partners in 5 Years Sex (Now think about the past five year, and including the past 12 months, how many sex partners have you had in that five year period?)'].map( data_dict['sex_partners']['answers']).astype(float)
 
-df['sex_freq'] = df['Sex Frequency in Last Year Sex'].map( data_dict['sex_freq']['answers']).astype(float)
+df['sex_frequency'] = df['Sex Frequency in Last Year Sex'].map( data_dict['sex_frequency']['answers']).astype(float)
 
 df['bar'] = df['Go to Bar or Tavern Society'].map( data_dict['bar']['answers']).astype(float)
 
@@ -74,7 +74,7 @@ df['spanking'] = df['Spanking Family (Sometimes necessary to discipline a child 
 
 df['income_distribution'] = df["Income Distribution from Washington Govt (Some people think that the government in Washington ought to reduce the income differences between the rich and the poor, perhaps by raising the taxes of wealthy families or by giving income assistance to the poor. Others think that the government should not concern itself with reducing this income difference between the rich and the poor. What score comes closest to the way you feel? (1 = Government Should Reduce Difference, 7 = Government Shouldn't Take Action))"]
 
-df['standard_living'] = df['Standard of Living Compared to Parents Society (Compared to your parents when they were the age you are now, do you think your own standard of living now is much better, somewhat better, about the same, somewhat worse, or much worse than theirs was?)'].map( data_dict['standard_living']['answers']).astype(float)
+df['standard_of_living'] = df['Standard of Living Compared to Parents Society (Compared to your parents when they were the age you are now, do you think your own standard of living now is much better, somewhat better, about the same, somewhat worse, or much worse than theirs was?)'].map( data_dict['standard_of_living']['answers']).astype(float)
 
 df['birth_control'] = df['Birth Control for Young Govt Sex (Methods of birth control should be available to teenagers between the ages of 14 and 16 if their parents do not approve)'].map( data_dict['birth_control']['answers']).astype(float)
 
@@ -94,7 +94,7 @@ df['gun'] = df['Gun in Home Guns'].map( data_dict['gun']['answers']).astype(floa
 
 df['tax_approp'] = df['Tax Appropriateness Govt (Do you consider the amount of federal income tax which you have to pay as too high, about right, or too low?)'].map( data_dict['tax_approp']['answers']).astype(float)
 
-df['divorce_ease'] = df['Divorce Ease Govt Family (Should divorce in this country be easier or more difficult to obtain than it is now?)'].map( data_dict['divorce']['answers']).astype(float)
+df['divorce_ease'] = df['Divorce Ease Govt Family (Should divorce in this country be easier or more difficult to obtain than it is now?)'].map( data_dict['divorce_ease']['answers']).astype(float)
 
 df['numb_children'] = df["Ideal Number of Children in Family Family"]
 

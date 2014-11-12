@@ -78,52 +78,58 @@ def next_question():
 	global data_dict, reversed_data_dict, forest, df, column_order
 
 	old_question_var_name = column_order[websession['current_q_numb']]
-	new_question_var_name = column_order[websession['current_q_numb']+1]
-	
-	print [str(request.form.get(old_question_var_name))]
-	print [str(request.form.get('new_question_var_name'))]
 	old_question_answer = data_dict[old_question_var_name]['answers'][str(request.form.get(old_question_var_name))]
-
-	column_of_var = column_order.index(new_question_var_name) + 8 #because there are 7 demographic questions before the predictable questions begin, and we need to slice up to current column plus one b/c range of slice is not inclusive
-
-	### Set up training data ###
-	train_data = df.ix[:,0:column_of_var] #trimming it down to just the columns up to and including the target variable
-	train_data_values = train_data.values #converting out of dataframe
-	features_of_training_data = train_data_values[0::,0:-1:] #whole dataset minus last column, which is target variable
-	target_variable = train_data_values[0::,-1] # slices off the last column, which is the target variable 
-
-	# Fit the training data to the target and create the decision trees
-	forest = forest.fit(features_of_training_data, target_variable)
-
 	# Get current playsession object out of database, using id stored in websession
 	playsession = dbsession.query(PlaySession).get(websession['session_id'])
 
 	setattr(playsession, old_question_var_name, old_question_answer)
 
-	# Set up test data  ## PROB AREA
-	test_data = playsession.ordered_parameter() 
+	if column_order.index(old_question_var_name) == 25:
 
+		return render_template('thank_you.html')
 
-	predicted_new_question_answer = forest.predict(test_data)[0] #comes back as a one-item list.  sliced it down to a single number
+	else:
+		new_question_var_name = column_order[websession['current_q_numb']+1]
+		
+		
+		column_of_var = column_order.index(new_question_var_name) + 8 #because there are 7 demographic questions before the predictable questions begin, and we need to slice up to current column plus one b/c range of slice is not inclusive
 
-	# add stated spiritual and predicted party to database, then commit
+		### Set up training data ###
+		train_data = df.ix[:,0:column_of_var] #trimming it down to just the columns up to and including the target variable
+		train_data_values = train_data.values #converting out of dataframe
+		features_of_training_data = train_data_values[0::,0:-1:] #whole dataset minus last column, which is target variable
+		target_variable = train_data_values[0::,-1] # slices off the last column, which is the target variable 
 
-	setattr(playsession, new_question_var_name, predicted_new_question_answer)
-	playsession.commit_play_session()
+		# Fit the training data to the target and create the decision trees
+		forest = forest.fit(features_of_training_data, target_variable)
 
-	predicted_new_question_translated = reversed_data_dict[new_question_var_name][int(predicted_new_question_answer)]
+		test_data = playsession.ordered_parameter() 
 
-	websession['current_q_numb'] += 1
+		
+		predicted_new_question_answer = forest.predict(test_data)[0] #comes back as a one-item list.  sliced it down to a single number
 
-	#text of new question to hand to html template
-	new_question_text = data_dict[new_question_var_name]['question']
+		# add stated old question answer and predicted new question answer to database, then commit
+		predicted_new_question_var_name = "predicted_"+str(new_question_var_name)
+		setattr(playsession, predicted_new_question_var_name, predicted_new_question_answer)
+		playsession.commit_play_session()
 
-	# making a list of answer options to hand to the html template. Pulling form reversed data dict b/c 1) can use keys to create the order, and 2) already removed NaN's from reversed data dict
-	new_question_answer_list = []
-	for i in range(len(reversed_data_dict[new_question_var_name])):
-		new_question_answer_list.append(reversed_data_dict[new_question_var_name][i])
+		predicted_new_question_translated = reversed_data_dict[new_question_var_name][int(predicted_new_question_answer)]
 
-	return render_template('question.html', predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list)
+		websession['current_q_numb'] += 1
+
+		#text of new question to hand to html template
+		new_question_text = data_dict[new_question_var_name]['question']
+
+		# making a list of answer options to hand to the html template. Pulling form reversed data dict b/c 1) can use keys to create the order, and 2) already removed NaN's from reversed data dict
+		new_question_answer_list = []
+		for i in range(len(reversed_data_dict[new_question_var_name])):
+			questions_without_0_answer = ['income_distribution','govt_help_poor','govt_help_sick','govt_more_less','govt_help_blacks']
+			if new_question_var_name in questions_without_0_answer:
+				new_question_answer_list.append(reversed_data_dict[new_question_var_name][i+1])
+			else:
+				new_question_answer_list.append(reversed_data_dict[new_question_var_name][i])
+
+		return render_template('question.html', predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list)
 
 
 
