@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier 
 import sys
+import numpy as np
 
 sys.path.append("/Users/greglaughlin/Desktop/Hackbright/HB_Project")
 
@@ -15,6 +16,8 @@ df = df.ix[:,1:]
 
 
 for i in range(len(column_order)):
+
+	column_order = ['religious', 'spiritual', 'party', 'lib_cons', 'death_penalty', 'court_harsh','income', 'sex_partners', 'sex_freq', 'bar', 'tv', 'relatives', 'spanking', 'income_distribution', 'standard_living', 'birth_control', 'immigration', 'govt_help_poor','govt_help_sick', 'govt_more_less', 'govt_help_blacks', 'affirmative_action', 'gun', 'tax_approp', 'divorce_ease', 'numb_children'] ### HACKY SOLUTION. NEED TO CHANGE COLUMN ORDER BACK TO INCOME (FROM INCOME BUCKET)
 
 	variable = column_order[i]
 
@@ -50,7 +53,12 @@ for i in range(len(column_order)):
 	for i in range(len(ids_from_test_data)):
 		df[variable][ids_from_test_data[i]] = output[i] #sets previously empty cell equal to prediction
 
+
+
+
 # save file
+
+
 
 df.to_csv('imputed.csv')
 

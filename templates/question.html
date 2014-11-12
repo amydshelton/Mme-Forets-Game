@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+
+predicted {{new_question_var_name}} status: {{predicted_new_question_translated}}<br>
+
+{{ new_question_text}}
+
+<br>
+
+
+<form class="form" action="/nextquestion" required method="POST">
+	{% for item in new_question_answer_list %}
+	<input type="radio" name="{{new_question_var_name}}" value="{{item}}"> {{item}}<br>
+	{% endfor %}
+<button type="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+</form>
+
+{% endblock %}

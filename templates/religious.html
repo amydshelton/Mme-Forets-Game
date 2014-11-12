@@ -2,12 +2,13 @@
 {% block body %}
 First question
 
-predicted religous status: {{predicted_religious_translated}}
+predicted religious status: {{predicted_religious_translated}}
 
 To what extent do you consider yourself a religious person? Are you...<br>
 
 
-<form class="relgious-form" action="/nextquestion" required method="POST">
+<form class="form" action="/nextquestion" required method="POST">
+
 <input type="radio" name="religious" value="Not Religious At All"> Not Religious At All<br>
 <input type="radio" name="religious" value="Slightly Religious"> Slightly Religious<br>
 <input type="radio" name="religious" value="Moderately Religious"> Moderately Religious<br>
@@ -15,4 +16,3 @@ To what extent do you consider yourself a religious person? Are you...<br>
 <button type="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 </form>
 
-{% endblock %}
