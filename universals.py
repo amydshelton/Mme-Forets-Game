@@ -34,7 +34,7 @@ data_dict= {
 			{'Not Harsh Enough':0, 'About Right':1, 'Too Harsh': 2, "Don't Know":'NaN'}},
 	'income': 
 		{'question': 'In which of these groups did your total family income, from all sources, fall last year (before taxes)?', 'answers': 
-			{'<10K': 0, '10-19K': 1, '20-29K': 2, '30-39K': 3, '40-49K': 4, '50-74K': 5, '75-99K': 6, '100-199K': 7, '200K or more': 8,}},
+			{'<$10K': 0, '$10-19K': 1, '$20-29K': 2, '$30-39K': 3, '$40-49K': 4, '$50-74K': 5, '$75-99K': 6, '$100-199K': 7, '$200K or more': 8,}},
 	'sex_partners': 
 		{'question': 'In the past five years (including the past 12 months), how many sex partners have you had in that five year period?', 'answers': 
 			{'No Partners':0, '1 Partner':1, '2 Partners':2, '3 Partners':3, '4 Partners':4, '5-10 Partners':5, '11-20 Partners':6, '21-100 Partners':7, 'More than 100 Partners':8}},

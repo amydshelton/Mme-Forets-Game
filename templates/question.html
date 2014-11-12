@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block body %}
 
-predicted {{new_question_var_name}} status: {{predicted_new_question_translated}}<br>
+predicted {{new_question_var_name}} status: {{predicted_new_question_translated}}<br><br>
 
 {{ new_question_text}}
 
-<br>
+<br> <br>
 
 <form class="form" action="/nextquestion" required method="POST">
 	{% for item in new_question_answer_list %}
