@@ -32,14 +32,17 @@ def display_question():
 		#get out of the form the items put in
 		age = int(request.form.get("age"))
 		sex = data_dict['sex']['answers'][str(request.form.get("sex"))]
-		race = data_dict['race']['answers'][str(request.form.get("race"))]
-		region = data_dict['region']['answers'][str(request.form.get("region"))]
+		race = str(request.form.get("race"))
+		region = str(request.form.get("region"))
+		employment_status = str(request.form.get("employment-status"))
+		marital_status = str(request.form.get("marital-status"))
 		highest_grade = int(request.form.get("highest-grade"))
-		employment_status = data_dict['employment_status']['answers'][str(request.form.get("employment-status"))]
-		marital_status = data_dict['marital_status']['answers'][str(request.form.get("marital-status"))]
+
+		
+		list_of_boolean_vars = [[american_indian, asian_indian, black, chinese, filipino, hispanic, japanese, korean, multiple, hawaiian, asian, pacific_islander, samoan, other_race, vietnamese, white], [east_north_central, east_south_central, middle_atlantic, mountain, new_england, pacific, south_atlantic, west_north_central, west_south_central], [keeping_house, other_employment, retired, school, temp_not_working, unemployed, fulltime, parttime], [divorced, married, never_married, separated, widowed]]
 
 		#this will be the data the model uses to predict the answer to the next question
-		test_data = [age, sex, race, region, highest_grade, employment_status, marital_status]
+		test_data = [age, sex, race, region, employment_status, marital_status, highest_grade]
 
 		# variable name is the first one in the order of questions
 		new_question_var_name = column_order[0]	
