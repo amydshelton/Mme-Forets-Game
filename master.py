@@ -18,7 +18,9 @@ df = df.ix[:,1:]
 
 @app.route("/")
 def index():
-    return render_template('seed_questions.html')
+	websession.clear()
+	return render_template('seed_questions.html')
+
 
 @app.route("/nextquestion", methods = ["POST"])
 def display_question():
