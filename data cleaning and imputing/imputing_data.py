@@ -54,26 +54,19 @@ for i in range(len(column_order)):
 
 
 
-df['income_bucket'] = pd.cut(df['income'], bins = [-1, 10000, 20000, 30000, 40000, 50000, 75000, 100000, 200000, 5000000000],labels = False)
-labels = np.array('0 1 2 3 4 5 6 7 8'.split()) 
-df['income_bucket'] = labels[df['income_bucket']]
-df['income_bucket'] = df['income_bucket'].astype(float) 
 
-del df ['income']
+# #put income_bucket in the right spot in the df, where income was
+# full_column_order = ['age', 'sex', 'race', 'region', 'highest_grade', 'employment_status', 'marital_status',] + column_order
 
-df.rename(columns={"income_bucket":"income"}, inplace=True)
-
-
-#put income_bucket in the right spot in the df, where income was
-full_column_order = ['age', 'sex', 'race', 'region', 'highest_grade', 'employment_status', 'marital_status',] + column_order
-
-new_df = df[full_column_order]
+# new_df = df[full_column_order]
 
 
 
 
-# save file
+# # save file
 
-new_df.to_csv('imputed.csv')
+# new_df.to_csv('imputed.csv')
+
+df.to_csv('imputed.csv')
 
 

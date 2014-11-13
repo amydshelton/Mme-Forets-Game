@@ -76,8 +76,8 @@ def display_question():
 		# up the cound of the current question
 		websession['current_q_numb'] += 1
 
-		#if the last question submitted is the last one on in the list of questions (aka #25), then commit the playsession and render the thank you template
-		if column_order.index(old_question_var_name) == 25:
+		#if the last question submitted is the last one on in the list of questions (aka #22 ), then commit the playsession and render the thank you template
+		if column_order.index(old_question_var_name) == 22:
 			playsession.commit_play_session()
 			return render_template('thank_you.html')
 

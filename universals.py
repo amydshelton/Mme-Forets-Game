@@ -32,15 +32,6 @@ data_dict= {
 	'court_harsh': 
 		{'question': 'In general, do you think the courts in this area deal too harshly or not harshly enough with criminals? ', 'answers': 
 			{'Not Harsh Enough':0, 'About Right':1, 'Too Harsh': 2, "Don't Know":'NaN'}},
-	'income': 
-		{'question': 'In which of these groups did your total family income, from all sources, fall last year (before taxes)?', 'answers': 
-			{'<$10K': 0, '$10-19K': 1, '$20-29K': 2, '$30-39K': 3, '$40-49K': 4, '$50-74K': 5, '$75-99K': 6, '$100-199K': 7, '$200K or more': 8,}},
-	'sex_partners': 
-		{'question': 'In the past five years (including the past 12 months), how many sex partners have you had in that five year period?', 'answers': 
-			{'No Partners':0, '1 Partner':1, '2 Partners':2, '3 Partners':3, '4 Partners':4, '5-10 Partners':5, '11-20 Partners':6, '21-100 Partners':7, 'More than 100 Partners':8}},
-	'sex_frequency': 
-		{'question': 'About how often did you have sex during the last 12 months?', 'answers': 
-			{'Not at All':0, 'Once or Twice':1, 'Once a Month':2, '2-3 Times a Month':2, 'Weekly':3, '2-3 Per Week':4, '4+ Per Week':5}},
 	'bar': 
 		{'question': 'How often do you go to a bar or tavern?', 'answers':
 			{'Never':0, 'Once a Year':1, 'Several Times a Year':2, 'Once a Month':3,'Several Times a Month':4, 'Several Times a Week':5, 'Almost Daily':6}},
@@ -113,5 +104,5 @@ for first_level_key in data_dict:
 		reversed_data_dict[first_level_key] = answer_level_dict
 
 
-column_order = ['religious', 'spiritual', 'party', 'lib_cons', 'death_penalty', 'court_harsh','income', 'sex_partners', 'sex_frequency', 'bar', 'tv', 'relatives', 'spanking', 'income_distribution', 'standard_of_living', 'birth_control', 'immigration', 'govt_help_poor','govt_help_sick', 'govt_more_less', 'govt_help_blacks', 'affirmative_action', 'gun', 'tax_approp', 'divorce_ease', 'numb_children'] 
+column_order = ['religious', 'spiritual', 'party', 'lib_cons', 'death_penalty', 'court_harsh','bar', 'tv', 'relatives', 'spanking', 'income_distribution', 'standard_of_living', 'birth_control', 'immigration', 'govt_help_poor','govt_help_sick', 'govt_more_less', 'govt_help_blacks', 'affirmative_action', 'gun', 'tax_approp', 'divorce_ease', 'numb_children'] 
 	# these are in order from lowest number of missing data points to highest number

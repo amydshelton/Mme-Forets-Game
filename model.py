@@ -38,12 +38,6 @@ class PlaySession(Base):
     death_penalty =         Column(Integer, nullable = True) 
     predicted_court_harsh = Column(Integer, nullable = True)
     court_harsh =           Column(Integer, nullable = True) 
-    predicted_income =      Column(Integer, nullable = True)
-    income =         Column(Integer, nullable = True)     
-    predicted_sex_partners = Column(Integer, nullable = True)
-    sex_partners =          Column(Integer, nullable = True)
-    predicted_sex_frequency = Column(Integer, nullable = True)
-    sex_frequency =         Column(Integer, nullable = True) 
     predicted_bar =         Column(Integer, nullable = True)
     bar =                   Column(Integer, nullable = True) 
     predicted_tv =          Column(Integer, nullable = True)
@@ -87,7 +81,7 @@ class PlaySession(Base):
         dbsession.commit()
 
     def ordered_parameter(self):
-        all_qs = [self.age, self.sex, self.race, self.region, self.highest_grade, self.employment_status, self.marital_status, self.religious, self.spiritual, self.party, self.lib_cons, self.death_penalty, self.court_harsh, self.income, self.sex_partners, self.sex_frequency, self.bar, self.tv, self.relatives, self.spanking, self.income_distribution, self.standard_of_living, self.birth_control, self.immigration, self.govt_help_poor, self.govt_help_sick, self.govt_more_less, self.govt_help_blacks, self.affirmative_action, self.gun, self.tax_approp, self.divorce_ease, self.numb_children]
+        all_qs = [self.age, self.sex, self.race, self.region, self.highest_grade, self.employment_status, self.marital_status, self.religious, self.spiritual, self.party, self.lib_cons, self.death_penalty, self.court_harsh, self.bar, self.tv, self.relatives, self.spanking, self.income_distribution, self.standard_of_living, self.birth_control, self.immigration, self.govt_help_poor, self.govt_help_sick, self.govt_more_less, self.govt_help_blacks, self.affirmative_action, self.gun, self.tax_approp, self.divorce_ease, self.numb_children]
         answered_qs = [item for item in all_qs if item != None]
         return answered_qs
         #strip nones off
