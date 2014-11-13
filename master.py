@@ -30,25 +30,51 @@ def display_question():
 	if 'session_id' not in websession:
 
 		#get out of the form the items put in
-		age = int(request.form.get("age"))
-		sex = data_dict['sex']['answers'][str(request.form.get("sex"))]
-		race = str(request.form.get("race"))
-		region = str(request.form.get("region"))
-		employment_status = str(request.form.get("employment-status"))
-		marital_status = str(request.form.get("marital-status"))
-		highest_grade = int(request.form.get("highest-grade"))
+		# age = int(request.form.get("age"))
+		# sex = data_dict['sex']['answers'][str(request.form.get("sex"))]
+		# race = str(request.form.get("race"))
+		# region = str(request.form.get("region"))
+		# employment_status = str(request.form.get("employment-status"))
+		# marital_status = str(request.form.get("marital-status"))
+		# highest_grade = int(request.form.get("highest-grade"))
 
+		age = 31
+		sex = 0
+		race = 'white'
+		region = 'pacific'
+		employment_status = 'school'
+		marital_status = 'married'
+		highest_grade = 16
 		
-		list_of_boolean_vars = [[american_indian, asian_indian, black, chinese, filipino, hispanic, japanese, korean, multiple, hawaiian, asian, pacific_islander, samoan, other_race, vietnamese, white], [east_north_central, east_south_central, middle_atlantic, mountain, new_england, pacific, south_atlantic, west_north_central, west_south_central], [keeping_house, other_employment, retired, school, temp_not_working, unemployed, fulltime, parttime], [divorced, married, never_married, separated, widowed]]
+		race_list= ['american_indian', 'asian_indian', 'black', 'chinese', 'filipino', 'hispanic', 'japanese', 'korean', 'multiple', 'hawaiian', 'asian', 'pacific_islander', 'samoan', 'other_race', 'vietnamese', 'white']
+		region_list=['east_north_central', 'east_south_central', 'middle_atlantic', 'mountain', 'new_england', 'pacific', 'south_atlantic', 'west_north_central', 'west_south_central']
+		employment_status_list=['keeping_house', 'other_employment', 'retired', 'school', 'temp_not_working', 'unemployed', 'fulltime', 'parttime']
+		marital_status_list=['divorced', 'married', 'never_married', 'separated', 'widowed']
+
+		list_of_names=['race', 'region', 'employment_status', 'marital_status']
+
+		for item in list_of_names:
+			item_list = item + "_list"
+			print item_list		
+			for secondary_item in eval(item_list):
+				print secondary_item
+				if item == secondary_item:
+					exec("%s = %d" % (item,1))
+				else:
+					exec("%s = %d" % (item,0))
+
+		print american_indian
+
+
 
 		#this will be the data the model uses to predict the answer to the next question
-		test_data = [age, sex, race, region, employment_status, marital_status, highest_grade]
+		test_data = [age, sex, american_indian, asian_indian, black, chinese, filipino, hispanic, japanese, korean, multiple, hawaiian, asian, pacific_islander, samoan, other_race, vietnamese, white, east_north_central, east_south_central, middle_atlantic, mountain, new_england, pacific, south_atlantic, west_north_central, west_south_central, keeping_house, other_employment, retired, school, temp_not_working, unemployed, fulltime, parttime, divorced, married, never_married, separated, widowed, highest_grade]
 
 		# variable name is the first one in the order of questions
 		new_question_var_name = column_order[0]	
 
 		# instantiate playsession
-		playsession = PlaySession(age = age, sex = sex, race = race, region = region, highest_grade = highest_grade, employment_status = employment_status, marital_status = marital_status)
+		playsession = PlaySession(age = age, sex = sex, american_indian = american_indian, asian_indian = asian_indian, black = black, chinese = chinese, filipino = filipino, hispanic = hispanic, japanese = japanese, korean = korean, multiple = multiple, hawaiian = hawaiian, asian = asian, pacific_islander = pacific_islander, samoan = samoan, other_race = other_race, vietnamese = vietnamese, white = white, east_north_central = east_north_central, east_south_central = east_south_central, middle_atlantic = middle_atlantic, mountain = mountain, new_england = new_england, pacific = pacific, south_atlantic = south_atlantic, west_north_central = west_north_central, west_south_central = west_south_central, keeping_house = keeping_house, other_employment = other_employment, retired = retired, school = school, temp_not_working = temp_not_working, unemployed = unemployed, fulltime = fulltime, parttime = parttime, divorced = divorced, married = married, never_married = never_married, separated = separated, widowed = widowed,highest_grade = highest_grade)
 
 		# add and commit
 		playsession.add_play_session()
@@ -90,7 +116,7 @@ def display_question():
 			test_data = playsession.ordered_parameter() 
 
 
-	column_of_var = column_order.index(new_question_var_name) + 8 #because there are 7 demographic questions before the predictable questions begin, and we need to slice up to current column plus one b/c range of slice is not inclusive
+	column_of_var = column_order.index(new_question_var_name) + 40 #because there are 7 demographic questions before the predictable questions begin, and we need to slice up to current column plus one b/c range of slice is not inclusive
 
 	### Set up training data ###
 	train_data = df.ix[:,0:column_of_var] #trimming it down to just the columns up to and including the target variable

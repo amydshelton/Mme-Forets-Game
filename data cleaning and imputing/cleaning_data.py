@@ -36,9 +36,7 @@ df['age'] = df["Age Demographic Core"].astype(float)
 
 df['sex'] = df['Sex Demographic Core'].map( data_dict['sex']['answers'] ).astype(float)
 
-# df['race'] = df['Race (Census) Race'].map ( data_dict['race']['answers'] ).astype(float)
 
-# df['region'] = df['Region Demographic'].map ( data_dict['region']['answers'] ).astype(float)
 
 ## Make categoricals into booleans
 cats_to_make_booleans = ['Race (Census) Race','Region Demographic','Employment Status Work Demographic Core','Marital Status Work Demographic Core (Are you currently -- married, widowed, divorced, separated, or have you never been married?)']
@@ -51,9 +49,7 @@ for column in cats_to_make_booleans:
 
 df['highest_grade'] = df["Highest Grade Completed Demographic"]
 
-# df['employment_status'] = df['Employment Status Work Demographic Core'].map ( data_dict['employment_status']['answers'] ).astype(float)
 
-# df['marital_status'] = df['Marital Status Work Demographic Core (Are you currently -- married, widowed, divorced, separated, or have you never been married?)'].map ( data_dict['marital_status']['answers'] ).astype(float)
 
 df['religious'] = df['Religious Person Relig (To what extent do you consider yourself a religious person?)'].map( data_dict['religious']['answers']).astype(float)
 
