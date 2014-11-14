@@ -69,7 +69,7 @@ data_dict= {
 		{'question': 'Some people think that African-Americans have been discriminated against for so long that the government has a special obligation to help improve their living standards. Others believe that the government should not be giving special treatment to African-Americans. Where would you place yourself on this scale?', 'answers': 
 			{'1 (Government should help)':1, '2':2, '3 (Agree with both)':3, '4':4, '5 (African-Americans should receive no special treatment)':5}},
 	'affirmative_action': 
-		{'question': 'Some people say that because of past discrimination, blacks should be given preference in hiring and promotion. Others say that such preference in hiring and promotion of blacks is wrong because it discriminates against whites. Are you for or against preferential hiring and promotion of blacks', 'answers': 
+		{'question': 'Some people say that because of past discrimination, blacks should be given preference in hiring and promotion. Others say that such preference in hiring and promotion of blacks is wrong because it discriminates against whites. Are you for or against preferential hiring and promotion of blacks?', 'answers': 
 			{"Don't Know":'NaN', 'Strongly Oppose Preference for Blacks':0, 'Oppose Preference for Blacks':1, 'Support Preference for Blacks':2, 'Strongly Support Preference for Blacks':3}},
 	'gun': 
 		{'question': 'Do you have any guns or revolvers in your home?', 'answers': 

@@ -19,7 +19,7 @@ for i in range(len(column_order)):
 
 	variable = column_order[i]
 
-	column_of_var = i + 8 #because there are 8 columns before these columns with basic demographic info (age, sex, etc.) where I imputed based on the median/most common answer
+	column_of_var = i + 42 #because there are 8 columns before these columns with basic demographic info (age, sex, etc.) where I imputed based on the median/most common answer
 
 	train_data = df.loc[pd.isnull(df[variable])==False] #training data is the data where we have an answer for the target variable
 
