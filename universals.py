@@ -1,19 +1,19 @@
 data_dict= {
 	'race': 
 		{'question': 'What is your race?', 'answers': 
-			{'Multiple':0, 'American Indian or Alaska Native':1, 'Asian Indian':2, 'Black or African American':3, 'Chinese':4, 'Filipino':5, 'Hispanic (Any race)':6,'Japanese':7, 'Korean':8, 'Native Hawaiian':9, 'Other Asian':10, 'Other Pacific Islander':11,'Samoan':12, 'Some Other Race':13, 'Vietnamese':14, 'White':15}},
+			{'Multiple':'multiple', 'American Indian or Alaska Native':'american_indian', 'Asian Indian':'asian_indian', 'Black or African American':'black', 'Chinese':'chinese', 'Filipino':'filipino', 'Hispanic (Any race)':'hispanic','Japanese':'japanese', 'Korean':'korean', 'Native Hawaiian':'hawaiian', 'Other Asian':'asian', 'Other Pacific Islander':'pacific_islander','Samoan':'samoan', 'Some Other Race':'other_race', 'Vietnamese':'vietnamese', 'White':'white'}},
 	'sex': 
 		{'question': 'Sex', 'answers': 
 			{'Female':0, 'Male':1}},
 	'region': 
 		{'question': 'Region of Current Residence', 'answers': 
-			{'East North Central (IL, IN, MI, OH, WI)':0, 'East South Central (AL, KY, MS, TN)':1, 'Middle Atlantic (NJ, NY, PA)':2, 'Mountain (AZ, CO, ID, MT, NV, NM, UT, WY)':3, 'New England (CT, ME, MA, NH, RI, VT)':4, 'Pacific (AK, CA, HI, OR, WA)':5, 'South Atlantic (DE, FL, GA, MD, NC, SC, VA, WV, DC)':6,'West North Central (IA, KS, MN, MO, NE, ND, SD)':7, 'West South Central (AR, LA, OK, TX)':8}},
+			{'East North Central (IL, IN, MI, OH, WI)':'east_north_central', 'East South Central (AL, KY, MS, TN)':'east_south_central', 'Middle Atlantic (NJ, NY, PA)':'middle_atlantic', 'Mountain (AZ, CO, ID, MT, NV, NM, UT, WY)':'mountain', 'New England (CT, ME, MA, NH, RI, VT)':'new_england', 'Pacific (AK, CA, HI, OR, WA)':'pacific', 'South Atlantic (DE, FL, GA, MD, NC, SC, VA, WV, DC)':'south_atlantic','West North Central (IA, KS, MN, MO, NE, ND, SD)':'west_north_central', 'West South Central (AR, LA, OK, TX)':'west_south_central'}},
 	'employment_status': 
 		{'question': 'Last week were you working full time, part time, going to school, keeping house, or what?', 'answers': 
-			{'Keeping House':0, 'Other':1, 'Retired':2, 'School':3, 'Temp Not Working':4,'Unemployed, Laid Off':5, 'Working Fulltime':6, 'Working Parttime':7}},
+			{'Keeping House':'keeping_house', 'Other':'other_employment', 'Retired':'retired', 'School':'school', 'Temp Not Working':'temp_not_working','Unemployed, Laid Off':'unemployed', 'Working Fulltime':'fulltime', 'Working Parttime':'parttime'}},
 	'marital_status': 
 		{'question': 'Are you currently married, widowed, divorced, separated, or have you never been married?', 'answers': 
-			{'Divorced':0, 'Married':1, 'Never Married':2, 'Separated':3, 'Widowed':4}},
+			{'Divorced':'divorced', 'Married':'married', 'Never Married':'never_married', 'Separated':'separated', 'Widowed':'widowed'}},
 	'religious': 
 		{'question': 'To what extent do you consider yourself a religious person? Are you...', 'answers': 
 			{'Not Religious At All':0, 'Slightly Religious':1, 'Moderately Religious':2, 'Very Religious':3}},
