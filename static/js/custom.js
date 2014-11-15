@@ -1,9 +1,13 @@
 $(document).ready(function() {
-	console.log("I'm in the custom JS");
 	$("#prediction_button").click(function(evt) {
 		evt.preventDefault();
 		$("#prediction").show();
-		console.log("got here");
+		$.post('/submitanswer',{old_question_answer_numb:$("input:radio[name=question]:checked").val()})
+			.done(function(data) {
+				console.log("points: "+data);
+				$("#points").html(data);
+			});
+
 	});
 });
 

@@ -106,7 +106,7 @@ def display_question():
 		# instantiate playsession
 		playsession = PlaySession(age = age, sex = sex, american_indian = american_indian, asian_indian = asian_indian, black = black, chinese = chinese, filipino = filipino, hispanic = hispanic, japanese = japanese, korean = korean, multiple = multiple, hawaiian = hawaiian, asian = asian, pacific_islander = pacific_islander, samoan = samoan, other_race = other_race, vietnamese = vietnamese, white = white, east_north_central = east_north_central, east_south_central = east_south_central, middle_atlantic = middle_atlantic, mountain = mountain, new_england = new_england, pacific = pacific, south_atlantic = south_atlantic, west_north_central = west_north_central, west_south_central = west_south_central, keeping_house = keeping_house, other_employment = other_employment, retired = retired, school = school, temp_not_working = temp_not_working, unemployed = unemployed, fulltime = fulltime, parttime = parttime, divorced = divorced, married = married, never_married = never_married, separated = separated, widowed = widowed, highest_grade = highest_grade)
 
-		# add and commit
+		# add
 		playsession.add_play_session()
 
 		#add playsession ID to websession
@@ -114,6 +114,9 @@ def display_question():
 
 		# keep track of what question number we're on in the websession
 		websession['current_q_numb'] = 0
+
+		# set foret's points equal to 0
+		websession['forets_points'] = 0
 		
 
 	#continuing an existing game
@@ -123,7 +126,7 @@ def display_question():
 		old_question_var_name = column_order[websession['current_q_numb']]
 
 		#get whatever they answered out of the form
-		old_question_answer = data_dict[old_question_var_name]['answers'][str(request.form.get(old_question_var_name))]
+		old_question_answer = request.form.get("question")
 		
 
 		# Get current playsession object out of database, using id stored in websession
@@ -160,6 +163,8 @@ def display_question():
 	
 	predicted_new_question_answer = forest.predict(test_data)[0] #comes back as a one-item list.  sliced it down to a single number
 
+	websession['prediction'] = predicted_new_question_answer
+
 	# add stated old question answer and predicted new question answer to database, then commit
 	predicted_new_question_var_name = "predicted_"+str(new_question_var_name)
 	setattr(playsession, predicted_new_question_var_name, predicted_new_question_answer)
@@ -167,6 +172,8 @@ def display_question():
 
 	predicted_new_question_translated = reversed_data_dict[new_question_var_name][int(predicted_new_question_answer)]
 
+	#title of new question to hand to html template
+	new_question_title = data_dict[new_question_var_name]['title']
 
 	#text of new question to hand to html template
 	new_question_text = data_dict[new_question_var_name]['question']
@@ -176,12 +183,26 @@ def display_question():
 	for i in range(len(reversed_data_dict[new_question_var_name])):
 		questions_without_0_answer = ['income_distribution','govt_help_poor','govt_help_sick','govt_more_less','govt_help_blacks']
 		if new_question_var_name in questions_without_0_answer:
-			new_question_answer_list.append(reversed_data_dict[new_question_var_name][i+1])
+			new_question_answer_list.append((i+1,reversed_data_dict[new_question_var_name][i+1]))
 		else:
-			new_question_answer_list.append(reversed_data_dict[new_question_var_name][i])
+			new_question_answer_list.append((i,reversed_data_dict[new_question_var_name][i]))
 
-	return render_template('question.html', predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list)
+	websession['len_of_answer_list'] = len(new_question_answer_list)-1 # Will use this to calculate points. Minus one because if algorithm guesses exactly wrong, it should get 0 points
 
+	return render_template('question_test.html', predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1)
+
+
+@app.route("/submitanswer", methods=["POST"])
+def submit_answer():
+	old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
+	points_per_answer = 100/int(websession["len_of_answer_list"])
+	prediction=int(websession["prediction"])
+	points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
+	if points == 1:
+		points = 0
+	websession["forets_points"] += points  # this needs to be handed to template too
+	print websession["forets_points"]
+	return str(points)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+	app.run(debug = True)

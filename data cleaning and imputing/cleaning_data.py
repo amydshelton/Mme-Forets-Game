@@ -47,8 +47,8 @@ for column in cats_to_make_booleans:
 	df = pd.concat(pieces_to_put_together, axis=1)
 
 
-df['highest_grade'] = df["Highest Grade Completed Demographic"]
 
+df['highest_grade'] = df["Highest Grade Completed Demographic"]
 
 
 df['religious'] = df['Religious Person Relig (To what extent do you consider yourself a religious person?)'].map( data_dict['religious']['answers']).astype(float)
