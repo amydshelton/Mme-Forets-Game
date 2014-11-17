@@ -1,28 +1,39 @@
 {% extends 'base.html' %}
 {% block body %}
 
+<h1> {{ new_question_title }} </h1>
 
+<div class="col-md-6">
+	{{ new_question_text}}
 
-{{ new_question_text}}
+	<br> <br>
 
-<br> <br>
+	<form class="form" action="/nextquestion" required method="POST">
+		{% for item in new_question_answer_list %}
+		<input type="radio" name="question" value="{{item[0]}}"> {{item[1]}}<br>
+		{% endfor %}
+		<br><br>
 
-<form class="form" action="/nextquestion" required method="POST">
-	{% for item in new_question_answer_list %}
-	<input type="radio" name="{{new_question_var_name}}" value="{{item}}"> {{item}}<br>
-	{% endfor %}
-	<br><br>
+	<button type="btn btn-lg-primary btn-block" id="prediction_button">Reveal Prediction</button><br><br>
 
-<button type="btn btn-lg-primary btn-block" id="prediction_button">Reveal Prediction</button><br>
+	<button type="btn btn-lg btn-primary btn-block" type="submit">Next Question</button>
+	</form>
+ </div>
 
-<div id="prediction" hidden>
-	predicted {{new_question_var_name}} status: {{predicted_new_question_translated}}<br><br>
+<div class="col-md-6">
+	<div id="prediction" hidden>
+		<br>predicted {{new_question_var_name}} status: {{predicted_new_question_translated}}<br>
+		<br>Number of points for Madame Foret: <div id="points"> 0 </div>
+		<br><br>
 
-<button type="btn btn-lg btn-primary btn-block" type="submit">Next Question</button>
+	</div>
 </div>
-</form>
- 
 
-	Question {{ question_numb }} of 22
+
+<div class="col-md-12">
+	<br>
+
+	Question {{ question_numb }} of 23
+</div>
 
 {% endblock %}
