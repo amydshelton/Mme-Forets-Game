@@ -104,5 +104,13 @@ for first_level_key in data_dict:
 		reversed_data_dict[first_level_key] = answer_level_dict
 
 
-column_order = ['religious', 'spiritual', 'party', 'lib_cons', 'death_penalty', 'court_harsh','bar', 'tv', 'relatives', 'spanking', 'income_distribution', 'standard_of_living', 'birth_control', 'immigration', 'govt_help_poor','govt_help_sick', 'govt_more_less', 'govt_help_blacks', 'affirmative_action', 'gun', 'tax_approp', 'divorce_ease', 'numb_children'] 
+columns_ordered_by_predictive_power = ['party','income_distribution', 'tv', 'relatives', 'religious', 'spiritual', 'standard_of_living', 'immigration', 'birth_control', 'bar','spanking','affirmative_action', 'divorce_ease', 'numb_children','court_harsh', 'tax_approp','death_penalty', 'gun'] 
+
+columns_ordered_by_decreasing_N = ['religious', 'spiritual', 'party', 'death_penalty', 'court_harsh','bar', 'tv', 'relatives', 'spanking', 'income_distribution', 'standard_of_living', 'birth_control', 'immigration', 'affirmative_action', 'gun', 'tax_approp', 'divorce_ease', 'numb_children'] 
+
+
+full_columns_ordered_by_decreasing_N = ['age', 'highest_grade'] + columns_ordered_by_decreasing_N
+
+full_columns_ordered_by_predictive_power = ['age', 'highest_grade'] + columns_ordered_by_predictive_power
+
 	# these are in order from lowest number of missing data points to highest number
