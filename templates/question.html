@@ -14,16 +14,24 @@
 		{% endfor %}
 		<br><br>
 
-	<button type="btn btn-lg-primary btn-block" id="prediction_button">Reveal Prediction</button><br><br>
+	Guess what percentage of Americans (surveyed in 2010 and 2012) chose the same answer you chose.
+	<input type="number" name="guess" class="form-control" required>
+	<br><br>
+
+	<button type="btn btn-lg-primary btn-block" id="prediction_button">Reveal Prediction and See How You Did</button><br><br>
 
 	<button type="btn btn-lg btn-primary btn-block" type="submit">Next Question</button>
 	</form>
- </div>
 
+
+ </div>
+	
 <div class="col-md-6">
 	<div id="prediction" hidden>
 		<br>predicted {{new_question_var_name}} status: {{predicted_new_question_translated}}<br>
-		<br>Number of points for Madame Foret: <div id="points"> 0 </div>
+		<br>Number of points for Madame Foret: <div id="points">  </div>
+		<br>Madame Foret's total: <div id="total_points">  </div>
+		<br>Submitted guess: <div id="submitted_guess">  </div>
 		<br><br>
 
 	</div>

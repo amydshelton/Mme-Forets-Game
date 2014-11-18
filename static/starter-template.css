@@ -5,3 +5,7 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+.form-control {
+	width: 200px;
+}

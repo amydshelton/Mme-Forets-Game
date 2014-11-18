@@ -33,7 +33,6 @@ def display_question():
 		age = int(request.form.get("age"))
 		highest_grade = int(request.form.get("highest-grade"))
 
-
 		#this will be the data the model uses to predict the answer to the next question
 		test_data = [age, highest_grade]
 
@@ -131,14 +130,16 @@ def display_question():
 @app.route("/submitanswer", methods=["POST"])
 def submit_answer():
 	old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
+	guess = request.form.get("guess")
 	points_per_answer = 100/int(websession["len_of_answer_list"])
 	prediction=int(websession["prediction"])
-	points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
-	if points == 1:
-		points = 0
-	websession["forets_points"] += points  # this needs to be handed to template too
-	print websession["forets_points"]
-	return str(points)
+	prediction_points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
+	if prediction_points == 1:
+		prediction_points = 0
+	websession["forets_points"] += prediction_points  # this needs to be handed to template too
+	total_points = websession["forets_points"]
+	to_send = str(prediction_points)+" "+ str(total_points)+" "+str(guess)
+	return str(to_send)
 
 if __name__ == "__main__":
 	app.run(debug = True)
