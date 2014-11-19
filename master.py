@@ -12,6 +12,8 @@ forest = RandomForestClassifier(n_estimators = 100)
 
 df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0)
 
+aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', header=0)
+
 # removing first column because it's duplicative - it's just the index column and pandas will assign that again anyway
 df = df.ix[:,1:]
 
@@ -53,6 +55,11 @@ def display_question():
 
 		# set foret's points equal to 0
 		websession['forets_points'] = 0
+
+		# set user's points equalt to 0
+		websession['users_points'] = 0
+
+		print websession['users_points']
 		
 
 	#continuing an existing game
@@ -129,16 +136,36 @@ def display_question():
 
 @app.route("/submitanswer", methods=["POST"])
 def submit_answer():
+	global aggregated_df
+
+	#get submitted answers from form
 	old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
-	guess = request.form.get("guess")
+	guess = int(request.form.get("guess"))
+
+	#determine what question we're on
+	old_question_var_name = columns_ordered_by_predictive_power[websession['current_q_numb']]
+
+	#pull the % of Americans who answered the same way as the responded
+	percent_who_answered_same_as_guess = int(aggregated_df[old_question_var_name][old_question_answer_numb] * 100 + .5) # add .5 to make sure the int rounds correctly
+
+	# calculate the number of points foret gets for her algorithm guess
 	points_per_answer = 100/int(websession["len_of_answer_list"])
 	prediction=int(websession["prediction"])
 	prediction_points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
 	if prediction_points == 1:
-		prediction_points = 0
-	websession["forets_points"] += prediction_points  # this needs to be handed to template too
-	total_points = websession["forets_points"]
-	to_send = str(prediction_points)+" "+ str(total_points)+" "+str(guess)
+		prediction_points = 0 #necessary because of weirdness with decimal places
+
+	# calculate the number of points the respondent gets for the accuracy of their guess
+	guess_points = 100 - abs(percent_who_answered_same_as_guess - guess) # points is the distance between your guess and the answer, such that a perfect guess is worth 100 points
+	
+	#keep track of foret's and user's total points tally
+	websession["forets_points"] += prediction_points 
+	total_forets_points = websession["forets_points"]
+	websession["users_points"] += guess_points
+	total_users_points = websession['users_points']
+
+	#send all that data to template
+	to_send = str(prediction_points)+" "+ str(total_forets_points)+" "+str(guess)+ "% " + str(percent_who_answered_same_as_guess) + "% " + str(guess_points) + " " + str(total_users_points)
 	return str(to_send)
 
 if __name__ == "__main__":
