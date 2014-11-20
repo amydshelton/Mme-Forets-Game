@@ -37,7 +37,7 @@ data_dict= {
 			{'Never':0, 'Once a Year':1, 'Several Times a Year':2, 'Once a Month':3,'Several Times a Month':4, 'Several Times a Week':5, 'Almost Daily':6}},
 	'tv': 
 		{'title': 'Hours Watching TV','question': 'On an average day, about how many hours do you personally spend watching television?', 'answers':
-			{'0': 0,'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, '11': 11, '12': 12, '13': 13, '14': 14, '15': 15, '16': 16, '17':17, '18': 18, '19':19,'20': 20, '21': 21, '22': 22, '23': 23, '24': 24,}},
+			{'0': 0,'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9 to 12': 9, '13 or higher': 10}},
 	'relatives': 
 		{'title': 'Socializing with Relatives','question': 'How often do you spend a social evening with relatives?', 'answers': 
 			{'Never':0, 'Once a Year':1, 'Several Times a Year':2, 'Once a Month':3,'Several Times a Month':4, 'Several Times a Week':5, 'Almost Daily':6}},
@@ -45,7 +45,7 @@ data_dict= {
 		{'title': 'Spanking Children','question': 'Do you strongly agree, agree, disagree, or strongly disagree that it is sometimes necessary to discipline a child with a good, hard spanking?', 'answers': 
 			{'Strongly Disagree':0,'Disagree':1,'Agree':2,'Strongly Agree':3,"Don't Know":'NaN'}},
 	'income_distribution': 
-		{'title': 'Income Redistribution','question': "Some people think that the government in Washington ought to reduce the income differences between the rich and the poor, perhaps by raising the taxes of wealthy families or by giving income assistance to the poor. Others think that the government should not concern itself with reducing this income difference between the rich and the poor. On a scale from 1 to 7, where 1 indicates that the government ought to reduce the income differences between rich and poor, and 7 means that the government should not concern itself with reducing income differences, what score comes closest to the way you feel?", 'answers': 
+		{'title': 'Income Redistribution','question': "On a scale from 1 to 7, where 1 indicates that the government ought to reduce the income differences between rich and poor, and 7 means that the government should not concern itself with reducing income differences, what score comes closest to the way you feel?", 'answers': 
 			{'1 (Government should reduce income differences)':1, '2':2, '3':3, '4':4, '5':5, '6':6, '7 (Government should not reduce income differences)':7}}, 
 	'standard_of_living': 
 		{'title': 'Standard of Living Compared to Parents','question': 'Compared to your parents when they were the age you are now, do you think your own standard of living now is much better, somewhat better, about the same, somewhat worse, or much worse than theirs was?', 'answers': 

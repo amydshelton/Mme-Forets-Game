@@ -26,7 +26,7 @@ df.loc[ df['Highest Grade Completed Demographic'].isnull(),'Highest Grade Comple
 old_and_new_var_names = [
 		('age','Age Demographic Core', 'float'), 
 		('highest_grade', "Highest Grade Completed Demographic", 'float'), 
-		('tv', 'Daily Hours Watching TV Tech', 'float'), 
+		('tv', 'Daily Hours Watching TV Tech', 'string'), 
 		('income_distribution', "Income Distribution from Washington Govt (Some people think that the government in Washington ought to reduce the income differences between the rich and the poor, perhaps by raising the taxes of wealthy families or by giving income assistance to the poor. Others think that the government should not concern itself with reducing this income difference between the rich and the poor. What score comes closest to the way you feel? (1 = Government Should Reduce Difference, 7 = Government Shouldn't Take Action))", 'float'), 
 		('numb_children', "Ideal Number of Children in Family Family", 'float'),
 		('religious', 'Religious Person Relig (To what extent do you consider yourself a religious person?)', 'string'),
