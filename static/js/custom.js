@@ -9,20 +9,16 @@ $(document).ready(function() {
 		$.post('/submitanswer',{old_question_answer_numb:$("input:radio[name=question]:checked").val(),guess:$("input[name=guess]").val()})
 			.done(function(stuff) {
 				var stuff_list = stuff.split(" ");
-
-				var total_forets_points = stuff_list.slice(1,2);
 				var guess = stuff_list.slice(2,3);
 
 
+
+
+				// Update total points in top left corner
+				var total_forets_points = stuff_list.slice(1,2);
 				var total_users_points = stuff_list.slice(5,6);
-
-
-
-				// console.log(stuff_list);
 				$("#total_forets_points").html(total_forets_points);
 				$("#total_users_points").html(total_users_points);
-
-
 
 
 				// Get info needed for first message and display it in the right place
@@ -45,6 +41,9 @@ $(document).ready(function() {
 
 	});
 });
+
+
+
 
 
 // '<div id="prediction"> predicted {{new_question_var_name}} status: {{predicted_new_question_translated}} <button type="btn btn-lg btn-primary btn-block" type="submit">Submit</button> </div>');

@@ -21,7 +21,9 @@ df = df.ix[:,1:]
 @app.route("/")
 def index():
 	websession.clear()
-	return render_template('seed_questions.html')
+	total_forets_points=-1
+	total_users_points=-1
+	return render_template('seed_questions.html', total_users_points = total_users_points, total_forets_points=total_forets_points)
 
 
 @app.route("/nextquestion", methods = ["POST"])
@@ -131,7 +133,10 @@ def display_question():
 
 	websession['len_of_answer_list'] = len(new_question_answer_list)-1 # Will use this to calculate points. Minus one because if algorithm guesses exactly wrong, it should get 0 points
 
-	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer, predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1)
+	total_forets_points = websession["forets_points"]
+	total_users_points = websession["users_points"]
+
+	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer, predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points)
 
 
 @app.route("/submitanswer", methods=["POST"])
@@ -167,6 +172,10 @@ def submit_answer():
 	#send all that data to template
 	to_send = str(prediction_points)+" "+ str(total_forets_points)+" "+str(guess)+ "% " + str(percent_who_answered_same_as_guess) + "% " + str(guess_points) + " " + str(total_users_points)
 	return str(to_send)
+
+@app.route("/about")
+def about():
+	return render_template('about.html')
 
 if __name__ == "__main__":
 	app.run(debug = True)

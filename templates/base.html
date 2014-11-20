@@ -44,8 +44,12 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Start A New Game</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+
+          {% if total_forets_points > -1 %}
+              <li style="color:red">Madame Forêt's Points: <span style="color:red" id="total_forets_points">{{total_forets_points}}</span></li>
+              <li style="color:red">Your Points: </li><span style="color:red" id="total_users_points">{{total_users_points}}</span></li>
+          {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
