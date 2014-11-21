@@ -28,7 +28,7 @@ def index():
 
 @app.route("/nextquestion", methods = ["POST"])
 def display_question():
-	global forest, df
+	global forest, df, aggregated_df
 
 	## if starting a new game:
 	if 'session_id' not in websession:
@@ -86,7 +86,7 @@ def display_question():
 		#if the last question submitted is the last one on in the list of questions (aka #18 ), then commit the playsession and render the thank you template
 		if columns_ordered_by_predictive_power.index(old_question_var_name) == 17:
 			playsession.commit_play_session()
-			return render_template('thank_you.html')
+			return render_template('thank_you.html', total_forets_points = websession['forets_points'], total_users_points = websession['users_points'])
 
 		#if it's not the last question, determine what the next question is and set up the test data
 		else:
@@ -122,21 +122,29 @@ def display_question():
 	#text of new question to hand to html template
 	new_question_text = data_dict[new_question_var_name]['question']
 
-	# making a list of answer options to hand to the html template. Pulling from reversed data dict b/c 1) can use keys to create the order, and 2) already removed NaN's from reversed data dict
+	# making a list of answer options tuples, and a separate list of the % of people who answered with each of those options, to hand to the html template. Pulling from reversed data dict b/c 1) can use keys to create the order, and 2) already removed NaN's from reversed data dict
 	new_question_answer_list = []
+	data_for_chart = []
 	for i in range(len(reversed_data_dict[new_question_var_name])):
-		questions_without_0_answer = ['income_distribution','govt_help_poor','govt_help_sick','govt_more_less','govt_help_blacks']
-		if new_question_var_name in questions_without_0_answer:
+		if new_question_var_name == 'income_distribution': #doesn't have a 0 answer so need to start at 1
 			new_question_answer_list.append((i+1,reversed_data_dict[new_question_var_name][i+1]))
+			data_for_chart.append(int(aggregated_df[new_question_var_name][i+1]*100 + .5)) #pulling data out of aggregated file, using current var name and number of answer option. Multiplying by 100 to make them percents, adding .5 to make int round correctly.
 		else:
 			new_question_answer_list.append((i,reversed_data_dict[new_question_var_name][i]))
+			data_for_chart.append(int(aggregated_df[new_question_var_name][i]*100 + .5)) #pulling data out of aggregated file, using current var name and number of answer option. Multiplying by 100 to make them percents, adding .5 to make int round correctly.
+
 
 	websession['len_of_answer_list'] = len(new_question_answer_list)-1 # Will use this to calculate points. Minus one because if algorithm guesses exactly wrong, it should get 0 points
 
 	total_forets_points = websession["forets_points"]
 	total_users_points = websession["users_points"]
 
-	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer, predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points)
+	a='a'
+
+
+
+# clean up the below at some point - is everythin here used in template?  #TODO
+	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer, predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, test = [5,10,15,20,25,30,35], test2 = [a,a,a,a,a,a,a], data_for_chart=data_for_chart)
 
 
 @app.route("/submitanswer", methods=["POST"])
@@ -175,7 +183,7 @@ def submit_answer():
 
 @app.route("/about")
 def about():
-	return render_template('about.html')
+	return render_template('about.html', total_forets_points=websession["forets_points"],total_users_points=websession['users_points'])
 
 if __name__ == "__main__":
 	app.run(debug = True)
