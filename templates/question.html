@@ -11,7 +11,7 @@
 	<br>
 	<form class="form" action="/nextquestion" required method="POST">
 		{% for item in new_question_answer_list %}
-		<input type="radio" name="question" value="{{item[0]}}"> {{item[1]}}
+		<input type="radio" required name="question" value="{{item[0]}}"> {{item[1]}}
 		<span style="color:red" id="{{item[0]}}"></span>
 		<br>
 		{% endfor %}
@@ -19,40 +19,42 @@
 		<br>
 
 	Guess what percentage of Americans (surveyed in 2010 and 2012) chose the same answer you chose.
-	<div><p> 
-		<input type="number" name="guess" class="form-control" required min="0" max="100">%
+	<div>
+		</a><span class="col-sm-4 input-group">
+	        <input type="text" class="form-control bfh-number" name="guess"  required>
+	        <span class="input-group-addon">%</span>
+	    </span>
+
 		<span style="color:red" id="percent-who-agree">
 			</span>
-	</p></div>
-
+	</div>
 	<br>
 	<br>
-	<button type="btn btn-lg-primary btn-block" id="prediction_button">
+	<button class="btn btn-lg-primary btn-block" id="prediction_button">
 		Reveal Prediction and See How You Did
 	</button>
 	<br>
 	<br>
-	<button type="btn btn-lg btn-primary btn-block" type="submit">
-		Next Question
-	</button>
-	</form>
+
  </div>	
 
 <div class="col-md-6">
 	<canvas id="canvas" height="250" width="400"></canvas>
-	<div id="prediction" >
-		<br>
+	<div id="prediction">
 		<div id="predicted-answer" hidden>{{predicted_new_question_answer}}</div>
-
-		<br>
-		<br>
-	</div>
+		</div>
 </div>
 
 
 <div class="col-md-12">
 	<br>
+	<div id="next-question" hidden>
 
+		<button class="btn btn-lg btn-primary btn-block" type="submit">
+			Next Question
+		</button>
+	</div>
+</form>
 	Question {{ question_numb }} of 18
 </div>
 
@@ -73,12 +75,12 @@
 		]
 
 	}
-	window.onload = function(){
-		var ctx = document.getElementById("canvas").getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChartData, {
-			responsive : true
-		});
-	}
+	// window.onload = function(){
+	// 	var ctx = document.getElementById("canvas").getContext("2d");
+	// 	window.myBar = new Chart(ctx).Bar(barChartData, {
+	// 		responsive : true
+	// 	});
+	// }
 
 	</script>
 

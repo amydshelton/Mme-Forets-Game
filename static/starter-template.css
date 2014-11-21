@@ -10,3 +10,8 @@ body {
 	width: 65px;
 	text-align: center;
 }
+
+.input-group[class*="col-"] {
+    width:88px;
+
+}

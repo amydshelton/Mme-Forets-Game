@@ -139,12 +139,10 @@ def display_question():
 	total_forets_points = websession["forets_points"]
 	total_users_points = websession["users_points"]
 
-	a='a'
-
 
 
 # clean up the below at some point - is everythin here used in template?  #TODO
-	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer, predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, test = [5,10,15,20,25,30,35], test2 = [a,a,a,a,a,a,a], data_for_chart=data_for_chart)
+	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer, predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, test = [5,10,15,20,25,30,35], data_for_chart=data_for_chart)
 
 
 @app.route("/submitanswer", methods=["POST"])
@@ -162,11 +160,11 @@ def submit_answer():
 	percent_who_answered_same_as_guess = int(aggregated_df[old_question_var_name][old_question_answer_numb] * 100 + .5) # add .5 to make sure the int rounds correctly
 
 	# calculate the number of points foret gets for her algorithm guess
-	points_per_answer = 100/int(websession["len_of_answer_list"])
+	points_per_answer = int(100/websession["len_of_answer_list"] + .5) #add .5 to make int round appropriately
 	prediction=int(websession["prediction"])
 	prediction_points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
-	if prediction_points == 1:
-		prediction_points = 0 #necessary because of weirdness with decimal places
+	if prediction_points < points_per_answer:
+		prediction_points = 0 #necessary because of weirdness with decimal places. without this, points could be negative or other nonsensical numbers.
 
 	# calculate the number of points the respondent gets for the accuracy of their guess
 	guess_points = 100 - abs(percent_who_answered_same_as_guess - guess) # points is the distance between your guess and the answer, such that a perfect guess is worth 100 points

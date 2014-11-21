@@ -6,7 +6,11 @@ $(document).ready(function() {
 		evt.preventDefault();
 		// $("#prediction").show();
 
-		$.post('/submitanswer',{old_question_answer_numb:$("input:radio[name=question]:checked").val(),guess:$("input[name=guess]").val()})
+		var old_question_answer_numb = $("input:radio[name=question]:checked").val();
+		var guess = $("input[name=guess]").val();
+
+		if (old_question_answer_numb && guess && isNaN(+guess)===false && guess >= 0 && guess <=100) {
+			$.post('/submitanswer',{'old_question_answer_numb': old_question_answer_numb,'guess': guess})
 			.done(function(stuff) {
 				var stuff_list = stuff.split(" ");
 				var guess = stuff_list.slice(2,3);
@@ -37,7 +41,21 @@ $(document).ready(function() {
 				// Disable Reval Prediction button
 				$("#prediction_button").prop("disabled",true);
 
+				$("#next-question").show();
+				// $("#chart").show();
+
+				var ctx = document.getElementById("canvas").getContext("2d");
+				window.myBar = new Chart(ctx).Bar(barChartData, {
+					responsive : true
+				});
+	
+
 			});
+		}
+		else {
+			alert("That is not a valid entry. Please edit and try again.");
+		}
+		
 
 	});
 });
