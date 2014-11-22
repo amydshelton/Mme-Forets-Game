@@ -114,7 +114,6 @@ def display_question():
 	setattr(playsession, predicted_new_question_var_name, predicted_new_question_answer)
 	playsession.commit_play_session()
 
-	predicted_new_question_translated = reversed_data_dict[new_question_var_name][int(predicted_new_question_answer)]
 
 	#title of new question to hand to html template
 	new_question_title = data_dict[new_question_var_name]['title']
@@ -125,13 +124,16 @@ def display_question():
 	# making a list of answer options tuples, and a separate list of the % of people who answered with each of those options, to hand to the html template. Pulling from reversed data dict b/c 1) can use keys to create the order, and 2) already removed NaN's from reversed data dict
 	new_question_answer_list = []
 	data_for_chart = []
+	new_question_answer_list_for_chart = []
 	for i in range(len(reversed_data_dict[new_question_var_name])):
 		if new_question_var_name == 'income_distribution': #doesn't have a 0 answer so need to start at 1
 			new_question_answer_list.append((i+1,reversed_data_dict[new_question_var_name][i+1]))
 			data_for_chart.append(int(aggregated_df[new_question_var_name][i+1]*100 + .5)) #pulling data out of aggregated file, using current var name and number of answer option. Multiplying by 100 to make them percents, adding .5 to make int round correctly.
+			new_question_answer_list_for_chart.append(reversed_data_dict[new_question_var_name][i+1])
 		else:
 			new_question_answer_list.append((i,reversed_data_dict[new_question_var_name][i]))
 			data_for_chart.append(int(aggregated_df[new_question_var_name][i]*100 + .5)) #pulling data out of aggregated file, using current var name and number of answer option. Multiplying by 100 to make them percents, adding .5 to make int round correctly.
+			new_question_answer_list_for_chart.append(reversed_data_dict[new_question_var_name][i])
 
 
 	websession['len_of_answer_list'] = len(new_question_answer_list)-1 # Will use this to calculate points. Minus one because if algorithm guesses exactly wrong, it should get 0 points
@@ -140,9 +142,8 @@ def display_question():
 	total_users_points = websession["users_points"]
 
 
-
 # clean up the below at some point - is everythin here used in template?  #TODO
-	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer, predicted_new_question_translated = predicted_new_question_translated, new_question_var_name = new_question_var_name, new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, test = [5,10,15,20,25,30,35], data_for_chart=data_for_chart)
+	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer,new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_answer_list_for_chart = new_question_answer_list_for_chart, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, data_for_chart=data_for_chart)
 
 
 @app.route("/submitanswer", methods=["POST"])

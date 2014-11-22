@@ -39,7 +39,7 @@
  </div>	
 
 <div class="col-md-6">
-	<canvas id="canvas" height="250" width="400"></canvas>
+	<canvas id="canvas" height="400" width="400"></canvas>
 	<div id="prediction">
 		<div id="predicted-answer" hidden>{{predicted_new_question_answer}}</div>
 		</div>
@@ -63,7 +63,7 @@
 	// var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 
 	var barChartData = {
-		labels : {{test}},
+		labels : {{new_question_answer_list_for_chart | safe}},
 		datasets : [
 			{
 				fillColor : "rgba(220,220,220,0.5)",
@@ -75,12 +75,6 @@
 		]
 
 	}
-	// window.onload = function(){
-	// 	var ctx = document.getElementById("canvas").getContext("2d");
-	// 	window.myBar = new Chart(ctx).Bar(barChartData, {
-	// 		responsive : true
-	// 	});
-	// }
 
 	</script>
 
