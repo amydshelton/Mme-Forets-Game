@@ -45,9 +45,8 @@ $(document).ready(function() {
 				// $("#chart").show();
 
 				var ctx = document.getElementById("canvas").getContext("2d");
-				window.myBar = new Chart(ctx).Bar(barChartData, {
-					responsive : true
-				});
+
+				window.myBar = new Chart(ctx).Bar(barChartData, options);
 	
 
 			});
