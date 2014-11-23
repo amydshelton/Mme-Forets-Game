@@ -17,10 +17,56 @@ body {
 }
 
 .foret {
-	color: #EB83FE;
-	
+	color: #B903D9;
+
 }
 
 .player {
 	color: #178F01;
+}
+
+.truth {
+	color: #011FCB;
+}
+
+h1 {
+	text-align: center;
+	font-family: Gotham-Medium, "Times New Roman", Times, serif
+
+}
+
+
+
+@font-face {
+    font-family: Gotham-Black;
+    src: url('/static/fonts/Gotham-Black.otf');
+}
+
+
+@font-face {
+    font-family: Gotham-Medium;
+    src: url('/static/fonts/Gotham-Medium.otf');
+
+}
+
+@font-face {
+    font-family: Whitney-Black;
+    src: url('/static/fonts/WhitneyHTF-Black.otf');
+
+}
+
+
+@font-face {
+    font-family: Gotham-Bold;
+    src: url('/static/fonts/Gotham-Bold.otf');
+
+}
+
+
+h2, h3, a {
+    font-family: Gotham-Medium, "Times New Roman", Times, serif
+}
+
+body, p {
+	font-family: Whitney-Black,
 }

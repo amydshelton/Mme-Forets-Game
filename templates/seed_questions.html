@@ -4,12 +4,12 @@
 
 <form class="seed-questions-form" action="/nextquestion" method="POST">
     <h2 class="seed-question-header">Please Answer These Questions</h2>
-    Your answers will help Madame Forêt clear your aura.<br><br>
-    Age
+    <i>Your answers will help Madame Forêt clear your aura.</i><br><br>
+    <p>Age</p>
     <input type="number" name="age" class="form-control" required autofocus>
     <br><br>
 
-	Highest Grade Completed
+	<p>Highest Grade Completed</p>
     <select class="form-control" name="highest-grade" required style="width:200px">
     	<option selected disabled hidden value=''></option>"
     	<option value="0">0</option>
@@ -35,7 +35,7 @@
     	<option value="20">20 or higher</option>
     </select><br>
     
-    <button type="btn btn-lg btn-primary btn-block" id="submit" type="submit">Submit</button>
+    <button class="btn btn-primary btn-sample" id="submit" type="submit">Submit</button>
 </form>
 
 

@@ -3,34 +3,39 @@
 
 <h1> 
 	{{ new_question_title }} 
-</h1>
+</h1><br>
 
 <div class="col-md-6">
-	{{ new_question_text}}
-	<br> 
-	<br>
+	<p>
+		{{ new_question_text}}
+	</p>
 	<form class="form" action="/nextquestion" required method="POST">
 		{% for item in new_question_answer_list %}
-		<input type="radio" required name="question" id="{{item[0]}}_radio" value="{{item[0]}}"/> {{item[1]}}
-		<span class="foret" id="{{item[0]}}"></span>
+		<input type="radio" required name="question" id="{{item[0]}}_radio" value="{{item[0]}}"/>
+			<span id="{{item[0]}}_label"> 
+				{{item[1]}}
+			</span>
+		<span class="foret" id="{{item[0]}}">
+		</span>
 		<br>
 		{% endfor %}
 		<br>
 		<br>
-
-	Guess what percentage of Americans (surveyed in 2010 and 2012) chose the same answer you chose.
+	<p>
+		Guess what percentage of Americans (surveyed in 2010 and 2012) chose the same answer you chose.
+	</p>
 	<div>
 		</a><span class="col-sm-4 input-group">
 	        <input type="text" class="form-control bfh-number" name="guess"  required>
 	        <span class="input-group-addon">%</span>
 	    </span>
 
-		<span style="color:red" id="percent-who-agree">
+		<span class="player" id="percent-who-agree">
 			</span>
 	</div>
 	<br>
 	<br>
-	<button class="btn btn-lg-primary btn-block" id="prediction_button">
+	<button class="btn btn-lg-primary btn-sample" id="prediction_button">
 		Reveal Prediction and See How You Did
 	</button>
 	<br>
@@ -39,16 +44,16 @@
  </div>	
 
 <div class="col-md-6">
-	<canvas id="canvas" height="400" width="400"></canvas>
+	<canvas id="canvas" height="280" width="400"></canvas>
 
 </div>
 
 
 <div class="col-md-12">
 	<br>
-	<div id="next-question" hidden>
+	<div id="next-question"  style="text-align:center" hidden>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">
+		<button class="btn btn-lg btn-primary btn-sample" type="submit">
 			Next Question
 		</button>
 	</div>

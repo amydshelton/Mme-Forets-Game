@@ -31,7 +31,7 @@ $(document).ready(function() {
 				var message = "<-- Madame Forêt predicted you would say this answer, so she gets ".concat(points_for_question, " points.");
 				$(predicted_answer_id).text(message);
 
-				chosen_radio = String(old_question_answer_numb).concat("_radio");
+				chosen_radio = String(old_question_answer_numb).concat("_label");
 				document.getElementById(chosen_radio).setAttribute('class','player');
 
 				// Get info needed for second message and display it in the right place
@@ -44,6 +44,7 @@ $(document).ready(function() {
 				$("#prediction_button").prop("disabled",true);
 
 				$("#next-question").show();
+				$("#chart-title").show();
 
 				// Get data and labels for chart
 				var data_for_chart = stuff_dict.data_for_chart;
@@ -52,6 +53,9 @@ $(document).ready(function() {
 
 				// Color the answer that the person chose red
 				var fillColorList = Array.apply(null, new Array(length_of_chart_data)).map(String.prototype.valueOf,"rgba(220,220,220,0.5)"); // make a list that is the right length, full of the gray color
+
+				// var labels_for_chart = Array.apply(null, new Array(length_of_chart_data)).map(String.prototype.valueOf,"abcdefghijk\n test"); // make a list that is the right length, full of the gray color
+
 				var varName = stuff_dict.old_question_var_name;
 				if (varName === "income_distribution") {
 					fillColorList[old_question_answer_numb-1] = "#178F01";
@@ -64,11 +68,49 @@ $(document).ready(function() {
 
 				var maxScaleStep = Math.ceil(max_of_chart_data/10);
 
-
-
+				var labels_for_charts = {
+										'religious':
+											['Not\nReligious', 'Slightly\nReligious', 'Moderately\nReligious', 'Very\nReligious'],
+										'spiritual':
+											['Not\nSpiritual','Slightly\nSpiritual', 'Moderately\nSpirtual', 'Very\nSpiritual'],
+										'party':
+											['Strong\nRep.', 'Not\nStrong\nRep.', 'Ind.,\nNear\nRep.', 'Ind.', 'Ind.,\nNear\nDem.', 'Not\nStrong\nDem.', 'Strong\nDem.'],
+										'death_penalty':
+											['Oppose','Favor'],
+										'court_harsh':
+											['Not Harsh\nEnough', 'About Right', 'Too Harsh'],
+										'bar':
+											['Never', 'Once\na Year', 'Several\nTimes\na Year', 'Once\na Month','Several\nTimes\na Month', 'Several\nTimes\na Week', 'Almost\nDaily'],
+										'tv':
+											['0','1', '2', '3', '4', '5', '6', '7', '8', '9 to 12', '13 or\nhigher'],
+										'relatives':
+											['Never', 'Once\na Year', 'Several\nTimes\na Year', 'Once\na Month','Several\nTimes\na Month', 'Several\nTimes\na Week', 'Almost\nDaily'],
+										'spanking':
+											['Strongly\nDisagree','Disagree','Agree','Strongly\nAgree'],
+										'income_distribution':
+											['1', '2', '3', '4', '5', '6', '7'],
+										'standard_of_living':
+											['Much\nWorse', 'Somewhat\nWorse', 'About\nthe Same','Somewhat\nBetter','Much\nBetter'],
+										'birth_control':
+											['Strongly\nDisagree','Disagree','Agree','Strongly\nAgree'],
+										'immigration':
+											['Reduced\na Lot','Reduced\na Little','Remain\nthe Same\nas It Is','Increased\na Little','Increased\na Lot'],
+										'affirmative_action':
+											['Strongly\nOppose\nPreference\nfor Blacks', 'Oppose\nPreference\nfor Blacks', 'Support\nPreference\nfor Blacks', 'Strongly\nSupport\nPreference\nfor Blacks'],
+										'gun':
+											['No','Yes'],
+										'tax_approp':
+											['Too Low', 'About Right','Too High'],
+										'divorce_ease':
+											['Easier', 'Stay Same', 'More Difficult'],
+										'numb_children':
+											['None', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven\nor more']
+								};
+				// console.log(varName);
+				// console.log(labels_for_charts[varName]);
 
 				var barChartData = {
-					labels : labels_for_chart,
+					labels : labels_for_charts[varName],
 					datasets : [
 						{
 							fillColor : fillColorList,
@@ -80,7 +122,7 @@ $(document).ready(function() {
 					]
 
 				}, options = {
-								responsive : true, scaleOverride: true, scaleStartValue: 0, scaleSteps: maxScaleStep, scaleStepWidth: 10, scaleLabel: "<%= Number(value) + '%'%>",  annotateDisplay:true, annotateLabel : "<%=v2%>: <%=v3%>%"
+								responsive : true, scaleOverride: true, scaleStartValue: 0, scaleSteps: maxScaleStep, scaleStepWidth: 10, scaleLabel: "<%= Number(value) + '%'%>",  annotateDisplay:true, annotateLabel : "<%=v2%>: <%=v3%>%", graphTitle : "Responses of Surveyed Americans", yAxisLabel: "Percent of Respondents"
 							};
 
 

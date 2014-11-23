@@ -5,15 +5,6 @@ data_dict= {
 	'sex': 
 		{'question': 'Sex', 'answers': 
 			{'Female':0, 'Male':1}},
-	'region': 
-		{'question': 'Region of Current Residence', 'answers': 
-			{'East North Central (IL, IN, MI, OH, WI)':'east_north_central', 'East South Central (AL, KY, MS, TN)':'east_south_central', 'Middle Atlantic (NJ, NY, PA)':'middle_atlantic', 'Mountain (AZ, CO, ID, MT, NV, NM, UT, WY)':'mountain', 'New England (CT, ME, MA, NH, RI, VT)':'new_england', 'Pacific (AK, CA, HI, OR, WA)':'pacific', 'South Atlantic (DE, FL, GA, MD, NC, SC, VA, WV, DC)':'south_atlantic','West North Central (IA, KS, MN, MO, NE, ND, SD)':'west_north_central', 'West South Central (AR, LA, OK, TX)':'west_south_central'}},
-	'employment_status': 
-		{'question': 'Last week were you working full time, part time, going to school, keeping house, or what?', 'answers': 
-			{'Keeping House':'keeping_house', 'Other':'other_employment', 'Retired':'retired', 'School':'school', 'Temp Not Working':'temp_not_working','Unemployed, Laid Off':'unemployed', 'Working Fulltime':'fulltime', 'Working Parttime':'parttime'}},
-	'marital_status': 
-		{'question': 'Are you currently married, widowed, divorced, separated, or have you never been married?', 'answers': 
-			{'Divorced':'divorced', 'Married':'married', 'Never Married':'never_married', 'Separated':'separated', 'Widowed':'widowed'}},
 	'religious': 
 		{'title': 'Religiosity', 'question': 'To what extent do you consider yourself a religious person? Are you...', 'answers': 
 			{'Not Religious':0, 'Slightly Religious':1, 'Moderately Religious':2, 'Very Religious':3}},
@@ -23,9 +14,6 @@ data_dict= {
 	'party': 
 		{'title': 'Political Party','question': 'Generally speaking, do you usually think of yourself as a Republican, Democrat, or Independent?', 'answers': 
 			{ 'Strong Republican':0, 'Not Strong Republican':1, 'Independent, Near Republican':2, 'Independent':3, 'Independent, Near Democrat':4, 'Not Strong Democrat':5, 'Strong Democrat':6, 'Other Party':'NaN'}},
-	'lib_cons': 
-		{'title': 'Conserativism to Liberalism','question': 'Where would you place yourself on a scale from extremely conservative to extremely liberal?', 'answers': 
-			{ 'Extremely Conservative':0,'Conservative':1, 'Slightly Conservative':2, 'Moderate':3, 'Slightly Liberal':4, 'Liberal':5, 'Extremely Liberal':6, "Don't Know":'NaN'}},
 	'death_penalty': 
 		{'title': 'Death Penalty','question': 'Do you favor or oppose the death penalty for persons convicted of murder?', 'answers': 
 			{'Oppose':0,'Favor':1,"Don't Know":'NaN'}},
@@ -56,18 +44,6 @@ data_dict= {
 	'immigration': 
 		{'title': 'Number of Immigrants in the U.S.','question': 'Do you think the number of immigrants to America nowadays should be...', 'answers': 
 			{"Can't Choose":'NaN','Reduced a Lot':0,'Reduced a Little':1,'Remain the Same as It Is':2,'Increased a Little':3,'Increased a Lot':4}},
-	'govt_help_poor': 
-		{'title': "Government's Obligation to the Poor",'question': "Some people think that the government in Washington should do everything possible to improve the standard of living of all poor Americans; they would rate themselves a 1 on this scale. Other people think it is not the government's responsibility, and that each person should take care of himself; they would rate themselves a 5. How would you rate yourself?", 'answers': 
-			{'1 (Government should do all it can)':1, '2':2, '3 (Agree with both)':3, '4':4, '5 (Each person should take care of him/herself)':5}},
-	'govt_help_sick': 
-		{'title': "Government's Obligation to the Sick",'question': 'In general, some people think that it is the responsibility of the government in Washington to see to it that people have help in paying for doctors and hospital bills. Others think that these matters are not the responsibility of the federal government and that people should take care of these things themselves. Where would you place yourself on this scale?', 'answers': 
-			{'1 (Government should help)':1, '2':2, '3 (Agree with both)':3, '4':4, '5 (Each person should take care of his/her own medical bills)':5}},
-	'govt_more_less': 
-		{'title': "Government's Obligation to the Poor",'question': "Some people think that the government in Washington is trying to do too many things that should be left to individuals and private businesses. Others disagree and think that the government should do even more to solve our country's problems. Where would you place yourself on this scale?", 'answers': 
-			{'1 (Government should do more)':1, '2':2, '3 (Agree with both)':3, '4': 4, '5 (Government doing too much)':5}},
-	'govt_help_blacks': 
-		{'title': "Government's Obligation to African-Americans",'question': 'Some people think that African-Americans have been discriminated against for so long that the government has a special obligation to help improve their living standards. Others believe that the government should not be giving special treatment to African-Americans. Where would you place yourself on this scale?', 'answers': 
-			{'1 (Government should help)':1, '2':2, '3 (Agree with both)':3, '4':4, '5 (African-Americans should receive no special treatment)':5}},
 	'affirmative_action': 
 		{'title': 'Affirmative Action for African-Americans','question': 'Some people say that because of past discrimination, blacks should be given preference in hiring and promotion. Others say that such preference in hiring and promotion of blacks is wrong because it discriminates against whites. Are you for or against preferential hiring and promotion of blacks?', 'answers': 
 			{"Don't Know":'NaN', 'Strongly Oppose Preference for Blacks':0, 'Oppose Preference for Blacks':1, 'Support Preference for Blacks':2, 'Strongly Support Preference for Blacks':3}},
