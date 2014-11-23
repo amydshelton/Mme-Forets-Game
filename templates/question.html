@@ -11,7 +11,7 @@
 	<br>
 	<form class="form" action="/nextquestion" required method="POST">
 		{% for item in new_question_answer_list %}
-		<input type="radio" required name="question" value="{{item[0]}}"> {{item[1]}}
+		<input type="radio" required name="question" id="question" value="{{item[0]}}"> {{item[1]}}
 		<span style="color:red" id="{{item[0]}}"></span>
 		<br>
 		{% endfor %}
@@ -40,9 +40,7 @@
 
 <div class="col-md-6">
 	<canvas id="canvas" height="400" width="400"></canvas>
-	<div id="prediction">
-		<div id="predicted-answer" hidden>{{predicted_new_question_answer}}</div>
-		</div>
+
 </div>
 
 
@@ -64,21 +62,6 @@
 
 	// make logic to make list that feeds fill color here
 
-	var barChartData = {
-		labels : {{new_question_answer_list_for_chart | safe}},
-		datasets : [
-			{
-				fillColor : ["rgba(220,220,220,0.5)","red","rgba(220,0,220,0.5)","rgba(220,220,0,0.5)"],
-				strokeColor : "rgba(220,220,220,0.8)",
-				highlightFill: "rgba(220,220,220,0.75)",
-				highlightStroke: "rgba(220,220,220,1)",
-				data : {{data_for_chart}}
-			},
-		]
-
-	}, options = {
-					responsive : true, scaleOverride: true, scaleStartValue: 0, scaleSteps: 7, scaleStepWidth: 10
-				};
 
 	</script>
 

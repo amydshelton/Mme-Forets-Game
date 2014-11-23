@@ -3,7 +3,7 @@ from model import PlaySession, dbsession
 import pandas as pd 
 from sklearn.ensemble import RandomForestClassifier
 from universals import data_dict, reversed_data_dict , columns_ordered_by_predictive_power,full_columns_ordered_by_predictive_power
-
+import json
 
 app = Flask(__name__)
 app.secret_key = 'PredictionFTW'
@@ -140,10 +140,13 @@ def display_question():
 
 	total_forets_points = websession["forets_points"]
 	total_users_points = websession["users_points"]
+	websession['data_for_chart'] = data_for_chart
+	websession['new_question_answer_list_for_chart'] = new_question_answer_list_for_chart
+	websession['predicted_new_question_answer'] = int(predicted_new_question_answer)
 
 
 # clean up the below at some point - is everythin here used in template?  #TODO
-	return render_template('question.html', predicted_new_question_answer = predicted_new_question_answer,new_question_text = new_question_text, new_question_answer_list = new_question_answer_list, new_question_answer_list_for_chart = new_question_answer_list_for_chart, new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, data_for_chart=data_for_chart)
+	return render_template('question.html', new_question_text = new_question_text, new_question_answer_list = new_question_answer_list,  new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points)
 
 
 @app.route("/submitanswer", methods=["POST"])
@@ -177,8 +180,11 @@ def submit_answer():
 	total_users_points = websession['users_points']
 
 	#send all that data to template
-	to_send = str(prediction_points)+" "+ str(total_forets_points)+" "+str(guess)+ "% " + str(percent_who_answered_same_as_guess) + "% " + str(guess_points) + " " + str(total_users_points)
-	return str(to_send)
+	to_send = {'prediction_points': prediction_points, 'total_forets_points': total_forets_points, 'guess': guess, 'percent_who_answered_same_as_guess': percent_who_answered_same_as_guess, 'guess_points': guess_points, 'total_users_points': total_users_points, 'data_for_chart': websession['data_for_chart'], 'new_question_answer_list_for_chart': websession['new_question_answer_list_for_chart'], 'predicted_new_question_answer':websession['predicted_new_question_answer'],}
+	json_to_send = json.dumps(to_send)
+
+	# to_send = str(prediction_points)+" "+ str(total_forets_points)+" "+str(guess)+ "% " + str(percent_who_answered_same_as_guess) + "% " + str(guess_points) + " " + str(total_users_points)
+	return json_to_send
 
 @app.route("/about")
 def about():
