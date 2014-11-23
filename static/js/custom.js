@@ -31,10 +31,13 @@ $(document).ready(function() {
 				var message = "<-- Madame Forêt predicted you would say this answer, so she gets ".concat(points_for_question, " points.");
 				$(predicted_answer_id).text(message);
 
+				chosen_radio = String(old_question_answer_numb).concat("_radio");
+				document.getElementById(chosen_radio).setAttribute('class','player');
+
 				// Get info needed for second message and display it in the right place
 				var percent_who_answered_same_as_guess = stuff_dict.percent_who_answered_same_as_guess;
 				var guess_points = stuff_dict.guess_points;
-				var message2 = "   A total of ".concat(percent_who_answered_same_as_guess, "% of Americans agree with you, so you get ", guess_points, " points.");
+				var message2 = "A total of ".concat(percent_who_answered_same_as_guess, "% of Americans agree with you, so you get ", guess_points, " points.");
 				$("#percent-who-agree").text(message2);
 
 				// Disable Reval Prediction button
@@ -42,16 +45,26 @@ $(document).ready(function() {
 
 				$("#next-question").show();
 
-
+				// Get data and labels for chart
 				var data_for_chart = stuff_dict.data_for_chart;
 				var labels_for_chart = stuff_dict.new_question_answer_list_for_chart;
 				var length_of_chart_data = data_for_chart.length;
 
-				var fillColorList = Array.apply(null, new Array(length_of_chart_data)).map(String.prototype.valueOf,"rgba(220,220,220,0.5)");
+				// Color the answer that the person chose red
+				var fillColorList = Array.apply(null, new Array(length_of_chart_data)).map(String.prototype.valueOf,"rgba(220,220,220,0.5)"); // make a list that is the right length, full of the gray color
+				var varName = stuff_dict.old_question_var_name;
+				if (varName === "income_distribution") {
+					fillColorList[old_question_answer_numb-1] = "#178F01";
 
-				fillColorList[old_question_answer_numb] = "red";
+				} else {
+					fillColorList[old_question_answer_numb] = "#178F01";
+				} // color the chosen answer red (accomodate for the fact that there is no '0th' answer for income distribution)
 
-				console.log(fillColorList);
+				var max_of_chart_data = Math.max.apply(Math, data_for_chart);
+
+				var maxScaleStep = Math.ceil(max_of_chart_data/10);
+
+
 
 
 				var barChartData = {
@@ -67,7 +80,7 @@ $(document).ready(function() {
 					]
 
 				}, options = {
-								responsive : true, scaleOverride: true, scaleStartValue: 0, scaleSteps: 7, scaleStepWidth: 10
+								responsive : true, scaleOverride: true, scaleStartValue: 0, scaleSteps: maxScaleStep, scaleStepWidth: 10, scaleLabel: "<%= Number(value) + '%'%>",  annotateDisplay:true, annotateLabel : "<%=v2%>: <%=v3%>%"
 							};
 
 
@@ -89,5 +102,3 @@ $(document).ready(function() {
 
 
 
-
-// '<div id="prediction"> predicted {{new_question_var_name}} status: {{predicted_new_question_translated}} <button type="btn btn-lg btn-primary btn-block" type="submit">Submit</button> </div>');

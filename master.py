@@ -18,6 +18,10 @@ aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', header=
 df = df.ix[:,1:]
 
 
+@app.route("/welcome")
+def welcome():
+	return render_template('index.html')
+
 @app.route("/")
 def index():
 	websession.clear()
@@ -160,7 +164,7 @@ def submit_answer():
 	#determine what question we're on
 	old_question_var_name = columns_ordered_by_predictive_power[websession['current_q_numb']]
 
-	#pull the % of Americans who answered the same way as the responded
+	#pull the % of Americans who answered the same way as the respondent
 	percent_who_answered_same_as_guess = int(aggregated_df[old_question_var_name][old_question_answer_numb] * 100 + .5) # add .5 to make sure the int rounds correctly
 
 	# calculate the number of points foret gets for her algorithm guess
@@ -179,12 +183,12 @@ def submit_answer():
 	websession["users_points"] += guess_points
 	total_users_points = websession['users_points']
 
-	#send all that data to template
-	to_send = {'prediction_points': prediction_points, 'total_forets_points': total_forets_points, 'guess': guess, 'percent_who_answered_same_as_guess': percent_who_answered_same_as_guess, 'guess_points': guess_points, 'total_users_points': total_users_points, 'data_for_chart': websession['data_for_chart'], 'new_question_answer_list_for_chart': websession['new_question_answer_list_for_chart'], 'predicted_new_question_answer':websession['predicted_new_question_answer'],}
+	#send all that data to custom.js
+	to_send = {'prediction_points': prediction_points, 'total_forets_points': total_forets_points, 'guess': guess, 'percent_who_answered_same_as_guess': percent_who_answered_same_as_guess, 'guess_points': guess_points, 'total_users_points': total_users_points, 'data_for_chart': websession['data_for_chart'], 'new_question_answer_list_for_chart': websession['new_question_answer_list_for_chart'], 'predicted_new_question_answer':websession['predicted_new_question_answer'], 'old_question_var_name': old_question_var_name}
 	json_to_send = json.dumps(to_send)
 
-	# to_send = str(prediction_points)+" "+ str(total_forets_points)+" "+str(guess)+ "% " + str(percent_who_answered_same_as_guess) + "% " + str(guess_points) + " " + str(total_users_points)
 	return json_to_send
+
 
 @app.route("/about")
 def about():

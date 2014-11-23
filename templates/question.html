@@ -11,8 +11,8 @@
 	<br>
 	<form class="form" action="/nextquestion" required method="POST">
 		{% for item in new_question_answer_list %}
-		<input type="radio" required name="question" id="question" value="{{item[0]}}"> {{item[1]}}
-		<span style="color:red" id="{{item[0]}}"></span>
+		<input type="radio" required name="question" id="{{item[0]}}_radio" value="{{item[0]}}"/> {{item[1]}}
+		<span class="foret" id="{{item[0]}}"></span>
 		<br>
 		{% endfor %}
 		<br>
@@ -57,12 +57,5 @@
 </div>
 
 
-	<script>
-	// var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-
-	// make logic to make list that feeds fill color here
-
-
-	</script>
 
 {% endblock %}

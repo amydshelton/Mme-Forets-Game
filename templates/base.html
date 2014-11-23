@@ -41,7 +41,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Madame Forêt's Game</a>
+          <a class="navbar-brand" a href="/welcome">Madame Forêt's Game</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -50,8 +50,8 @@
           </ul>          
           <ul class="nav navbar-nav navbar-right">  
           {% if total_forets_points > -1 %}
-              <li style="color:red">Madame Forêt's Points: <span style="color:red" id="total_forets_points">{{total_forets_points}}</span></li><br>
-              <li style="color:red">Your Points: <span style="color:red" id="total_users_points">{{total_users_points}}</span></li>
+              <li class="foret">Madame Forêt's Points: <span class="foret" id="total_forets_points">{{total_forets_points}}</span></li><br>
+              <li class="player">Your Points: <span class="player" id="total_users_points">{{total_users_points}}</span></li>
           {% endif %}
         </ul>
         </div><!--/.nav-collapse -->
