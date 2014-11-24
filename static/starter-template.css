@@ -7,7 +7,7 @@ body {
 }
 
 .form-control {
-	width: 65px;
+	width: 47px;
 	text-align: center;
 }
 
@@ -18,16 +18,15 @@ body {
 
 .foret {
 	color: #B903D9;
+	font-weight: bold;
 
 }
 
 .player {
 	color: #178F01;
+	font-weight: bold;
 }
 
-.truth {
-	color: #011FCB;
-}
 
 h1 {
 	text-align: center;

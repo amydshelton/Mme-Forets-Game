@@ -18,11 +18,11 @@ aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', header=
 df = df.ix[:,1:]
 
 
-@app.route("/welcome")
+@app.route("/")
 def welcome():
 	return render_template('index.html')
 
-@app.route("/")
+@app.route("/newgame")
 def index():
 	websession.clear()
 	total_forets_points=-1

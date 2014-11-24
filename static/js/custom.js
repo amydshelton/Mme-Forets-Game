@@ -1,10 +1,17 @@
 $(document).ready(function() {
 
-	// var guess = $("#guess");
-	// guess.val(guess.val() + "more text");
+	$("#submit").click(function(evt) {
+		var age = $("input[name=age]").val();
+		if (isNaN(+age)) {
+			alert("Your age must be a number.");
+			evt.preventDefault();
+
+		}
+	});
+
 	$("#prediction_button").click(function(evt) {
 		evt.preventDefault();
-		// $("#prediction").show();
+
 
 		var old_question_answer_numb = $("input:radio[name=question]:checked").val();
 		var guess = $("input[name=guess]").val();
@@ -51,11 +58,8 @@ $(document).ready(function() {
 				var labels_for_chart = stuff_dict.new_question_answer_list_for_chart;
 				var length_of_chart_data = data_for_chart.length;
 
-				// Color the answer that the person chose red
+				// Color the answer that the person chose green
 				var fillColorList = Array.apply(null, new Array(length_of_chart_data)).map(String.prototype.valueOf,"rgba(220,220,220,0.5)"); // make a list that is the right length, full of the gray color
-
-				// var labels_for_chart = Array.apply(null, new Array(length_of_chart_data)).map(String.prototype.valueOf,"abcdefghijk\n test"); // make a list that is the right length, full of the gray color
-
 				var varName = stuff_dict.old_question_var_name;
 				if (varName === "income_distribution") {
 					fillColorList[old_question_answer_numb-1] = "#178F01";
@@ -64,10 +68,11 @@ $(document).ready(function() {
 					fillColorList[old_question_answer_numb] = "#178F01";
 				} // color the chosen answer red (accomodate for the fact that there is no '0th' answer for income distribution)
 
+				// Determine what the max of the y axis should be
 				var max_of_chart_data = Math.max.apply(Math, data_for_chart);
-
 				var maxScaleStep = Math.ceil(max_of_chart_data/10);
 
+				// Determine what the labels for the charts should be
 				var labels_for_charts = {
 										'religious':
 											['Not\nReligious', 'Slightly\nReligious', 'Moderately\nReligious', 'Very\nReligious'],
@@ -106,9 +111,8 @@ $(document).ready(function() {
 										'numb_children':
 											['None', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven\nor more']
 								};
-				// console.log(varName);
-				// console.log(labels_for_charts[varName]);
 
+				// Feed in data to make the chart
 				var barChartData = {
 					labels : labels_for_charts[varName],
 					datasets : [
@@ -125,9 +129,8 @@ $(document).ready(function() {
 								responsive : true, scaleOverride: true, scaleStartValue: 0, scaleSteps: maxScaleStep, scaleStepWidth: 10, scaleLabel: "<%= Number(value) + '%'%>",  annotateDisplay:true, annotateLabel : "<%=v2%>: <%=v3%>%", graphTitle : "Responses of Surveyed Americans", yAxisLabel: "Percent of Respondents"
 							};
 
-
+				// Make the chart
 				var ctx = document.getElementById("canvas").getContext("2d");
-
 				window.myBar = new Chart(ctx).Bar(barChartData, options);
 	
 
