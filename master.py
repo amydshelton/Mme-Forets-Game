@@ -153,12 +153,33 @@ def display_question():
 	websession['predicted_new_question_answer'] = int(predicted_new_question_answer)
 
 
-# clean up the below at some point - is everythin here used in template?  #TODO
+# clean up the below at some point - is everything here used in template?  #TODO
 	return render_template('question.html', new_question_text = new_question_text, new_question_answer_list = new_question_answer_list,  new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, progress_bar = progress_bar)
 
 
-@app.route("/submitanswer", methods=["POST"])
-def submit_answer():
+
+@app.route("/submitfirstanswer", methods = ["POST"])
+def submit_first_answer():
+	old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
+	# calculate the number of points foret gets for her algorithm guess
+	points_per_answer = int(100/websession["len_of_answer_list"] + .5) #add .5 to make int round appropriately
+	prediction=int(websession["prediction"])
+	prediction_points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
+	if prediction_points < points_per_answer:
+		prediction_points = 0 #necessary because of weirdness with decimal places. without this, points could be negative or other nonsensical numbers.
+
+
+	#keep track of foret's total points tally
+	websession["forets_points"] += prediction_points 
+	total_forets_points = websession["forets_points"]
+
+	to_send = {'prediction_points': prediction_points, 'predicted_new_question_answer': websession['predicted_new_question_answer'], 'total_forets_points': total_forets_points,}
+	json_to_send = json.dumps(to_send)
+	return json_to_send
+
+
+@app.route("/submitsecondanswer", methods=["POST"])
+def submit_second_answer():
 	global aggregated_df
 
 	#get submitted answers from form
@@ -171,24 +192,17 @@ def submit_answer():
 	#pull the % of Americans who answered the same way as the respondent
 	percent_who_answered_same_as_guess = int(aggregated_df[old_question_var_name][old_question_answer_numb] * 100 + .5) # add .5 to make sure the int rounds correctly
 
-	# calculate the number of points foret gets for her algorithm guess
-	points_per_answer = int(100/websession["len_of_answer_list"] + .5) #add .5 to make int round appropriately
-	prediction=int(websession["prediction"])
-	prediction_points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
-	if prediction_points < points_per_answer:
-		prediction_points = 0 #necessary because of weirdness with decimal places. without this, points could be negative or other nonsensical numbers.
+
 
 	# calculate the number of points the respondent gets for the accuracy of their guess
 	guess_points = 100 - abs(percent_who_answered_same_as_guess - guess) # points is the distance between your guess and the answer, such that a perfect guess is worth 100 points
 	
-	#keep track of foret's and user's total points tally
-	websession["forets_points"] += prediction_points 
-	total_forets_points = websession["forets_points"]
+	#keep track of user's total points tally
 	websession["users_points"] += guess_points
 	total_users_points = websession['users_points']
 
 	#send all that data to custom.js
-	to_send = {'prediction_points': prediction_points, 'total_forets_points': total_forets_points, 'guess': guess, 'percent_who_answered_same_as_guess': percent_who_answered_same_as_guess, 'guess_points': guess_points, 'total_users_points': total_users_points, 'data_for_chart': websession['data_for_chart'], 'new_question_answer_list_for_chart': websession['new_question_answer_list_for_chart'], 'predicted_new_question_answer':websession['predicted_new_question_answer'], 'old_question_var_name': old_question_var_name}
+	to_send = {'guess': guess, 'percent_who_answered_same_as_guess': percent_who_answered_same_as_guess, 'guess_points': guess_points, 'total_users_points': total_users_points, 'data_for_chart': websession['data_for_chart'], 'new_question_answer_list_for_chart': websession['new_question_answer_list_for_chart'], 'predicted_new_question_answer':websession['predicted_new_question_answer'], 'old_question_var_name': old_question_var_name}
 	json_to_send = json.dumps(to_send)
 
 	return json_to_send

@@ -20,26 +20,33 @@
 		<br>
 		{% endfor %}
 		<br>
+		<button class="btn btn-lg-primary btn-sample" id="prediction_button">
+			Reveal Madame Forêt's Prediction
+		</button>
 		<br>
-	<p>
-		Guess what percentage of Americans (surveyed in 2010 and 2012) chose the same answer you chose.
-	</p>
-	<div>
-		</a><span class="col-sm-4 input-group">
-	        <input type="text" class="form-control bfh-number" name="guess"  required>
-	        <span class="input-group-addon">%</span>
-	    </span>
+		<br>
+		<br>
 
-		<span class="player" id="percent-who-agree">
-			</span>
+	<div id="second-question" hidden>
+		<p>
+			Guess what percentage of Americans (surveyed in 2010 and 2012) chose the same answer you chose.
+		</p>
+		<div>
+			</a><span class="col-sm-4 input-group">
+		        <input type="text" class="form-control bfh-number" name="guess"  required>
+		        <span class="input-group-addon">%</span>
+		    </span>
+
+			<span class="player" id="percent-who-agree">
+				</span>
+		</div>
+		<br>
+		<button class="btn btn-lg-primary btn-sample" id="guess_button">
+			See How You Did
+		</button>
+		<br>
+		<br>
 	</div>
-	<br>
-	<br>
-	<button class="btn btn-lg-primary btn-sample" id="prediction_button">
-		Reveal Prediction and See How You Did
-	</button>
-	<br>
-	<br>
 
  </div>	
 

@@ -12,24 +12,12 @@ $(document).ready(function() {
 	$("#prediction_button").click(function(evt) {
 		evt.preventDefault();
 
-
 		var old_question_answer_numb = $("input:radio[name=question]:checked").val();
-		var guess = $("input[name=guess]").val();
 
-		if (old_question_answer_numb && guess && isNaN(+guess)===false && guess >= 0 && guess <=100) {
-			$.post('/submitanswer',{'old_question_answer_numb': old_question_answer_numb,'guess': guess})
+		if (old_question_answer_numb) {
+			$.post('/submitfirstanswer',{'old_question_answer_numb': old_question_answer_numb})
 			.done(function(stuff) {
-
-
 				var stuff_dict = JSON.parse(stuff);
-
-
-				// Update total points in top left corner
-				var total_forets_points = stuff_dict.total_forets_points;
-				var total_users_points = stuff_dict.total_users_points;
-				$("#total_forets_points").html(total_forets_points);
-				$("#total_users_points").html(total_users_points);
-
 
 				// Get info needed for first message and display it in the right place
 				var points_for_question = stuff_dict.prediction_points;
@@ -37,6 +25,39 @@ $(document).ready(function() {
 				var predicted_answer_id = '#'.concat(predicted_answer);
 				var message = "<-- Madame Forêt predicted you would say this answer, so she gets ".concat(points_for_question, " points.");
 				$(predicted_answer_id).text(message);
+
+				// Update total points in top left corner
+				var total_forets_points = stuff_dict.total_forets_points;
+				$("#total_forets_points").html(total_forets_points);
+
+				// Disable Guess Prediction button
+				$("#prediction_button").prop("disabled",true);
+
+				$("#second-question").show();
+
+			});
+		}
+		else {
+			alert("Please select an answer.");
+		}
+	});
+	
+
+	$("#guess_button").click(function(evt) {
+		evt.preventDefault();
+
+		var old_question_answer_numb = $("input:radio[name=question]:checked").val();
+		var guess = $("input[name=guess]").val();
+
+		if (old_question_answer_numb && guess && isNaN(+guess)===false && guess >= 0 && guess <=100) {
+			$.post('/submitsecondanswer',{'old_question_answer_numb': old_question_answer_numb,'guess': guess})
+			.done(function(stuff) {
+
+				var stuff_dict = JSON.parse(stuff);
+
+				// Update total points in top left corner
+				var total_users_points = stuff_dict.total_users_points;
+				$("#total_users_points").html(total_users_points);
 
 				chosen_radio = String(old_question_answer_numb).concat("_label");
 				document.getElementById(chosen_radio).setAttribute('class','player');
@@ -48,7 +69,7 @@ $(document).ready(function() {
 				$("#percent-who-agree").text(message2);
 
 				// Disable Reval Prediction button
-				$("#prediction_button").prop("disabled",true);
+				$("#guess_button").prop("disabled",true);
 
 				$("#next-question").show();
 
