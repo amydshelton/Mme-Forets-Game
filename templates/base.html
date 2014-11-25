@@ -50,10 +50,18 @@
             <li><a href="/about">About</a></li>
           </ul>          
           <ul class="nav navbar-nav navbar-right">  
-          {% if total_forets_points > -1 %}
-              <li class="foret">Madame Forêt's Points: <span class="foret" id="total_forets_points">{{total_forets_points}}</span></li><br>
-              <li class="player">Your Points: <span class="player" id="total_users_points">{{total_users_points}}</span></li>
+          {% if question_numb >0 %}
+              <li class="foret" id="forets_words">Madame Forêt's Points: <span class="foret" id="total_forets_points">{{total_forets_points}}</span></li><br>
+          {% else %}
+              <li class="foret hidden-on-first-page" id="forets_words">Madame Forêt's Points: <span class="foret" id="total_forets_points">{{total_forets_points}}</span></li><br>
           {% endif %}
+
+          {% if question_numb >0 %}
+              <li class="player" id="players_words">Your Points: <span class="player" id="total_users_points">{{total_users_points}}</span></li>
+          {% else %}
+              <li class="player hidden-on-first-page" id="players_words">Your Points: <span class="player" id="total_users_points">{{total_users_points}}</span></li><br>
+          {% endif %}
+
         </ul>
         </div><!--/.nav-collapse -->
       </div>

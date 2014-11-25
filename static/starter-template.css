@@ -19,7 +19,10 @@ body {
 .foret {
 	color: #B903D9;
 	font-weight: bold;
+}
 
+.hidden-on-first-page {
+  visibility: hidden;
 }
 
 .player {

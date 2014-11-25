@@ -35,6 +35,8 @@ $(document).ready(function() {
 
 				$("#second-question").show();
 
+				$("#forets_words").removeClass("hidden-on-first-page");
+
 			});
 		}
 		else {
@@ -72,6 +74,8 @@ $(document).ready(function() {
 				$("#guess_button").prop("disabled",true);
 
 				$("#next-question").show();
+
+				$("#players_words").removeClass("hidden-on-first-page");
 
 				// Get data and labels for chart
 				var data_for_chart = stuff_dict.data_for_chart;
