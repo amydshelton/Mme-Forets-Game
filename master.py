@@ -17,6 +17,9 @@ aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', header=
 # removing first column because it's duplicative - it's just the index column and pandas will assign that again anyway
 df = df.ix[:,1:]
 
+@app.route("/thank_you")
+def thank_you():
+	return render_template('thank_you.html', total_forets_points = 100, total_users_points = 100)
 
 @app.route("/")
 def welcome():
@@ -27,10 +30,10 @@ def index():
 	websession.clear()
 	total_forets_points=-1
 	total_users_points=-1
-	return render_template('seed_questions.html', total_users_points = total_users_points, total_forets_points=total_forets_points)
+	return render_template('seed_questions.html', total_users_points = total_users_points, total_forets_points=total_forets_points, progress_bar = 5)
 
 
-@app.route("/nextquestion", methods = ["POST"])
+@app.route("/question", methods = ["POST"])
 def display_question():
 	global forest, df, aggregated_df
 
@@ -65,8 +68,7 @@ def display_question():
 		# set user's points equalt to 0
 		websession['users_points'] = 0
 
-		print websession['users_points']
-		
+		progress_bar = 10
 
 	#continuing an existing game
 	else:
@@ -84,13 +86,15 @@ def display_question():
 		# attach what they just submitted to playsession object
 		setattr(playsession, old_question_var_name, old_question_answer)
 
-		# up the cound of the current question
+		# up the count of the current question
 		websession['current_q_numb'] += 1
+
+		progress_bar = 5 * (websession['current_q_numb']+2)
 
 		#if the last question submitted is the last one on in the list of questions (aka #18 ), then commit the playsession and render the thank you template
 		if columns_ordered_by_predictive_power.index(old_question_var_name) == 17:
 			playsession.commit_play_session()
-			return render_template('thank_you.html', total_forets_points = websession['forets_points'], total_users_points = websession['users_points'])
+			return render_template('thank_you.html', total_forets_points = websession['forets_points'], total_users_points = websession['users_points'], progress_bar = progress_bar)
 
 		#if it's not the last question, determine what the next question is and set up the test data
 		else:
@@ -150,7 +154,7 @@ def display_question():
 
 
 # clean up the below at some point - is everythin here used in template?  #TODO
-	return render_template('question.html', new_question_text = new_question_text, new_question_answer_list = new_question_answer_list,  new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points)
+	return render_template('question.html', new_question_text = new_question_text, new_question_answer_list = new_question_answer_list,  new_question_title=new_question_title, question_numb = websession['current_q_numb']+1, total_users_points = total_users_points, total_forets_points = total_forets_points, progress_bar = progress_bar)
 
 
 @app.route("/submitanswer", methods=["POST"])

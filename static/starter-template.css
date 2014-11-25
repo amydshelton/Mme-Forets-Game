@@ -27,6 +27,9 @@ body {
 	font-weight: bold;
 }
 
+.col-md-6 {
+  padding: 40px;
+}
 
 h1 {
 	text-align: center;
@@ -34,6 +37,9 @@ h1 {
 
 }
 
+.progress-bar {
+  background-color: #9D9D9D;
+}
 
 
 @font-face {
@@ -68,4 +74,10 @@ h2, h3, a {
 
 body, p {
 	font-family: Whitney-Black,
+}
+
+.fireworks {
+  margin-left: auto;
+  margin-right: auto;
+  width: 38%;
 }

@@ -1,10 +1,4 @@
 data_dict= {
-	'race': 
-		{'question': 'What is your race?', 'answers': 
-			{'Multiple':'multiple', 'American Indian or Alaska Native':'american_indian', 'Asian Indian':'asian_indian', 'Black or African American':'black', 'Chinese':'chinese', 'Filipino':'filipino', 'Hispanic (Any race)':'hispanic','Japanese':'japanese', 'Korean':'korean', 'Native Hawaiian':'hawaiian', 'Other Asian':'asian', 'Other Pacific Islander':'pacific_islander','Samoan':'samoan', 'Some Other Race':'other_race', 'Vietnamese':'vietnamese', 'White':'white'}},
-	'sex': 
-		{'question': 'Sex', 'answers': 
-			{'Female':0, 'Male':1}},
 	'religious': 
 		{'title': 'Religiosity', 'question': 'To what extent do you consider yourself a religious person? Are you...', 'answers': 
 			{'Not Religious':0, 'Slightly Religious':1, 'Moderately Religious':2, 'Very Religious':3}},
@@ -12,7 +6,7 @@ data_dict= {
 		{'title': 'Spirituality','question': 'To what extent do you consider yourself a spiritual person? Are you...', 'answers': 
 			{ 'Not Spiritual':0,'Slight Spiritual':1, 'Moderate Spirtual':2, 'Very Spiritual':3}},
 	'party': 
-		{'title': 'Political Party','question': 'Generally speaking, do you usually think of yourself as a Republican, Democrat, or Independent?', 'answers': 
+		{'title': 'Political Party','question': 'Do you usually think of yourself as a Republican, Democrat, or Independent?', 'answers': 
 			{ 'Strong Republican':0, 'Not Strong Republican':1, 'Independent, Near Republican':2, 'Independent':3, 'Independent, Near Democrat':4, 'Not Strong Democrat':5, 'Strong Democrat':6, 'Other Party':'NaN'}},
 	'death_penalty': 
 		{'title': 'Death Penalty','question': 'Do you favor or oppose the death penalty for persons convicted of murder?', 'answers': 
@@ -30,23 +24,23 @@ data_dict= {
 		{'title': 'Socializing with Relatives','question': 'How often do you spend a social evening with relatives?', 'answers': 
 			{'Never':0, 'Once a Year':1, 'Several Times a Year':2, 'Once a Month':3,'Several Times a Month':4, 'Several Times a Week':5, 'Almost Daily':6}},
 	'spanking':
-		{'title': 'Spanking Children','question': 'Do you strongly agree, agree, disagree, or strongly disagree that it is sometimes necessary to discipline a child with a good, hard spanking?', 'answers': 
+		{'title': 'Spanking Children','question': 'To what extent do you agree or disagree that it is sometimes necessary to discipline a child with a good, hard spanking?', 'answers': 
 			{'Strongly Disagree':0,'Disagree':1,'Agree':2,'Strongly Agree':3,"Don't Know":'NaN'}},
 	'income_distribution': 
-		{'title': 'Income Redistribution','question': "On a scale from 1 to 7, where 1 indicates that the government ought to reduce the income differences between rich and poor, and 7 means that the government should not concern itself with reducing income differences, what score comes closest to the way you feel?", 'answers': 
+		{'title': 'Income Redistribution','question': "On a scale from 1 to 7, where 1 indicates that the government ought to reduce income inequality, and 7 means that the government should not reduce income inequality, how would you rate yourself?", 'answers': 
 			{'1 (Government should reduce income differences)':1, '2':2, '3':3, '4':4, '5':5, '6':6, '7 (Government should not reduce income differences)':7}}, 
 	'standard_of_living': 
-		{'title': 'Standard of Living Compared to Parents','question': 'Compared to your parents when they were the age you are now, do you think your own standard of living now is much better, somewhat better, about the same, somewhat worse, or much worse than theirs was?', 'answers': 
+		{'title': 'Standard of Living Compared to Parents','question': 'Compared to your parents when they were the age you are now, how do you think your own standard of living compares?', 'answers': 
 			{'Much Worse':0, 'Somewhat Worse':1, 'About the Same':2,'Somewhat Better':3,'Much Better':4}},
 	'birth_control':
-		{'title': 'Birth Control for Young People','question': 'Do you strongly agree, agree, disagree, or strongly disagree that methods of birth control should be available to teenagers between the ages of 14 and 16 if their parents do not approve?', 'answers': 
+		{'title': 'Birth Control for Young People','question': 'To what extent do you agree or disagree that methods of birth control should be available to teenagers between the ages of 14 and 16 if their parents do not approve?', 'answers': 
 			{'Strongly Disagree':0,'Disagree':1,'Agree':2,'Strongly Agree':3,"Don't Know":'NaN'}},
 	'immigration': 
 		{'title': 'Number of Immigrants in the U.S.','question': 'Do you think the number of immigrants to America nowadays should be...', 'answers': 
 			{"Can't Choose":'NaN','Reduced a Lot':0,'Reduced a Little':1,'Remain the Same as It Is':2,'Increased a Little':3,'Increased a Lot':4}},
 	'affirmative_action': 
-		{'title': 'Affirmative Action for African-Americans','question': 'Some people say that because of past discrimination, blacks should be given preference in hiring and promotion. Others say that such preference in hiring and promotion of blacks is wrong because it discriminates against whites. Are you for or against preferential hiring and promotion of blacks?', 'answers': 
-			{"Don't Know":'NaN', 'Strongly Oppose Preference for Blacks':0, 'Oppose Preference for Blacks':1, 'Support Preference for Blacks':2, 'Strongly Support Preference for Blacks':3}},
+		{'title': 'Affirmative Action for African-Americans','question': 'To what extent do you agree or disagree with preferential hiring and promotion for African-Americans?', 'answers': 
+			{"Don't Know":'NaN', 'Strongly Oppose Preference for African-Americans':0, 'Oppose Preference for African-Americans':1, 'Support Preference for African-Americans':2, 'Strongly Support Preference for African-Americans':3}},
 	'gun': 
 		{'title': 'Guns in the Home','question': 'Do you have any guns or revolvers in your home?', 'answers': 
 			{'No':0,'Yes':1}},

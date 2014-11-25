@@ -51,7 +51,6 @@ $(document).ready(function() {
 				$("#prediction_button").prop("disabled",true);
 
 				$("#next-question").show();
-				$("#chart-title").show();
 
 				// Get data and labels for chart
 				var data_for_chart = stuff_dict.data_for_chart;
@@ -101,7 +100,7 @@ $(document).ready(function() {
 										'immigration':
 											['Reduced\na Lot','Reduced\na Little','Remain\nthe Same\nas It Is','Increased\na Little','Increased\na Lot'],
 										'affirmative_action':
-											['Strongly\nOppose\nPreference\nfor Blacks', 'Oppose\nPreference\nfor Blacks', 'Support\nPreference\nfor Blacks', 'Strongly\nSupport\nPreference\nfor Blacks'],
+											['Strongly\nOppose\nPreference\nfor Afr.\nAmericans', 'Oppose\nPreference\nfor Afr.\nAmericans', 'Support\nPreference\nfor Afr.\nAmericans', 'Strongly\nSupport\nPreference\nfor Afr.\nAmericans'],
 										'gun':
 											['No','Yes'],
 										'tax_approp':

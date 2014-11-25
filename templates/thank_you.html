@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+body {
+	background-color: black
+}
+</style>
 
-Thanks for playing!
+
+<div class="fireworks">
+	<img src="/static/img/fireworks.gif" style="width:456px;height:433px">
+</div>
+
+<h1><font color="#ffd700"> You won! Congratulations!!</font></h1>
+
 
 {% endblock %}
+
+{% block javascript %}
+
+<script>
+$(document).ready(function() {
+    $("#progress").hide();
+});
+</script>
+
+{%endblock%}

@@ -3,13 +3,13 @@
 
 <h1> 
 	{{ new_question_title }} 
-</h1><br>
+</h1>
 
 <div class="col-md-6">
 	<p>
 		{{ new_question_text}}
 	</p>
-	<form class="form" action="/nextquestion" required method="POST">
+	<form class="form" action="/question" required method="POST">
 		{% for item in new_question_answer_list %}
 		<input type="radio" required name="question" id="{{item[0]}}_radio" value="{{item[0]}}"/>
 			<span id="{{item[0]}}_label"> 
@@ -43,6 +43,7 @@
 
  </div>	
 
+
 <div class="col-md-6">
 	<canvas id="canvas" height="280" width="400"></canvas>
 
@@ -58,9 +59,6 @@
 		</button>
 	</div>
 </form>
-	Question {{ question_numb }} of 18
 </div>
-
-
 
 {% endblock %}
