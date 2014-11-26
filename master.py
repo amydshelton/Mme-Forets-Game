@@ -27,10 +27,10 @@ def newgame():
 	""" Clears old session and sets the items needed to render the base template (total foret's points, total player's points, and current question number) to 0 and the progress bar to 5% """
 	websession.clear()
 	websession['forets_points'] = 0
-	websession['users_points'] = 0
+	websession['players_points'] = 0
 	websession['current_q_numb'] = 0
 	websession['progress_bar'] = 5
-	return render_template('seed_questions.html', total_users_points = websession['users_points'], total_forets_points = websession['forets_points'], progress_bar = websession['progress_bar'], question_numb = websession['current_q_numb'])
+	return render_template('seed_questions.html', total_players_points = websession['players_points'], total_forets_points = websession['forets_points'], progress_bar = websession['progress_bar'], question_numb = websession['current_q_numb'])
 
 
 @app.route("/question", methods = ["POST"])
@@ -88,7 +88,7 @@ def display_question():
 		# if the last question submitted is the last one on in the list of questions, then commit the playsession and render the thank you template
 		if old_question_var_name == columns_ordered_by_predictive_power[-1]:
 			playsession.commit_play_session()
-			return render_template('thank_you.html', total_forets_points = websession['forets_points'], total_users_points = websession['users_points'], progress_bar = websession['progress_bar'], question_numb = websession['current_q_numb'])
+			return render_template('thank_you.html', total_forets_points = websession['forets_points'], total_players_points = websession['players_points'], progress_bar = websession['progress_bar'], question_numb = websession['current_q_numb'])
 
 		#if it's not the last question, determine what the next question is and set up the test data
 		else:
@@ -159,7 +159,7 @@ def display_question():
 
 		# These four are used in base template
 		question_numb = websession['current_q_numb'], 
-		total_users_points = websession["users_points"], 
+		total_players_points = websession["players_points"], 
 		total_forets_points = websession["forets_points"], 
 		progress_bar = websession['progress_bar'])
 
@@ -167,8 +167,12 @@ def display_question():
 
 @app.route("/submitfirstanswer", methods = ["POST"])
 def submit_first_answer():
+	""" Called when 'Reveal Prediction' button clicked. Reveals Mme. Foret's prediction and updates her points. """
+
+	# Get submitted answer out of form
 	old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
-	# calculate the number of points foret gets for her algorithm guess
+
+	# Calculate the number of points foret gets for her algorithm guess
 	points_per_answer = int(100/websession["len_of_answer_list"] + .5) #add .5 to make int round appropriately
 	prediction=int(websession["prediction"])
 	prediction_points = 100 - abs(old_question_answer_numb - prediction)*points_per_answer #points is a function of distance between predicted answer and submitted answer, plus number of answer choices. max for each q is 100, min is 0.
@@ -176,55 +180,68 @@ def submit_first_answer():
 		prediction_points = 0 #necessary because of weirdness with decimal places. without this, points could be negative or other nonsensical numbers.
 
 
-	#keep track of foret's total points tally
+	# Add her points to her existing total
 	websession["forets_points"] += prediction_points 
 
-
+	# Make a dictionary with predicted answer, points for that prediction, and total points for foret
 	to_send = {'prediction_points': prediction_points, 'predicted_new_question_answer': websession['predicted_new_question_answer'], 'total_forets_points': websession["forets_points"],}
+
+	# JSON-ify the dictionary
 	json_to_send = json.dumps(to_send)
+
 	return json_to_send
 
 
 @app.route("/submitsecondanswer", methods=["POST"])
 def submit_second_answer():
+	""" Called when 'See How You Did' button is clicked. Calculates what percent agreed with player, points for player, and data for chart. """
+
+	# Access the CSV which has the aggregated totals for how many Americans answered a specific way
 	global aggregated_df
 
-	#get submitted answers from form
+	# Get submitted answers from form
 	old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
 	guess = int(request.form.get("guess"))
 
-	#determine what question we're on
+	# Determine what question we're on
 	old_question_var_name = columns_ordered_by_predictive_power[websession['current_q_numb']]
 
-	#pull the % of Americans who answered the same way as the respondent
-	percent_who_answered_same_as_guess = int(aggregated_df[old_question_var_name][old_question_answer_numb] * 100 + .5) # add .5 to make sure the int rounds correctly
+	# Pull the % of Americans who answered the same way as the player
+	percent_who_answered_same_as_player = int(aggregated_df[old_question_var_name][old_question_answer_numb] * 100 + .5) # add .5 to make sure the int rounds correctly
 
+	# calculate the number of points the player gets for the accuracy of their guess
+	player_points = 100 - abs(percent_who_answered_same_as_player - guess)*3 # points is the distance between your guess and the answer, such that a perfect guess is worth 100 points
 
-
-	# calculate the number of points the respondent gets for the accuracy of their guess
-	guess_points = 100 - abs(percent_who_answered_same_as_guess - guess)*2 # points is the distance between your guess and the answer, such that a perfect guess is worth 100 points
-
-	if guess_points < 0:
-		guess_points = 0
+	if player_points < 0:
+		player_points = 0
 	
-	#keep track of user's total points tally
-	websession["users_points"] += guess_points
-	total_users_points = websession['users_points']
+	# keep track of player's total points tally
+	websession["players_points"] += player_points
 
-	#send all that data to custom.js
-	to_send = {'guess': guess, 'percent_who_answered_same_as_guess': percent_who_answered_same_as_guess, 'guess_points': guess_points, 'total_users_points': total_users_points, 'data_for_chart': websession['data_for_chart'], 'predicted_new_question_answer':websession['predicted_new_question_answer'], 'old_question_var_name': old_question_var_name}
+	# Make a dictionary with percent who answered same as 
+	to_send = {'percent_who_answered_same_as_player': percent_who_answered_same_as_player, 'player_points': player_points, 'total_players_points': websession['players_points'], 'data_for_chart': websession['data_for_chart'], 'old_question_var_name': old_question_var_name}
 	json_to_send = json.dumps(to_send)
 
 	return json_to_send
 
 @app.route("/thank_you")
 def thank_you():
-	return render_template('thank_you.html', total_forets_points = websession['forets_points'], total_users_points = websession['users_points'], question_numb = websession['current_q_numb'])
+	return render_template('thank_you.html', 
+
+		# These three are for the base template
+		total_forets_points = websession['forets_points'], 
+		total_players_points = websession['players_points'], 
+		question_numb = websession['current_q_numb'])
 
 
 @app.route("/about")
 def about():
-	return render_template('about.html', total_forets_points=websession["forets_points"],total_users_points=websession['users_points'], question_numb = websession['current_q_numb'])
+	return render_template('about.html', 
+
+		# These three are for the base template
+		total_forets_points = websession["forets_points"],
+		total_players_points = websession['players_points'], 
+		question_numb = websession['current_q_numb'])
 
 if __name__ == "__main__":
 	app.run(debug = True)

@@ -58,16 +58,16 @@ $(document).ready(function() {
 				var stuff_dict = JSON.parse(stuff);
 
 				// Update total points in top left corner
-				var total_users_points = stuff_dict.total_users_points;
-				$("#total_users_points").html(total_users_points);
+				var total_players_points = stuff_dict.total_players_points;
+				$("#total_players_points").html(total_players_points);
 
 				chosen_radio = String(old_question_answer_numb).concat("_label");
 				document.getElementById(chosen_radio).setAttribute('class','player');
 
 				// Get info needed for second message and display it in the right place
-				var percent_who_answered_same_as_guess = stuff_dict.percent_who_answered_same_as_guess;
-				var guess_points = stuff_dict.guess_points;
-				var message2 = "A total of ".concat(percent_who_answered_same_as_guess, "% of Americans agree with you, so you get ", guess_points, " points.");
+				var percent_who_answered_same_as_player = stuff_dict.percent_who_answered_same_as_player;
+				var player_points = stuff_dict.player_points;
+				var message2 = "A total of ".concat(percent_who_answered_same_as_player, "% of Americans agree with you, so you get ", player_points, " points.");
 				$("#percent-who-agree").text(message2);
 
 				// Disable Reval Prediction button
