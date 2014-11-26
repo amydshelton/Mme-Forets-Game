@@ -2,11 +2,37 @@
  * Globals
  */
 
+@font-face {
+    font-family: Gotham-Black;
+    src: url('/static/fonts/Gotham-Black.otf');
+}
+
+
+@font-face {
+    font-family: Gotham-Medium;
+    src: url('/static/fonts/Gotham-Medium.otf');
+
+}
+
+@font-face {
+    font-family: Whitney-Black;
+    src: url('/static/fonts/WhitneyHTF-Black.otf');
+
+}
+
+
+@font-face {
+    font-family: Gotham-Bold;
+    src: url('/static/fonts/Gotham-Bold.otf');
+
+}
+
 /* Links */
 a,
 a:focus,
 a:hover {
   color: #fff;
+  font-family: Gotham-Medium, "Times New Roman", Times, serif
 }
 
 /* Custom default button */

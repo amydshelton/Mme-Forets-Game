@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 
 
-ENGINE = create_engine("sqlite:///GSS_project.db", echo=False)
+ENGINE = create_engine("sqlite:///Mme_Forets_Game.db", echo=False)
 dbsession = scoped_session(sessionmaker(bind = ENGINE, autocommit = False, autoflush = False))
 
 
