@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
 	$("#submit").click(function(evt) {
+
+		// On first page, on submit, check to see if age is a number. If it is not, alert user with error
 		var age = $("input[name=age]").val();
 		if (isNaN(+age)) {
 			alert("Your age must be a number.");
@@ -10,12 +12,19 @@ $(document).ready(function() {
 	});
 
 	$("#prediction_button").click(function(evt) {
+
+		// Reveal prediction and update Mme. Foret's points
+
 		evt.preventDefault();
 
+		// Get answer out of form
 		var old_question_answer_numb = $("input:radio[name=question]:checked").val();
 
+		// If they did select something, add it the dictionary that gets handed back to the python master file
 		if (old_question_answer_numb) {
 			$.post('/submitfirstanswer',{'old_question_answer_numb': old_question_answer_numb})
+
+			// After dictionary has been handed to master.py, master.py will hand back a JSON dictionary of info needed (dictionary is elegantly named 'stuff' :D )
 			.done(function(stuff) {
 				var stuff_dict = JSON.parse(stuff);
 
@@ -26,19 +35,22 @@ $(document).ready(function() {
 				var message = "<-- Madame Forêt predicted you would say this answer, so she gets ".concat(points_for_question, " points.");
 				$(predicted_answer_id).text(message);
 
-				// Update total points in top left corner
+				// Update total points in top right corner
 				var total_forets_points = stuff_dict.total_forets_points;
 				$("#total_forets_points").html(total_forets_points);
 
 				// Disable Guess Prediction button
 				$("#prediction_button").prop("disabled",true);
 
+				// Reveal second question
 				$("#second-question").show();
 
+				// Reveal Mme. Foret's points (only matters on first page b/c of jinja syntax on HTML page)
 				$("#forets_words").removeClass("hidden-on-first-page");
 
 			});
 		}
+		// This alert shows if they tried to hit 'reveal' without choosing an option first
 		else {
 			alert("Please select an answer.");
 		}
@@ -46,13 +58,22 @@ $(document).ready(function() {
 	
 
 	$("#guess_button").click(function(evt) {
+
+		// Reveal how accurate player's guess was, determine points, show chart, reveal 'next question' button
+
 		evt.preventDefault();
 
+		// Get info out of form 
 		var old_question_answer_numb = $("input:radio[name=question]:checked").val();
 		var guess = $("input[name=guess]").val();
 
+		// Check to make sure they answered both questions and that the guess submitted is a number between 0 and 100
 		if (old_question_answer_numb && guess && isNaN(+guess)===false && guess >= 0 && guess <=100) {
+
+			// Put the submitted answers into a dictionary to hand back to master.py
 			$.post('/submitsecondanswer',{'old_question_answer_numb': old_question_answer_numb,'guess': guess})
+
+			// After dictionary has been handed to master.py, master.py will hand back a JSON dictionary (called stuff!) full of info needed for function below.
 			.done(function(stuff) {
 
 				var stuff_dict = JSON.parse(stuff);
@@ -61,6 +82,7 @@ $(document).ready(function() {
 				var total_players_points = stuff_dict.total_players_points;
 				$("#total_players_points").html(total_players_points);
 
+				// Add the 'player' class to the chosen radio to make it turn green
 				chosen_radio = String(old_question_answer_numb).concat("_label");
 				document.getElementById(chosen_radio).setAttribute('class','player');
 
@@ -70,19 +92,18 @@ $(document).ready(function() {
 				var message2 = "A total of ".concat(percent_who_answered_same_as_player, "% of Americans agree with you, so you get ", player_points, " points.");
 				$("#percent-who-agree").text(message2);
 
-				// Disable Reval Prediction button
+				// Disable Reveal Prediction button
 				$("#guess_button").prop("disabled",true);
 
+				// Reveal 'Next Question' button
 				$("#next-question").show();
 
+				// Reveal player's points (only matters on first page b/c of jinja syntax on HTML page)
 				$("#players_words").removeClass("hidden-on-first-page");
 
-				// Get data and labels for chart
-				var data_for_chart = stuff_dict.data_for_chart;
-				var labels_for_chart = stuff_dict.new_question_answer_list_for_chart;
-				var length_of_chart_data = data_for_chart.length;
 
-				// Color the answer that the person chose green
+				// Color the bar of answer that the person chose green in the chart
+				var length_of_chart_data = stuff_dict.data_for_chart.length;
 				var fillColorList = Array.apply(null, new Array(length_of_chart_data)).map(String.prototype.valueOf,"rgba(220,220,220,0.5)"); // make a list that is the right length, full of the gray color
 				var varName = stuff_dict.old_question_var_name;
 				if (varName === "income_distribution") {
@@ -90,13 +111,13 @@ $(document).ready(function() {
 
 				} else {
 					fillColorList[old_question_answer_numb] = "#178F01";
-				} // color the chosen answer red (accomodate for the fact that there is no '0th' answer for income distribution)
+				} // color the chosen answer green (accomodate for the fact that there is no '0th' answer for income distribution)
 
 				// Determine what the max of the y axis should be
 				var max_of_chart_data = Math.max.apply(Math, data_for_chart);
 				var maxScaleStep = Math.ceil(max_of_chart_data/10);
 
-				// Determine what the labels for the charts should be
+				// Dictionary of what the labels for the charts should be
 				var labels_for_charts = {
 										'religious':
 											['Not\nReligious', 'Slightly\nReligious', 'Moderately\nReligious', 'Very\nReligious'],
@@ -145,7 +166,7 @@ $(document).ready(function() {
 							strokeColor : "rgba(220,220,220,0.8)",
 							highlightFill: "rgba(220,220,220,0.75)",
 							highlightStroke: "rgba(220,220,220,1)",
-							data : data_for_chart
+							data : stuff_dict.data_for_chart
 						},
 					]
 
