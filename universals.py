@@ -4,7 +4,7 @@ data_dict= {
 			{'Not Religious':0, 'Slightly Religious':1, 'Moderately Religious':2, 'Very Religious':3}},
 	'spiritual': 
 		{'title': 'Spirituality','question': 'To what extent do you consider yourself a spiritual person? Are you...', 'answers': 
-			{ 'Not Spiritual':0,'Slight Spiritual':1, 'Moderate Spirtual':2, 'Very Spiritual':3}},
+			{ 'Not Spiritual':0,'Slightly Spiritual':1, 'Moderately Spirtual':2, 'Very Spiritual':3}},
 	'party': 
 		{'title': 'Political Party','question': 'Do you usually think of yourself as a Republican, Democrat, or Independent?', 'answers': 
 			{ 'Strong Republican':0, 'Not Strong Republican':1, 'Independent, Near Republican':2, 'Independent':3, 'Independent, Near Democrat':4, 'Not Strong Democrat':5, 'Strong Democrat':6, 'Other Party':'NaN'}},
@@ -74,9 +74,9 @@ for first_level_key in data_dict:
 		reversed_data_dict[first_level_key] = answer_level_dict
 
 
-columns_ordered_by_predictive_power = ['party','income_distribution', 'tv', 'relatives', 'religious', 'spiritual', 'standard_of_living', 'immigration', 'birth_control', 'bar','spanking','affirmative_action', 'divorce_ease', 'numb_children','court_harsh', 'tax_approp','death_penalty', 'gun'] 
+columns_ordered_by_predictive_power = ['party', 'tv', 'relatives', 'income_distribution', 'religious', 'spiritual', 'standard_of_living', 'bar', 'immigration', 'birth_control', 'spanking', 'affirmative_action', 'numb_children', 'divorce_ease', 'court_harsh', 'tax_approp', 'death_penalty', 'gun'] 
 
-columns_ordered_by_decreasing_N = ['religious', 'spiritual', 'party', 'death_penalty', 'court_harsh','bar', 'tv', 'relatives', 'spanking', 'income_distribution', 'standard_of_living', 'birth_control', 'immigration', 'affirmative_action', 'gun', 'tax_approp', 'divorce_ease', 'numb_children'] 
+columns_ordered_by_decreasing_N = ['religious', 'spiritual', 'party', 'death_penalty', 'court_harsh', 'bar', 'relatives', 'income_distribution', 'tv', 'spanking', 'standard_of_living', 'immigration', 'gun', 'tax_approp', 'affirmative_action', 'divorce_ease', 'numb_children', 'birth_control']
 
 
 full_columns_ordered_by_decreasing_N = ['age', 'highest_grade'] + columns_ordered_by_decreasing_N

@@ -31,7 +31,7 @@
 
 		<div id="second-question" hidden>
 			<p>
-				Guess what percentage of Americans (surveyed in 2010 and 2012) chose the same answer you chose.
+				Guess what percentage of Americans (surveyed in 2008, 2010, and 2012) chose the same answer you chose.
 			</p>
 
 			<div>
@@ -59,10 +59,13 @@
 		</div>
 
 		<div class="col-md-12">
-			<br>
 			<div id="next-question"  style="text-align:center" hidden>
 				<button class="btn btn-lg btn-primary btn-sample" type="submit">
-					Next Question
+					{% if question_numb == 17 %}
+						Submit
+					{% else %}
+						Next Question
+					{% endif %}
 				</button>
 			</div>
 		</div>

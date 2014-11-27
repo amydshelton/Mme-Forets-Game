@@ -114,7 +114,7 @@ $(document).ready(function() {
 				} // color the chosen answer green (accomodate for the fact that there is no '0th' answer for income distribution)
 
 				// Determine what the max of the y axis should be
-				var max_of_chart_data = Math.max.apply(Math, data_for_chart);
+				var max_of_chart_data = Math.max.apply(Math, stuff_dict.data_for_chart);
 				var maxScaleStep = Math.ceil(max_of_chart_data/10);
 
 				// Dictionary of what the labels for the charts should be

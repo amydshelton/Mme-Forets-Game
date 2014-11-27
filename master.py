@@ -85,10 +85,19 @@ def display_question():
 		# up the progress bar by 5%. 
 		websession['progress_bar'] += 5
 
-		# if the last question submitted is the last one on in the list of questions, then commit the playsession and render the thank you template
+		# if the last question submitted is the last one on in the list of questions, then commit the playsession and render the winner/loser/tied template
 		if old_question_var_name == columns_ordered_by_predictive_power[-1]:
 			playsession.commit_play_session()
-			return render_template('thank_you.html', total_forets_points = websession['forets_points'], total_players_points = websession['players_points'], progress_bar = websession['progress_bar'], question_numb = websession['current_q_numb'])
+			total_forets_points = websession['forets_points']
+			total_players_points = websession['players_points']
+			progress_bar = websession['progress_bar']
+			question_numb = websession['current_q_numb']
+			if total_forets_points > total_players_points:
+				return render_template('loser.html', total_forets_points = total_forets_points, total_players_points = total_players_points, progress_bar = progress_bar, question_numb = question_numb)
+			elif total_players_points > total_forets_points:
+				return render_template('winner.html', total_forets_points = total_forets_points, total_players_points = total_players_points, progress_bar = progress_bar, question_numb = question_numb)
+			else:
+				return render_template('tie.html', total_forets_points = total_forets_points, total_players_points = total_players_points, progress_bar = progress_bar, question_numb = question_numb)
 
 		#if it's not the last question, determine what the next question is and set up the test data
 		else:
