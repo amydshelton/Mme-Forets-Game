@@ -10,7 +10,7 @@ app.secret_key = 'PredictionFTW'
 
 forest = RandomForestClassifier(n_estimators = 100)
 
-df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0)
+df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0) # can say index = whatever so i can get rid of removing first column
 
 aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', header=0)
 
@@ -30,7 +30,14 @@ def newgame():
 	websession['players_points'] = 0
 	websession['current_q_numb'] = 0
 	websession['progress_bar'] = 5
-	return render_template('seed_questions.html', total_players_points = websession['players_points'], total_forets_points = websession['forets_points'], progress_bar = websession['progress_bar'], question_numb = websession['current_q_numb'])
+
+	return render_template('seed_questions.html', 
+
+		# These four variables are used in base template
+		total_players_points = websession['players_points'], 
+		total_forets_points = websession['forets_points'], 
+		progress_bar = websession['progress_bar'], 
+		question_numb = websession['current_q_numb'])
 
 
 @app.route("/question", methods = ["POST"])
@@ -92,12 +99,32 @@ def display_question():
 			total_players_points = websession['players_points']
 			progress_bar = websession['progress_bar']
 			question_numb = websession['current_q_numb']
+
 			if total_forets_points > total_players_points:
-				return render_template('loser.html', total_forets_points = total_forets_points, total_players_points = total_players_points, progress_bar = progress_bar, question_numb = question_numb)
+				return render_template('loser.html', 
+
+					# These four are used in base template
+					total_forets_points = total_forets_points, 
+					total_players_points = total_players_points, 
+					progress_bar = progress_bar, 
+					question_numb = question_numb)
+
 			elif total_players_points > total_forets_points:
-				return render_template('winner.html', total_forets_points = total_forets_points, total_players_points = total_players_points, progress_bar = progress_bar, question_numb = question_numb)
+				return render_template('winner.html', 
+
+					# These four are used in base template
+					total_forets_points = total_forets_points, 
+					total_players_points = total_players_points, 
+					progress_bar = progress_bar, 
+					question_numb = question_numb)
 			else:
-				return render_template('tie.html', total_forets_points = total_forets_points, total_players_points = total_players_points, progress_bar = progress_bar, question_numb = question_numb)
+				return render_template('tie.html', 
+
+					# These four are used in base template
+					total_forets_points = total_forets_points, 
+					total_players_points = total_players_points, 
+					progress_bar = progress_bar, 
+					question_numb = question_numb)
 
 		#if it's not the last question, determine what the next question is and set up the test data
 		else:
@@ -193,7 +220,11 @@ def submit_first_answer():
 	websession["forets_points"] += prediction_points 
 
 	# Make a dictionary with predicted answer, points for that prediction, and total points for foret
-	to_send = {'prediction_points': prediction_points, 'predicted_new_question_answer': websession['predicted_new_question_answer'], 'total_forets_points': websession["forets_points"],}
+	to_send = {
+		'prediction_points': 				prediction_points, 
+		'predicted_new_question_answer': 	websession['predicted_new_question_answer'], 
+		'total_forets_points': 				websession["forets_points"]
+	}
 
 	# JSON-ify the dictionary
 	json_to_send = json.dumps(to_send)
@@ -219,38 +250,46 @@ def submit_second_answer():
 	percent_who_answered_same_as_player = int(aggregated_df[old_question_var_name][old_question_answer_numb] * 100 + .5) # add .5 to make sure the int rounds correctly
 
 	# calculate the number of points the player gets for the accuracy of their guess
-	player_points = 100 - abs(percent_who_answered_same_as_player - guess)*3 # points is the distance between your guess and the answer, such that a perfect guess is worth 100 points
+	player_points = 100 - abs(percent_who_answered_same_as_player - guess)*2 # points is the distance between your guess and the answer, such that a perfect guess is worth 100 points
 
 	if player_points < 0:
 		player_points = 0
 	
 	# keep track of player's total points tally
-	websession["players_points"] += player_points
+	websession["players_points"] += player_points # UPDATE WEBSESSION TO BE TOTAL PLAYER POINTS TO DISTINGUISH B/T TWO VARS
 
-	# Make a dictionary with percent who answered same as 
-	to_send = {'percent_who_answered_same_as_player': percent_who_answered_same_as_player, 'player_points': player_points, 'total_players_points': websession['players_points'], 'data_for_chart': websession['data_for_chart'], 'old_question_var_name': old_question_var_name}
+	# Make a dictionary with percent who answered same as FINISH COMMENT
+	to_send = {
+		'percent_who_answered_same_as_player':  percent_who_answered_same_as_player, 
+		'player_points': 						player_points, 
+		'total_players_points': 				websession['players_points'], 
+		'data_for_chart': 						websession['data_for_chart'], 
+		'old_question_var_name': 				old_question_var_name
+	}
+
 	json_to_send = json.dumps(to_send)
 
 	return json_to_send
 
-@app.route("/thank_you")
-def thank_you():
-	return render_template('thank_you.html', 
+# @app.route("/thank_you")
+# def thank_you():
+# 	return render_template('thank_you.html', 
 
-		# These three are for the base template
-		total_forets_points = websession['forets_points'], 
-		total_players_points = websession['players_points'], 
-		question_numb = websession['current_q_numb'])
+# 		# These three are for the base template
+# 		total_forets_points = websession['forets_points'], 
+# 		total_players_points = websession['players_points'], 
+# 		question_numb = websession['current_q_numb'])
 
 
 @app.route("/about")
 def about():
 	return render_template('about.html', 
 
-		# These three are for the base template
+		# These four are for the base template
 		total_forets_points = websession["forets_points"],
 		total_players_points = websession['players_points'], 
-		question_numb = websession['current_q_numb'])
+		question_numb = websession['current_q_numb'],
+		progress_bar = websession['progress_bar'])
 
 if __name__ == "__main__":
 	app.run(debug = True)
