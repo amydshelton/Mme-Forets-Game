@@ -85,7 +85,53 @@ body, p {
   width: 38%;
 }
 
+.colbert {
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  padding-top: 80px;
+  padding-bottom: 30px
+}
+
+.tie {
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  padding-top: 40px;
+  padding-bottom: 30px
+}
 .points-totals {
   font-size: 18px;
 }
 
+.name {
+  width:120px;
+}
+
+.centered-div {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center {
+  text-align: center;
+}
+
+.gray-text{
+  color: #9d9d9d;
+  text-align: center;
+}
+
+.name-button {
+  background: #9d9d9d;
+  color: #000000;
+}
+
+.name-button:hover {
+  background: #dbdbdb;
+  color: #000000;
+}
+
+.name-div {
+  width: 200px;
+}

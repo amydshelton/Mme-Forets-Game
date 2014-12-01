@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h1>Scoreboard</h1>
+<table class ="centered-div table" style="width:40%">
+	<tr><h2>
+	    <th>Name</th>
+	    <th>Total Points for Player</th> 
+	    <th>Total Points for Madame Forêt</th>
+	</h2></tr>
+	{% for score in top_ten %}
+  <tr>
+    <td>{% if score.name %}
+    		{{score.name}}
+    	{% else %}
+    		Anonymous
+    	{% endif %}
+    	</td>
+    <td class="center">{{ score.total_players_points }}</td> 
+    <td class="center">{{ score.total_forets_points }}</td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+$(document).ready(function() {
+    $("#progress").hide();
+});
+</script>
+
+{% endblock %}

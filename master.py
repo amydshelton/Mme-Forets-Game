@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, session as websession
+from flask import Flask, render_template, request, redirect, url_for, session as websession
 from model import PlaySession, dbsession
 import pandas as pd 
 from sklearn.ensemble import RandomForestClassifier
 from universals import data_dict, reversed_data_dict , columns_ordered_by_predictive_power,full_columns_ordered_by_predictive_power
+from sqlalchemy import desc
 import json
 
 app = Flask(__name__)
@@ -26,16 +27,16 @@ def index():
 def newgame():
 	""" Clears old session and sets the items needed to render the base template (total foret's points, total player's points, and current question number) to 0 and the progress bar to 5% """
 	websession.clear()
-	websession['forets_points'] = 0
-	websession['players_points'] = 0
+	websession['total_forets_points'] = 0
+	websession['total_players_points'] = 0
 	websession['current_q_numb'] = 0
 	websession['progress_bar'] = 5
 
 	return render_template('seed_questions.html', 
 
 		# These four variables are used in base template
-		total_players_points = websession['players_points'], 
-		total_forets_points = websession['forets_points'], 
+		total_players_points = websession['total_players_points'], 
+		total_forets_points = websession['total_forets_points'], 
 		progress_bar = websession['progress_bar'], 
 		question_numb = websession['current_q_numb'])
 
@@ -86,6 +87,10 @@ def display_question():
 		# attach what they just submitted to playsession object
 		setattr(playsession, old_question_var_name, old_question_answer)
 
+		# add current points total to object
+		playsession.total_forets_points = websession['total_forets_points']
+		playsession.total_players_points = websession['total_players_points']
+
 		# up the count of the current question
 		websession['current_q_numb'] += 1
 
@@ -95,8 +100,8 @@ def display_question():
 		# if the last question submitted is the last one on in the list of questions, then commit the playsession and render the winner/loser/tied template
 		if old_question_var_name == columns_ordered_by_predictive_power[-1]:
 			playsession.commit_play_session()
-			total_forets_points = websession['forets_points']
-			total_players_points = websession['players_points']
+			total_forets_points = websession['total_forets_points']
+			total_players_points = websession['total_players_points']
 			progress_bar = websession['progress_bar']
 			question_numb = websession['current_q_numb']
 
@@ -110,7 +115,15 @@ def display_question():
 					question_numb = question_numb)
 
 			elif total_players_points > total_forets_points:
+				top_ten = dbsession.query(PlaySession).order_by(desc(PlaySession.total_players_points)).limit(10)
+				tenth_highest = top_ten[-1]
+				if total_players_points > tenth_highest.total_players_points:
+					sign_name = True
+				else:
+					sign_name = False
+
 				return render_template('winner.html', 
+					sign_name = sign_name,
 
 					# These four are used in base template
 					total_forets_points = total_forets_points, 
@@ -195,8 +208,8 @@ def display_question():
 
 		# These four are used in base template
 		question_numb = websession['current_q_numb'], 
-		total_players_points = websession["players_points"], 
-		total_forets_points = websession["forets_points"], 
+		total_players_points = websession["total_players_points"], 
+		total_forets_points = websession["total_forets_points"], 
 		progress_bar = websession['progress_bar'])
 
 
@@ -217,13 +230,13 @@ def submit_first_answer():
 
 
 	# Add her points to her existing total
-	websession["forets_points"] += prediction_points 
+	websession["total_forets_points"] += prediction_points 
 
 	# Make a dictionary with predicted answer, points for that prediction, and total points for foret
 	to_send = {
 		'prediction_points': 				prediction_points, 
 		'predicted_new_question_answer': 	websession['predicted_new_question_answer'], 
-		'total_forets_points': 				websession["forets_points"]
+		'total_forets_points': 				websession["total_forets_points"]
 	}
 
 	# JSON-ify the dictionary
@@ -256,13 +269,13 @@ def submit_second_answer():
 		player_points = 0
 	
 	# keep track of player's total points tally
-	websession["players_points"] += player_points # UPDATE WEBSESSION TO BE TOTAL PLAYER POINTS TO DISTINGUISH B/T TWO VARS
+	websession["total_players_points"] += player_points 
 
-	# Make a dictionary with percent who answered same as FINISH COMMENT
+	# Make a dictionary with percent who answered same as player, player's points, player's total points, data for the chart, and the variable name
 	to_send = {
 		'percent_who_answered_same_as_player':  percent_who_answered_same_as_player, 
 		'player_points': 						player_points, 
-		'total_players_points': 				websession['players_points'], 
+		'total_players_points': 				websession['total_players_points'], 
 		'data_for_chart': 						websession['data_for_chart'], 
 		'old_question_var_name': 				old_question_var_name
 	}
@@ -271,14 +284,35 @@ def submit_second_answer():
 
 	return json_to_send
 
-# @app.route("/thank_you")
-# def thank_you():
-# 	return render_template('thank_you.html', 
+@app.route("/winner")
+def winner():
+	return render_template('winner.html', 
+		sign_name = True,
+		# These four are for the base template
+		total_forets_points = websession['total_forets_points'], 
+		total_players_points = websession['total_players_points'], 
+		progress_bar = websession['progress_bar'], 
+		question_numb = websession['current_q_numb'])
 
-# 		# These three are for the base template
-# 		total_forets_points = websession['forets_points'], 
-# 		total_players_points = websession['players_points'], 
-# 		question_numb = websession['current_q_numb'])
+@app.route("/loser")
+def loser():
+	return render_template('loser.html', 
+
+		# These four are for the base template
+		total_forets_points = websession['total_forets_points'], 
+		total_players_points = websession['total_players_points'], 
+		progress_bar = websession['progress_bar'], 
+		question_numb = websession['current_q_numb'])
+
+@app.route("/tie")
+def tie():
+	return render_template('tie.html', 
+
+		# These four are for the base template
+		total_forets_points = websession['total_forets_points'], 
+		total_players_points = websession['total_players_points'], 
+		progress_bar = websession['progress_bar'], 
+		question_numb = websession['current_q_numb'])
 
 
 @app.route("/about")
@@ -286,8 +320,34 @@ def about():
 	return render_template('about.html', 
 
 		# These four are for the base template
-		total_forets_points = websession["forets_points"],
-		total_players_points = websession['players_points'], 
+		total_forets_points = websession["total_forets_points"],
+		total_players_points = websession['total_players_points'], 
+		question_numb = websession['current_q_numb'],
+		progress_bar = websession['progress_bar'])
+
+@app.route("/addtoscoreboard", methods = ["POST"])
+def add_to_scoreboard():
+	name = request.form.get("name")
+
+	# Get current playsession object out of database, using id stored in websession
+	playsession = dbsession.query(PlaySession).get(websession['session_id'])
+	
+	playsession.name = name
+	
+	playsession.commit_play_session()
+
+	return redirect(url_for('scoreboard'))
+
+
+@app.route("/scoreboard")
+def scoreboard():
+	top_ten = dbsession.query(PlaySession).order_by(desc(PlaySession.total_players_points)).limit(10)
+
+	return render_template('scoreboard.html', 
+		top_ten = top_ten,
+		# These four are for the base template
+		total_forets_points = websession["total_forets_points"],
+		total_players_points = websession['total_players_points'], 
 		question_numb = websession['current_q_numb'],
 		progress_bar = websession['progress_bar'])
 

@@ -13,6 +13,21 @@ body {
 
 <h1><font color="#ffd700"> You won! Congratulations!!</font></h1>
 
+{% if sign_name %}
+	<div id="top-ten">
+		<form class="form" action="/addtoscoreboard"  method="POST">
+
+			<h3><div class="gray-text">You have one of the 10 highest scores! Add your name to the scoreboard:</div></h3>
+			<br>
+			<div class="centered-div name-div">
+			<input type="text" class="name" name="name" autofocus>
+			<button class="btn btn-primary btn-sample name-button" id="submit-name" type="submit">Submit</button>
+			</div>
+
+		</form>
+	</div>
+{% endif %}
+
 
 {% endblock %}
 
