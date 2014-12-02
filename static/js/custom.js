@@ -75,6 +75,9 @@ $(document).ready(function() {
 
         evt.preventDefault();
 
+        var GREEN = "#178F01";
+        var GRAY = "rgba(220,220,220,0.5)";
+
         // Get info out of form 
         var old_question_answer_numb =
                                 $("input:radio[name=question]:checked").val();
@@ -134,17 +137,19 @@ $(document).ready(function() {
                 var length_of_chart_data = stuff_dict.data_for_chart.length;
                 var fillColorList = Array.apply(null, new Array
                         (length_of_chart_data)).map(String.prototype.valueOf,
-                        "rgba(220,220,220,0.5)");
-                        // make a list that is the right length, full of the 
-                        // gray color
+                        GRAY);
+                        // make an array of appropriate length, full of gray 
+                        // color.
+
                 var varName = stuff_dict.old_question_var_name;
                 if (varName === "income_distribution") {
-                    fillColorList[old_question_answer_numb-1] = "#178F01";
+                    fillColorList[old_question_answer_numb-1] = GREEN;
 
                 } else {
-                    fillColorList[old_question_answer_numb] = "#178F01";
+                    fillColorList[old_question_answer_numb] = GREEN;
                 } // color the chosen answer green (accomodate for the fact 
                     // that there is no '0th' answer for income distribution)
+
 
                 // Determine what the max of the y axis should be
                 var max_of_chart_data = Math.max.apply(Math,
