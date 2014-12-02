@@ -283,7 +283,7 @@ columns_ordered_by_decreasing_N = ['religious', 'spiritual', 'party',
                                    'affirmative_action', 'divorce_ease', 
                                    'numb_children', 'birth_control']
     # these are in order from lowest number of missing data points to 
-    # highest number
+    #   highest number
 
 full_columns_ordered_by_decreasing_N = ['age', 'highest_grade'] + \
                                        columns_ordered_by_decreasing_N
