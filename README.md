@@ -112,7 +112,7 @@ If you want to replicate the steps I took to prepare the data, they are outlined
 <li>You should now have a file called ```cleaned.csv``` with integers in place of strings. However, this file still has missing data. Therefore, we'll use Random Forest to impute the missing data. In terminal, type:<br>
 ```python imputing_data.py``` then hit Enter.</li>
 
-<p>The resulting file, imputed.csv, is read into ```master.py.```</p>
+<br><p>The resulting file, imputed.csv, is read into ```master.py.```</p>
 
 ###The Prediction Algorithm - Random Forest
 "Madame Forêt" is powered by 
