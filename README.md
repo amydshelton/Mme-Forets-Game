@@ -65,5 +65,7 @@ Follow these steps to install Madame Forêt's Game:
 </ol>
 
 ###The Prediction Algorithm - Random Forest
+"Madame Forêt" is powered by <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">the Random Forest algorithm from scikit-learn</a>. The <a href="http://en.wikipedia.org/wiki/Random_forest">Random Forest algorithm</a> creates many <a href="http://en.wikipedia.org/wiki/Decision_tree">decision trees</a> (in this case, 100 trees), and then returns the most commonly created tree - hence the term "forest". The random part of the title comes from the fact that the decision trees are modeled with some forced random decisions, which helps prevent overfitting. Random Forest is an excellent algorithm for <a href="http://strataconf.com/strata2012/public/schedule/detail/22658">predictions based on supervised learning</a>, and often wins <a href="https://www.kaggle.com/wiki/RandomForests">Kaggle</a> competitions. 
 
 ##About Amy
+<a href="http://amydshelton.com">Amy</a> is a longtime numbers nerd who has found a new passion for backend programming and data engineering. After Hackbright, she'll be looking for a job in San Francisco. You should probably hire her.
