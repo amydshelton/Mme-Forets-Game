@@ -47,14 +47,14 @@ def display_question():
 
 	global forest, df, aggregated_df
 
-	## if starting a new game:
+	# if starting a new game:
 	if 'session_id' not in websession:
 
-		#get out of the form the items put in
+		# get out of the form the items put in
 		age = int(request.form.get("age"))
 		highest_grade = int(request.form.get("highest-grade"))
 
-		#this will be the data the model uses to predict the answer to the next question
+		# this will be the data the model uses to predict the answer to the next question
 		test_data = [age, highest_grade]
 
 		# variable name is the first one in the order of questions
@@ -66,7 +66,7 @@ def display_question():
 		# add playsession to database
 		playsession.add_play_session()
 
-		#add playsession ID to websession
+		# add playsession ID to websession
 		websession['session_id'] = playsession.session_id
 
 		# set progress bar % to 10 (last page was 5%, goes up by 5% each time)
@@ -78,7 +78,7 @@ def display_question():
 		# get name of the last question answered from web session
 		old_question_var_name = columns_ordered_by_predictive_power[websession['current_q_numb']]
 
-		#get whatever they answered out of the form
+		# get whatever they answered out of the form
 		old_question_answer = request.form.get("question")
 		
 		# Get current playsession object out of database, using id stored in websession
@@ -139,7 +139,7 @@ def display_question():
 					progress_bar = progress_bar, 
 					question_numb = question_numb)
 
-		#if it's not the last question, determine what the next question is and set up the test data
+		# if it's not the last question, determine what the next question is and set up the test data
 		else:
 			new_question_var_name = columns_ordered_by_predictive_power[websession['current_q_numb']]
 
@@ -228,7 +228,6 @@ def submit_first_answer():
 	if prediction_points < points_per_answer:
 		prediction_points = 0 #necessary because of weirdness with decimal places. without this, points could be negative or other nonsensical numbers.
 
-
 	# Add her points to her existing total
 	websession["total_forets_points"] += prediction_points 
 
@@ -284,6 +283,8 @@ def submit_second_answer():
 
 	return json_to_send
 
+
+# This route only exists for demonstration purposes - normally this page would be reached by winning. 
 @app.route("/winner")
 def winner():
 	return render_template('winner.html', 
@@ -294,6 +295,7 @@ def winner():
 		progress_bar = websession['progress_bar'], 
 		question_numb = websession['current_q_numb'])
 
+# This route only exists for demonstration purposes - normally this page would be reached by losing. 
 @app.route("/loser")
 def loser():
 	return render_template('loser.html', 
@@ -304,6 +306,7 @@ def loser():
 		progress_bar = websession['progress_bar'], 
 		question_numb = websession['current_q_numb'])
 
+# This route only exists for demonstration purposes - normally this page would be reached by getting a tie. 
 @app.route("/tie")
 def tie():
 	return render_template('tie.html', 
@@ -325,15 +328,21 @@ def about():
 		question_numb = websession['current_q_numb'],
 		progress_bar = websession['progress_bar'])
 
+
 @app.route("/addtoscoreboard", methods = ["POST"])
 def add_to_scoreboard():
+	"""Adds player's name to database, for people who scored in the top 10"""
+
+	# Get the name the player submitted
 	name = request.form.get("name")
 
 	# Get current playsession object out of database, using id stored in websession
 	playsession = dbsession.query(PlaySession).get(websession['session_id'])
 	
+	# Attach name to playsession object
 	playsession.name = name
 	
+	# Commit to database
 	playsession.commit_play_session()
 
 	return redirect(url_for('scoreboard'))
