@@ -14,14 +14,14 @@ app.secret_key = 'PredictionFTW'
 
 forest = RandomForestClassifier(n_estimators = 100)
 
-df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0) # can say index = whatever so i can get rid of removing first column
+df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0, 
+                 index_col=0)
 
 aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', 
                 header=0)
 
-# removing first column because it's duplicative - it's just the index column 
-# and pandas will assign that again anyway
-df = df.ix[:,1:]
+
+POINTS_MULTIPLIER = 2
 
 @app.route("/")
 def index():
@@ -219,26 +219,21 @@ def display_question():
                                                            # start at 1
             new_question_answer_list.append((i+1,reversed_data_dict\
                                             [new_question_var_name][i+1]))
-            data_for_chart.append(int(aggregated_df[new_question_var_name]\
-                                      [i+1]*100 + .5)) # pulling data out of 
-                                                       # aggregated file, using 
-                                                       # current var name and 
-                                                       # number of answer option. 
-                                                       # Multiplying by 100 to 
-                                                       # make them percents, 
-                                                       # adding .5 to make int 
-                                                       # round correctly.
+            data_for_chart.append(int(round(aggregated_df\
+                                 [new_question_var_name][i+1]*100))) # pulling 
+                                  # data out of aggregated file, using current
+                                  # var name and number of answer option. 
+                                  # Multiplying by 100 to make them percents, 
+                                  # and rounding.
         else:
             new_question_answer_list.append((i,reversed_data_dict\
                                             [new_question_var_name][i]))
-            data_for_chart.append(int(aggregated_df[new_question_var_name][i]\
-                                      *100 + .5)) # pulling data out of 
-                                                  # aggregated file, using 
-                                                  # current var name and number 
-                                                  # of answer option. 
-                                                  # Multiplying by 100 to make 
-                                                  # them percents, adding .5 to 
-                                                  # make int round correctly.
+            data_for_chart.append(int(round(aggregated_df\
+                                  [new_question_var_name][i]*100))) # pulling 
+                                  # data out of aggregated file, using current
+                                  # var name and number of answer option. 
+                                  # Multiplying by 100 to make them percents, 
+                                  # and rounding.
 
     # Storing data for chart in websession to access later
     websession['data_for_chart'] = data_for_chart
@@ -277,7 +272,7 @@ def submit_first_answer():
     old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
 
     # Calculate the number of points foret gets for her algorithm guess
-    points_per_answer = int(100/websession["len_of_answer_list"] + .5) #add .5 to make int round appropriately
+    points_per_answer = int(round(100/websession["len_of_answer_list"])) 
     prediction=int(websession["prediction"])
     prediction_points = 100 - abs(old_question_answer_numb - prediction)*\
                         points_per_answer # points is a function of distance 
@@ -315,7 +310,7 @@ def submit_second_answer():
 
     # Access the CSV which has the aggregated totals for how many Americans 
     # answered a specific way
-    global aggregated_df
+    global aggregated_df, POINTS_MULTIPLIER
 
     # Get submitted answers from form
     old_question_answer_numb = int(request.form.get("old_question_answer_numb"))
@@ -326,14 +321,14 @@ def submit_second_answer():
                             [websession['current_q_numb']]
 
     # Pull the % of Americans who answered the same way as the player
-    percent_who_answered_same_as_player = int(aggregated_df\
+    percent_who_answered_same_as_player = int(round(aggregated_df\
                                           [old_question_var_name]\
-                                          [old_question_answer_numb] * 100 + .5) 
-                                          # add .5 to make sure the int rounds correctly
+                                          [old_question_answer_numb] * 100)) 
+
 
     # calculate the number of points the player gets for the accuracy of their 
     # guess
-    player_points = 100 - abs(percent_who_answered_same_as_player - guess)*2 
+    player_points = 100 - abs(percent_who_answered_same_as_player - guess)*POINTS_MULTIPLIER 
     # points is the distance between your guess and the answer, such that a 
     # perfect guess is worth 100 points
 

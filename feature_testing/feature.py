@@ -3,11 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 forest = RandomForestClassifier(n_estimators = 100)
 
-df = pd.read_csv('imputed.csv', header=0)
-
-# removing first column because it's duplicative - it's just the index column 
-# and pandas will assign that again anyway
-train_data = df.ix[:,1:]
+train_data = pd.read_csv('imputed.csv', header=0, index_col=0)
 
 # train_data = df.ix[:,0:-1] #trimming it down to just the columns up to and 
 # including the target variable

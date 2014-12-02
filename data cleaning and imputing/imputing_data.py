@@ -4,17 +4,14 @@ import sys
 
 sys.path.append("/Users/greglaughlin/Desktop/Hackbright/HB_Project")
 
-from universals import columns_ordered_by_decreasing_N, 
-                       full_columns_ordered_by_decreasing_N, 
+from universals import columns_ordered_by_decreasing_N, \
+                       full_columns_ordered_by_decreasing_N, \
                        full_columns_ordered_by_predictive_power 
 
 forest = RandomForestClassifier(n_estimators = 100)
 
-df = pd.read_csv("cleaned.csv", header=0)
+df = pd.read_csv("cleaned.csv", header=0, index_col=0)
 
-# removing first column because it's duplicative - it's just the index column 
-# and pandas will assign that again anyway
-df = df.ix[:,1:]
 
 # imputing data!
 for i in range(len(columns_ordered_by_decreasing_N)):

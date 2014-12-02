@@ -132,7 +132,7 @@ skip these steps when running Madame Forêt's Game on your machine, you can.
     Random Forest to impute the missing data. In terminal, type:<br>
 ```python imputing_data.py``` then hit Enter.</li>
 
-<p>The resulting file, imputed.csv, is read into ```master.py.```</p>
+<p>The resulting file, imputed.csv, is read into ```master.py```.</p>
 
 ###The Prediction Algorithm - Random Forest
 "Madame Forêt" is powered by 
