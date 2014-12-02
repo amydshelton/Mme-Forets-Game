@@ -94,12 +94,10 @@ Follow these steps to install Madame Forêt's Game:
 <li>In terminal, navigate into that folder and create and activate a 
     <a href="http://virtualenv.readthedocs.org/en/latest/virtualenv.html">
         virtual environment</a>.</li>
-<li>Install the required packages. To do so, from your terminal, type <br>
-    ```pip install -r requirements.txt``` 
-    <br>and hit Enter.</li>
-<li>From terminal, type <br>
-    ```python model.py``` 
-    <br> and hit Enter. This sets up your database.</li>
+<li>Install the required packages. To do so, from your terminal, type: <br>
+    ```pip install -r requirements.txt``` and hit Enter.</li>
+<li>From terminal, type: <br>
+    ```python model.py``` and hit Enter. This sets up your database.</li>
 <li>In terminal, type ```python master.py``` and hit Enter. This will start the 
     server.</li>
 <li>Navigate to <a href="localhost:5000/">localhost:5000</a> and play!</li>
@@ -109,12 +107,10 @@ Follow these steps to install Madame Forêt's Game:
 If you want to replicate the steps I took to prepare the data, they are outlined here. The final product of these steps - the file named ```imputed.csv``` - is included in this repository, so if you would like to skip these steps when running Madame Forêt's Game on your machine, you can. <ol>
 <li>Open the full, raw data from the General Social Survey. That data is included in this repository (```GSS/GSS Data for Statwing Prize (1).csv```) or can be downloaded from <a href="http://blog.statwing.com/open-data-the-general-social-survey-40-years-of-results/">Statwing's website</a>. Save it in a subfolder called ```GSS```.</li> 
 <li>Edit the file down to the years (2008, 2010, and 2012) and the 18 variables of interest (which are listed in ```universals.py```), and save the resulting file as ```GSS/2008, 2010, and 2012 results for variables of interest.csv``` .</li>
-<li>In terminal, navigate to the ```data cleaning and imputing``` folder. Make sure your virtual environment is active. Type in<br>
-```python cleaning_data.py```
-<br>then hit Enter.</li>
-<li>You should now have a file called ```cleaned.csv``` with integers in place of strings. However, this file still has missing data. Therefore, we'll use Random Forest to impute the missing data. In terminal, type<br>
-```python imputing_data.py```
-<br>then hit Enter.</li>
+<li>In terminal, navigate to the ```data cleaning and imputing``` folder. Make sure your virtual environment is active. Type:<br>
+```python cleaning_data.py``` then hit Enter.</li>
+<li>You should now have a file called ```cleaned.csv``` with integers in place of strings. However, this file still has missing data. Therefore, we'll use Random Forest to impute the missing data. In terminal, type:<br>
+```python imputing_data.py``` then hit Enter.</li>
 
 <p>The resulting file, imputed.csv, is read into ```master.py.```</p>
 
