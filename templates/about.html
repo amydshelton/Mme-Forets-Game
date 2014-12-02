@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% block body %}
 <h2>About</h2>
-<p>Madame Forêt's Game was developed by Amy Shelton in November 2014. Amy is a student at <a href="http://www.hackbrightacademy.com/">Hackbright Academy</a> and will graduate in December 2014.</P>
+<p>Madame Forêt's Game was developed by Amy Shelton in November 2014. Amy is a 
+    student at 
+    <a href="http://www.hackbrightacademy.com/">Hackbright Academy</a> 
+    and will graduate in December 2014.</P>
 
-<p>More about Amy can be found at <a href = "https://github.com/amydshelton">github.com/amydshelton</a>,  <a href="https://www.linkedin.com/in/amydshelton">linkedin.com/in/amydshelton</a>, <a href="https://twitter.com/amydshelton">@amydshelton</a>, and <a href"www.amydshelton.com">www.amydshelton.com.</a></p>
+<p>More about Amy can be found at 
+    <a href = "https://github.com/amydshelton">github.com/amydshelton</a>,  
+    <a href="https://www.linkedin.com/in/amydshelton">
+        linkedin.com/in/amydshelton</a>, 
+    <a href="https://twitter.com/amydshelton">@amydshelton</a>, and 
+    <a href"www.amydshelton.com">www.amydshelton.com.</a></p>
 
 
 Thanks to:<ul>
@@ -14,21 +22,67 @@ Thanks to:<ul>
 <li>Thomson Nguyen</li>
 <li>The Hackbright instructors</li></ul>
 
-Psychic sign adapted from <a href="http://www.arounddublinblog.com/tag/psychic/">Around Dublin</a>, fireworks gif from <a href="http://race-to-happiness.tumblr.com/">Race to Happiness</a>, Colbert gif from <a href="http://media.giphy.com/media/d8ilc8qcW4lG0/giphy.gif">Giphy.com</a>, cat in a tie from <a href="http://www.babble.com/home/five-rad-pet-gifts-for-valentines-its-not-to-early-to-think-about-this/">Babble.com</a>.
+Psychic sign adapted from 
+    <a href="http://www.arounddublinblog.com/tag/psychic/">Around Dublin</a>, 
+    fireworks gif from 
+        <a href="http://race-to-happiness.tumblr.com/">Race to Happiness</a>, 
+    Colbert gif from 
+        <a href="http://media.giphy.com/media/d8ilc8qcW4lG0/giphy.gif">
+            Giphy.com</a>, 
+    cat in a tie from <a href="http://www.babble.com/home/five-rad-pet-gifts-
+        for-valentines-its-not-to-early-to-think-about-this/">Babble.com</a>.
 
 <br>
 <br>
 <h2>FAQ:</h2>
 <h3>How are Madame Forêt's answers calculated?</h3>
-"Madame Forêt" is powered by <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">the Random Forest algorithm from scikit-learn</a>. The <a href="http://en.wikipedia.org/wiki/Random_forest">Random Forest algorithm</a> creates many <a href="http://en.wikipedia.org/wiki/Decision_tree">decision trees</a> (in this case, 100 trees), and then returns the most commonly created tree - hence the term "forest". The random part of the title comes from the fact that the decision trees are modeled with some forced random decisions, which helps prevent overfitting. Random Forest is an excellent algorithm for <a href="http://strataconf.com/strata2012/public/schedule/detail/22658">predictions based on supervised learning</a>, and often wins <a href="https://www.kaggle.com/wiki/RandomForests">Kaggle</a> competitions. 
+"Madame Forêt" is powered by 
+    <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.
+    RandomForestClassifier.html">the Random Forest algorithm from scikit-learn
+    </a>. 
+The <a href="http://en.wikipedia.org/wiki/Random_forest">Random Forest 
+    algorithm</a> creates many <a href="http://en.wikipedia.org/wiki/
+    Decision_tree">decision trees</a> 
+and then returns the most commonly created tree - hence the term "forest". The 
+random part of the title comes from the fact that the decision trees are modeled
+ with some forced random decisions, which helps prevent overfitting. Random 
+ Forest is an excellent algorithm for 
+    <a href="http://strataconf.com/strata2012/public/schedule/detail/22658">
+        predictions based on supervised learning</a>, 
+and often wins <a href="https://www.kaggle.com/wiki/RandomForests">Kaggle</a> 
+competitions. 
 
 <h3>What are the survey questions from?</h3>
-The survey questions were drawn from the <a href="http://en.wikipedia.org/wiki/General_Social_Survey">General Social Survey</a>. The results included here are from the 2008, 2010, and 2012 surveys. <a href="http://blog.statwing.com/open-data-the-general-social-survey-40-years-of-results/">Play with the original data yourself</a>.
+The survey questions were drawn from the 
+    <a href="http://en.wikipedia.org/wiki/General_Social_Survey">
+            General Social Survey</a>. 
+The results included here are from the 2008, 2010, and 2012 surveys. 
+    <a href="http://blog.statwing.com/open-data-the-general-social-survey-
+    40-years-of-results/">Play with the original data yourself</a>.
 
 <h3>How are points allocated?</h3>
-<p>For both the player and Madame Forêt, the maximum number of points is 100 per question, and the minimum is 0. Both the player and Madame Forêt get allocated points as a function of the distance between the correct answer and the chosen answer.</p> 
-<p>For the player, the points are calculated as follows: 100 minus twice the difference between the player's guess of what percentage of Americans agree with the player and the actual percentage who agree (100 - abs(guess - truth)*2), such that if the player guesses 20% and the correct answer was 15%, the player would get 90 points.</p> 
-<p>For Madame Forêt, the points are calculated as follows: 100 minus the distance between predicted answer and chosen answer times the number of points per answer option (which is, in turn, calculated by dividing 100 by the number of options minus 1). That is, 100 - ((distance between predicted answer and chosen answer) * 100/(number of answer choices - 1)), such that if Madame Forêt predicted the player would choose option 5 (of 5 available choices), and the player chose option 3, Madame Forêt would receive 50 points.</p>
+<p>For both the player and Madame Forêt, the maximum number of points is 100 per 
+    question, and the minimum is 0. Both the player and Madame Forêt get 
+    allocated points as a function of the distance between the correct answer 
+    and the chosen answer.
+</p> 
+
+<p>For the player, the points are calculated as follows: 100 minus twice the 
+    difference between the player's guess of what percentage of Americans agree 
+    with the player and the actual percentage who agree (100 - abs(guess - 
+    truth)*2), such that if the player guesses 20% and the correct answer was 
+    15%, the player would get 90 points.
+</p>
+
+<p>For Madame Forêt, the points are calculated as follows: 100 minus the 
+    distance between predicted answer and chosen answer times the number of 
+    points per answer option (which is, in turn, calculated by dividing 100 by 
+    the number of options minus 1). That is, 100 - ((distance between predicted 
+    answer and chosen answer) * 100/(number of answer choices - 1)), such that 
+    if Madame Forêt predicted the player would choose option 5 (of 5 available 
+    choices), and the player chose option 3, Madame Forêt would receive 50 
+    points.
+</p>
 
 {% endblock %}
 

@@ -5,13 +5,17 @@ forest = RandomForestClassifier(n_estimators = 100)
 
 df = pd.read_csv('imputed.csv', header=0)
 
-# removing first column because it's duplicative - it's just the index column and pandas will assign that again anyway
+# removing first column because it's duplicative - it's just the index column 
+# and pandas will assign that again anyway
 train_data = df.ix[:,1:]
 
-# train_data = df.ix[:,0:-1] #trimming it down to just the columns up to and including the target variable
+# train_data = df.ix[:,0:-1] #trimming it down to just the columns up to and 
+# including the target variable
 train_data_values = train_data.values #converting out of dataframe
-features_of_training_data = train_data_values[0::,0:-1:] #whole dataset minus last column, which is target variable
-target_variable = train_data_values[0::,-1] # slices off the last column, which is the target variable 
+features_of_training_data = train_data_values[0::,0:-1:] #whole dataset minus 
+# last column, which is target variable
+target_variable = train_data_values[0::,-1] # slices off the last column, 
+# which is the target variable 
 
 # Fit the training data to the target and create the decision trees
 forest = forest.fit(features_of_training_data, target_variable)

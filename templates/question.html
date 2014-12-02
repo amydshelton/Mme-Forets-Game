@@ -2,74 +2,76 @@
 {% block body %}
 
 <h1> 
-	{{ new_question_title }}</h1>
+    {{ new_question_title }}</h1>
 
 <div class="col-md-6">
-	<p>
-		{{ new_question_text}}
-	</p>
+    <p>
+        {{ new_question_text}}
+    </p>
 
-	<form class="form" action="/question" required method="POST">
+    <form class="form" action="/question" required method="POST">
 
-		{% for item in new_question_answer_list %}
-			<input type="radio" required name="question" value="{{item[0]}}"/>
-			<span id="{{item[0]}}_label"> 
-				{{item[1]}}
-			</span>
-			<span class="foret" id="{{item[0]}}">
-			</span>
-			<br>
-		{% endfor %}
+        {% for item in new_question_answer_list %}
+            <input type="radio" required name="question" value="{{item[0]}}"/>
+            <span id="{{item[0]}}_label"> 
+                {{item[1]}}
+            </span>
+            <span class="foret" id="{{item[0]}}">
+            </span>
+            <br>
+        {% endfor %}
 
-		<br>
-		<button class="btn btn-lg-primary btn-sample" id="prediction_button">
-			Reveal Madame Forêt's Prediction
-		</button>
-		<br>
-		<br>
-		<br>
+        <br>
+        <button class="btn btn-lg-primary btn-sample" id="prediction_button">
+            Reveal Madame Forêt's Prediction
+        </button>
+        <br>
+        <br>
+        <br>
 
-		<div id="second-question" hidden>
-			<p>
-				Guess what percentage of Americans (surveyed in 2008, 2010, and 2012) chose the same answer you chose.
-			</p>
+        <div id="second-question" hidden>
+            <p>
+                Guess what percentage of Americans (surveyed in 2008, 2010, 
+                and 2012) chose the same answer you chose.
+            </p>
 
-			<div>
-				<span class="col-sm-4 input-group">
-			        <input type="text" class="form-control bfh-number" name="guess"  required>
-			        <span class="input-group-addon">%</span>
-			    </span>
+            <div>
+                <span class="col-sm-4 input-group">
+                    <input type="text" class="form-control bfh-number" 
+                           name="guess"  required>
+                    <span class="input-group-addon">%</span>
+                </span>
 
-				<span class="player" id="percent-who-agree">
-				</span>
-			</div>
-			<br>
-			<button class="btn btn-lg-primary btn-sample" id="guess_button">
-				See How You Did
-			</button>
-			<br>
-			<br>
-		</div>
+                <span class="player" id="percent-who-agree">
+                </span>
+            </div>
+            <br>
+            <button class="btn btn-lg-primary btn-sample" id="guess_button">
+                See How You Did
+            </button>
+            <br>
+            <br>
+        </div>
 
-</div>	
+</div>  
 
-		<div class="col-md-6">
-			<canvas id="canvas" height="280" width="400">
-			</canvas>
-		</div>
+        <div class="col-md-6">
+            <canvas id="canvas" height="280" width="400">
+            </canvas>
+        </div>
 
-		<div class="col-md-12">
-			<div id="next-question"  style="text-align:center" hidden>
-				<button class="btn btn-lg btn-primary btn-sample" type="submit">
-					{% if question_numb == 17 %}
-						Submit
-					{% else %}
-						Next Question
-					{% endif %}
-				</button>
-			</div>
-		</div>
-	</form>
+        <div class="col-md-12">
+            <div id="next-question"  style="text-align:center" hidden>
+                <button class="btn btn-lg btn-primary btn-sample" type="submit">
+                    {% if question_numb == 17 %}
+                        Submit
+                    {% else %}
+                        Next Question
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
 <br>
 <br>
 

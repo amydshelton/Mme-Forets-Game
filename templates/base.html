@@ -25,7 +25,9 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" 
+                  data-toggle="collapse" data-target="#navbar" 
+                  aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -42,15 +44,38 @@
           <ul class="nav navbar-nav navbar-right">  
 
           {% if question_numb >0 %}
-              <li class="foret points-totals" id="forets_words">Madame Forêt's Points: <span class="foret" id="total_forets_points">{{total_forets_points}}</span></li><br>
+              <li class="foret points-totals" id="forets_words">
+                Madame Forêt's Points: 
+                <span class="foret" id="total_forets_points">
+                  {{total_forets_points}}
+                </span>
+              </li>
+              <br>
           {% else %}
-              <li class="foret hidden-on-first-page points-totals" id="forets_words">Madame Forêt's Points: <span class="foret" id="total_forets_points">{{total_forets_points}}</span></li><br>
+              <li class="foret hidden-on-first-page points-totals" 
+                        id="forets_words">
+                  Madame Forêt's Points: 
+                  <span class="foret" id="total_forets_points">
+                    {{total_forets_points}}
+                  </span></li><br>
           {% endif %}
 
           {% if question_numb >0 %}
-              <li class="player points-totals" id="players_words">Your Points: <span class="player" id="total_players_points">{{total_players_points}}</span></li>
+              <li class="player points-totals" id="players_words">
+                Your Points: 
+                <span class="player" id="total_players_points">
+                  {{total_players_points}}
+                </span>
+              </li>
           {% else %}
-              <li class="player hidden-on-first-page points-totals" id="players_words">Your Points: <span class="player" id="total_players_points">{{total_players_points}}</span></li><br>
+              <li class="player hidden-on-first-page points-totals" 
+                       id="players_words">
+                Your Points: 
+                <span class="player" id="total_players_points">
+                  {{total_players_points}}
+                </span>
+              </li>
+              <br>
           {% endif %}
 
         </ul>
@@ -77,7 +102,10 @@
     <footer class="footer" id="footer">
       <div class="container" id="progress">
         <div class="progress progress-striped">
-          <div class="progress-bar" role="progressbar" aria-valuenow="{{progress_bar}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress_bar}}%;">
+          <div class="progress-bar" role="progressbar" 
+                     aria-valuenow="{{progress_bar}}" 
+                     aria-valuemin="0" aria-valuemax="100" 
+                     style="width: {{progress_bar}}%;">
             <span class="sr-only">{{progress_bar}}% Complete</span>
           </div>
         </div>      
@@ -94,8 +122,6 @@
     <script src="/static/js/custom.js"></script>
 
      <script src="/static/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<!--     // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
             {% block javascript %}{% endblock %}
 
   </body>
