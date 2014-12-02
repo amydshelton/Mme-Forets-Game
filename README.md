@@ -54,6 +54,15 @@ The main files of Madame Forêt's Game are as follows:<ul>
 *Note about source data: The full, raw data from the General Social Survey is included in this repository (GSS/GSS Data for Statwing Prize (1).csv). I edited the file down to the years (2008, 2010, and 2012) and the 18 variables I was interested down, to make the "2008, 2010, and 2012 results for variables of interest.csv" file. I then cleaned that file (coverted strings to integers) using cleaning_data.py (saved under "data cleaning and imputing). Finally, I used Random Forest to impute missing data (data cleaning and imputing/imputing_data.py). The resulting file, imputed.csv, is read into master.py.*
 
 ###How to Install Madame Forêt's Game on Your Machine
+Follow these steps to install Madame Forêt's Game:
+<ol>
+<li>Create a dedicated folder on your machine.</li>
+<li>In terminal, navigate into that folder and create and activate a <a href="http://virtualenv.readthedocs.org/en/latest/virtualenv.html">virtual environment</a>.</li>
+<li>Install the required packages. To do so, from your terminal, type "pip install -r requirements.txt" and hit Enter.</li>
+<li>From terminal, type "python model.py" and hit Enter. This sets up your database.</li>
+<li>In terminal, type "python master.py" and hit Enter. This will start the server.</li>
+<li>Navigate to your local host port and play!</li>
+</ol>
 
 ###The Prediction Algorithm - Random Forest
 
