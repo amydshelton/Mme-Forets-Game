@@ -64,18 +64,24 @@ This app includes the following technologies:<ul>
 
 ###Structure of Files
 The main files of Madame Forêt's Game are as follows:<ul>
-    <li>**```model.py```:** This file creates the database and defines the 
-        ```PlaySession``` class that maps to the database table.</li>
-    <li>**```master.py```:** This is the heart of the app. It processess and 
-        predicts answers, updates the database, and feeds information to the 
-        front end.</li>
-    <li>**```custom.js```:** This file (saved in ```static/js```) controls the 
+    <li>```model.py```: This file creates the database and defines the 
+        ```PlaySession``` class and the ```RandomForest``` class that map to 
+        the database tables.</li>
+    <li>```cache_rf_models.py```: This file stores the Random Forest models 
+        for each of the 18 questions.</li>
+    <li>```master.py```: This is the heart of the app. It calls the cached 
+        Random Forest models to predicts answers, updates the database, and 
+        feeds information to the front end.</li>
+    <li>```custom.js```: This file (saved in ```static/js```) controls the 
         front end. It has event listeners to reveal buttons, charts, and 
         predictions.</li>
-    <li>**```universals.py```:** This contains dictionaries and lists accessed 
+    <li>```universals.py```: This contains dictionaries and lists accessed 
         by other files, such as a list with the order that questions should be 
         revealed.</li>
-    <li>**```Mme_Forets_Game.db```:** This is the sqlite3 database for the app.
+    <li>```Mme_Forets_Game.db```: This is the sqlite3 database for the app. It 
+        is not included in this repository, but the files to set up a similar 
+        database are included here (```model.py``` and 
+        ```cache_rf_models.py```).
     <li>**CSS files:** These files (saved in the ```static``` folder) control 
         the styling of the HTML pages. </li>
     <li>**HTML templates:** These files (saved in the ```templates``` folder) 
@@ -103,6 +109,10 @@ Follow these steps to install Madame Forêt's Game:
         ```pip install -r requirements.txt``` and hit Enter.</li>
     <li>From terminal, type: <br>
         ```python model.py``` and hit Enter. This sets up your database.</li>
+    <li>In terminal, type ```python cache_rf_models.py``` and hit Enter. This 
+        will make and cache (aka pickle) the random forest model for each 
+        question. The models are saved in the random_forest table of your 
+        database.</li>
     <li>In terminal, type ```python master.py``` and hit Enter. This will start 
         the server.</li>
     <li>Navigate to <a href="localhost:5000/">localhost:5000</a> and play!</li>

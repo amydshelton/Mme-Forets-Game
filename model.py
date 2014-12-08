@@ -118,11 +118,9 @@ class RandomForest(Base):
 
 
 def main():
-
     global Base
     Base.metadata.create_all(ENGINE)
-    # random_forest = RandomForest()
-    # random_forest.store_model()
+
 
 if __name__ == "__main__":
     main()

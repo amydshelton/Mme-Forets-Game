@@ -28,17 +28,15 @@ def store_model():
                                     # +1 because python slicing is not inclusive
 
         ### Set up training data ###
-        train_data = df.ix[:,0:column_of_var_in_full_list] # trimming it down to just the columns 
-                                              # up to and including the target 
-                                              # variable
+        train_data = df.ix[:,0:column_of_var_in_full_list] # trimming it down 
+                                              # to just the columns up to and 
+                                              # including the target variable
 
         train_data_values = train_data.values #converting out of dataframe
-        features_of_training_data = train_data_values[0::,0:-1:] # whole dataset 
-                                                                 # minus last 
-                                                                 # column, which is 
-                                                                 # target variable
-        target_variable = train_data_values[0::,-1] # slices off the last column, 
-                                                    # which is the target variable 
+        features_of_training_data = train_data_values[0::,0:-1:] 
+                # whole dataset minus last column, which is target variable
+        target_variable = train_data_values[0::,-1] 
+                # slices off the last column, which is the target variable 
 
         # Fit the training data to the target and create the decision trees
         model = forest.fit(features_of_training_data, target_variable)
@@ -65,5 +63,8 @@ def store_model():
         
         dbsession.commit()
 
+def main():
+    store_model()    
 
-store_model()
+if __name__=="__main__":
+    main()
