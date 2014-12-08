@@ -1,14 +1,19 @@
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, Float, String
+from sqlalchemy import Column, Integer, Float, String, LargeBinary
 from sqlalchemy.orm import sessionmaker, scoped_session
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from universals import data_dict, reversed_data_dict, \
+                       columns_ordered_by_predictive_power,\
+                       full_columns_ordered_by_predictive_power
 
 
 
 ENGINE = create_engine("sqlite:///Mme_Forets_Game.db", echo=False)
 dbsession = scoped_session(sessionmaker(bind = ENGINE, autocommit = False, 
-            autoflush = False))
+            autoflush = True))
 
 
 Base = declarative_base()
@@ -86,10 +91,38 @@ class PlaySession(Base):
         #strip nones off
 
 
+
+class RandomForest(Base):
+    __tablename__ = 'random_forest'
+    rf_id =                         Column(Integer, primary_key = True)
+    output_var =                    Column(String(50), nullable = False)    
+    party_input =                   Column(Integer, nullable = False)
+    income_distribution_input =     Column(Integer, nullable = False)     
+    tv_input =                      Column(Integer, nullable = False)
+    relatives_input =               Column(Integer, nullable = False) 
+    religious_input =               Column(Integer, nullable = False) 
+    spiritual_input =               Column(Integer, nullable = False) 
+    standard_of_living_input =      Column(Integer, nullable = False)  
+    immigration_input =             Column(Integer, nullable = False)   
+    birth_control_input =           Column(Integer, nullable = False)
+    bar_input =                     Column(Integer, nullable = False)
+    spanking_input =                Column(Integer, nullable = False)
+    affirmative_action_input =      Column(Integer, nullable = False) 
+    divorce_ease_input =            Column(Integer, nullable = False) 
+    numb_children_input =           Column(Integer, nullable = False)     
+    court_harsh_input =             Column(Integer, nullable = False) 
+    tax_approp_input =              Column(Integer, nullable = False) 
+    death_penalty_input =           Column(Integer, nullable = False) 
+    gun_input =                     Column(Integer, nullable = False)
+    rf_model =                      Column(LargeBinary, nullable = False)
+
+
 def main():
 
     global Base
     Base.metadata.create_all(ENGINE)
+    # random_forest = RandomForest()
+    # random_forest.store_model()
 
 if __name__ == "__main__":
     main()
