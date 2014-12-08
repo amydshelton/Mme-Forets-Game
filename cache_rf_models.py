@@ -2,10 +2,12 @@ from model import dbsession, RandomForest
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd 
 
-from universals import columns_ordered_by_predictive_power, full_columns_ordered_by_predictive_power
+from universals import columns_ordered_by_predictive_power, 
+                       full_columns_ordered_by_predictive_power
 
 def store_model():
-    global columns_ordered_by_predictive_power, dbsession, full_columns_ordered_by_predictive_power
+    global columns_ordered_by_predictive_power, dbsession, 
+           full_columns_ordered_by_predictive_power
 
     forest = RandomForestClassifier(n_estimators = 100)
 
@@ -21,9 +23,9 @@ def store_model():
 
         # determine what column number the current variable is in, to be used in 
         # setting up the training data
-        column_of_var_in_full_list = full_columns_ordered_by_predictive_power.index\
-                        (var_name) + 1  
-                        # + 1 because python slicing is not inclusive
+        column_of_var_in_full_list = full_columns_ordered_by_predictive_power.\
+                                    index(var_name) + 1  
+                                    # +1 because python slicing is not inclusive
 
         ### Set up training data ###
         train_data = df.ix[:,0:column_of_var_in_full_list] # trimming it down to just the columns 
