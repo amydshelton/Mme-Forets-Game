@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, \
                   session as websession
-from model import PlaySession, dbsession
+from model import PlaySession, dbsession, RandomForest
 import pandas as pd 
 from sklearn.ensemble import RandomForestClassifier
 from universals import data_dict, reversed_data_dict, \
@@ -12,10 +12,10 @@ import json
 app = Flask(__name__)
 app.secret_key = 'PredictionFTW'
 
-forest = RandomForestClassifier(n_estimators = 100)
+# forest = RandomForestClassifier(n_estimators = 100)
 
-df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0, 
-                 index_col=0)
+# df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0, 
+#                  index_col=0)
 
 aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', 
                 header=0)
@@ -53,7 +53,7 @@ def display_question():
     """ Main question page. Takes known data, runs it against the Random Forest 
         model, makes a prediction. """
 
-    global forest, df, aggregated_df
+    global aggregated_df
 
     # if starting a new game:
     if 'session_id' not in websession:
@@ -165,27 +165,30 @@ def display_question():
             # data for the random forest model.
             test_data = playsession.ordered_parameter() 
 
-    # determine what column number the current variable is in, to be used in 
-    # setting up the training data
-    column_of_var = full_columns_ordered_by_predictive_power.index\
-                    (new_question_var_name) + 1  
-                    # + 1 because python slicing is not inclusive
+    # # determine what column number the current variable is in, to be used in 
+    # # setting up the training data
+    # column_of_var = full_columns_ordered_by_predictive_power.index\
+    #                 (new_question_var_name) + 1  
+    #                 # + 1 because python slicing is not inclusive
 
-    ### Set up training data ###
-    train_data = df.ix[:,0:column_of_var] # trimming it down to just the columns 
-                                          # up to and including the target 
-                                          # variable
-    train_data_values = train_data.values #converting out of dataframe
-    features_of_training_data = train_data_values[0::,0:-1:] # whole dataset 
-                                                             # minus last 
-                                                             # column, which is 
-                                                             # target variable
-    target_variable = train_data_values[0::,-1] # slices off the last column, 
-                                                # which is the target variable 
+    # ### Set up training data ###
+    # train_data = df.ix[:,0:column_of_var] # trimming it down to just the columns 
+    #                                       # up to and including the target 
+    #                                       # variable
+    # train_data_values = train_data.values #converting out of dataframe
+    # features_of_training_data = train_data_values[0::,0:-1:] # whole dataset 
+    #                                                          # minus last 
+    #                                                          # column, which is 
+    #                                                          # target variable
+    # target_variable = train_data_values[0::,-1] # slices off the last column, 
+    #                                             # which is the target variable 
 
-    # Fit the training data to the target and create the decision trees
-    forest = forest.fit(features_of_training_data, target_variable)
+    # # Fit the training data to the target and create the decision trees
+    # forest = forest.fit(features_of_training_data, target_variable)
 
+    rf_object = dbsession.query(RandomForest).filter_by(output_var = new_question_var_name).first()
+
+    forest = rf_object.rf_model
     # Predict the answer!
     predicted_new_question_answer = forest.predict(test_data)[0] 
     #comes back as a one-item list.  sliced it down to a single number

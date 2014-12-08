@@ -21,12 +21,12 @@ def store_model():
 
         # determine what column number the current variable is in, to be used in 
         # setting up the training data
-        column_of_var = full_columns_ordered_by_predictive_power.index\
+        column_of_var_in_full_list = full_columns_ordered_by_predictive_power.index\
                         (var_name) + 1  
                         # + 1 because python slicing is not inclusive
 
         ### Set up training data ###
-        train_data = df.ix[:,0:column_of_var] # trimming it down to just the columns 
+        train_data = df.ix[:,0:column_of_var_in_full_list] # trimming it down to just the columns 
                                               # up to and including the target 
                                               # variable
 
@@ -38,18 +38,22 @@ def store_model():
         target_variable = train_data_values[0::,-1] # slices off the last column, 
                                                     # which is the target variable 
 
-
         # Fit the training data to the target and create the decision trees
         model = forest.fit(features_of_training_data, target_variable)
         setattr(random_forest, 'rf_model', model)
         # random_forest.rf_model = model
 
-        for variable in columns_ordered_by_predictive_power[:column_of_var-3]:
+        column_of_var_in_short_list = columns_ordered_by_predictive_power.index\
+                                      (var_name)
+
+        for variable in columns_ordered_by_predictive_power\
+            [:column_of_var_in_short_list]:
             model_var_name = str(variable) + "_input"
             setattr(random_forest, model_var_name, 1)
             # print getattr(random_forest, model_var_name)
 
-        for variable in columns_ordered_by_predictive_power[column_of_var-3:]:
+        for variable in columns_ordered_by_predictive_power\
+            [column_of_var_in_short_list:]:
             model_var_name = str(variable) + "_input"
             setattr(random_forest, model_var_name, 0)
             # print getattr(random_forest, model_var_name)

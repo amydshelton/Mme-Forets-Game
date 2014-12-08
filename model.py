@@ -88,7 +88,7 @@ class PlaySession(Base):
                   self.death_penalty, self.gun]
         answered_qs = [item for item in all_qs if item != None]
         return answered_qs
-        #strip nones off
+        # strip nones off
 
 
 
