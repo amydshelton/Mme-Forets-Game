@@ -38,9 +38,10 @@ def store_model():
         target_variable = train_data_values[0::,-1] # slices off the last column, 
                                                     # which is the target variable 
 
+
         # Fit the training data to the target and create the decision trees
         model = forest.fit(features_of_training_data, target_variable)
-        setattr(random_forest, 'rf_model', str(model))
+        setattr(random_forest, 'rf_model', model)
         # random_forest.rf_model = model
 
         for variable in columns_ordered_by_predictive_power[:column_of_var-3]:
@@ -56,7 +57,7 @@ def store_model():
 
         dbsession.add(random_forest)
         
-    dbsession.commit()
+        dbsession.commit()
 
 
 store_model()

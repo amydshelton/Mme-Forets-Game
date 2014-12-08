@@ -4,14 +4,14 @@ import pandas as pd
 
 from universals import columns_ordered_by_predictive_power, full_columns_ordered_by_predictive_power
 
-test_data = [31, 16]
+# test_data = [31, 16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
-rf_object = dbsession.query(RandomForest).filter_by(output_var = 'party').first()
+test_data = [31,16,6]
+rf_object = dbsession.query(RandomForest).filter_by(output_var = 'tv').first()
 
-print rf_object
+print rf_object.output_var
 
 forest = rf_object.rf_model
-forest = eval(forest)
 
 print forest
 

@@ -1,7 +1,7 @@
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, Float, String, LargeBinary
+from sqlalchemy import Column, Integer, Float, String, PickleType
 from sqlalchemy.orm import sessionmaker, scoped_session
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
@@ -114,7 +114,7 @@ class RandomForest(Base):
     tax_approp_input =              Column(Integer, nullable = False) 
     death_penalty_input =           Column(Integer, nullable = False) 
     gun_input =                     Column(Integer, nullable = False)
-    rf_model =                      Column(LargeBinary, nullable = False)
+    rf_model =                      Column(PickleType, nullable = False)
 
 
 def main():
