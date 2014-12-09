@@ -7,7 +7,7 @@ from universals import data_dict, reversed_data_dict, \
                        columns_ordered_by_predictive_power,\
                        full_columns_ordered_by_predictive_power
 from sqlalchemy import desc
-import json
+import json, os
 
 app = Flask(__name__)
 
@@ -424,4 +424,5 @@ def scoreboard():
 
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT",5000))
-    app.run(debug = True, port = PORT, host = "0.0.0.0")
+    DEBUG = "NO_DEBUG" not in os.environ
+    app.run(debug = DEBUG, port = PORT, host = "0.0.0.0")
