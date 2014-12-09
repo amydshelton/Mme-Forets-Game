@@ -10,7 +10,9 @@ from sqlalchemy import desc
 import json
 
 app = Flask(__name__)
-app.secret_key = 'PredictionFTW'
+
+SECRET_KEY = os.environ.get("FlASK_SECRET_KEY", "PredictionFTW")
+app.secret_key = SECRET_KEY
 
 # forest = RandomForestClassifier(n_estimators = 100)
 
@@ -421,4 +423,5 @@ def scoreboard():
         progress_bar = websession['progress_bar'])
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    PORT = int(os.environ.get("PORT",5000))
+    app.run(debug = True, port = PORT, host = "0.0.0.0")
