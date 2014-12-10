@@ -2,7 +2,6 @@ Flask==0.10.1
 Flask-SQLAlchemy==0.16
 Jinja2==2.7.2
 MarkupSafe==0.21
-PyRSS2Gen==1.0.0
 SQLAlchemy==0.9.8
 Werkzeug==0.9.4
 itsdangerous==0.24
