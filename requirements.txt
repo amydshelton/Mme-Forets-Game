@@ -8,6 +8,7 @@ itsdangerous==0.24
 numpy==1.9.1
 pandas==0.15.0
 python-dateutil==1.5
+pytz==2014.9
 scikit-learn==0.15.2
 scipy==0.14.0
 
