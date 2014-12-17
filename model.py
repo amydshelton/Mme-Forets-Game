@@ -10,7 +10,7 @@ from universals import data_dict, reversed_data_dict, \
                        full_columns_ordered_by_predictive_power
 
 
-
+# DATABASE_URL = "postgresql:///greglaughlin"
 ENGINE = create_engine("sqlite:///Mme_Forets_Game.db", echo=False)
 dbsession = scoped_session(sessionmaker(bind = ENGINE, autocommit = False, 
             autoflush = True))
