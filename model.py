@@ -3,11 +3,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, Float, String, PickleType
 from sqlalchemy.orm import sessionmaker, scoped_session
-import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from universals import data_dict, reversed_data_dict, \
-                       columns_ordered_by_predictive_power,\
-                       full_columns_ordered_by_predictive_power
+# import pandas as pd
+# from sklearn.ensemble import RandomForestClassifier
+# from universals import data_dict, reversed_data_dict, \
+#                        columns_ordered_by_predictive_power,\
+#                        full_columns_ordered_by_predictive_power
 
 
 # DATABASE_URL = "postgresql:///greglaughlin"
