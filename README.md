@@ -9,7 +9,7 @@ of your guesses.
 Madame Forêt's Game was built by 
     <a href="http://amydshelton.com">Amy Shelton</a> 
 in November 2013, as her independent project for 
-    <a href="http://www.hackbrightacademy.com/">Hackbright Academy</a>.
+    <a href="http://www.hackbrightacademy.com/">Hackbright Academy</a>. Amy is actively seeking full-time employment in the San Francisco Bay Area.
 
 This readme is divided into three main sections: The User Experience, Behind 
 the Scenes, and About Amy. 
