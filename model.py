@@ -4,14 +4,11 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, Float, String, PickleType
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
-# import pandas as pd
-# from sklearn.ensemble import RandomForestClassifier
-# from universals import data_dict, reversed_data_dict, \
-#                        columns_ordered_by_predictive_power,\
-#                        full_columns_ordered_by_predictive_power
 
 
-DATABASE_URL = os.environ.get("DATABASE_URL","postgresql://localhost:5432/mme_forets_game")
+
+DATABASE_URL = os.environ.get("DATABASE_URL",
+    "postgresql://localhost:5432/mme_forets_game")
 ENGINE = create_engine(DATABASE_URL, echo = False)
 # ENGINE = create_engine("sqlite:///Mme_Forets_Game.db", echo=False)
 dbsession = scoped_session(sessionmaker(bind = ENGINE, autocommit = False, 

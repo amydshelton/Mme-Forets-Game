@@ -119,9 +119,19 @@ def display_question():
             total_players_points = websession['total_players_points']
             progress_bar = websession['progress_bar']
             question_numb = websession['current_q_numb']
+            
+            top_ten = dbsession.query(PlaySession).order_by\
+                      (desc(PlaySession.total_players_points)).limit(10)
+            tenth_highest = top_ten[-1]
+            
+            if total_players_points > tenth_highest.total_players_points:
+                sign_name = True
+            else:
+                sign_name = False            
 
             if total_forets_points > total_players_points:
                 return render_template('loser.html', 
+                    sign_name = sign_name,
 
                     # These four are used in base template
                     total_forets_points = total_forets_points, 
@@ -130,14 +140,6 @@ def display_question():
                     question_numb = question_numb)
 
             elif total_players_points > total_forets_points:
-                top_ten = dbsession.query(PlaySession).order_by\
-                          (desc(PlaySession.total_players_points)).limit(10)
-                tenth_highest = top_ten[-1]
-
-                if total_players_points > tenth_highest.total_players_points:
-                    sign_name = True
-                else:
-                    sign_name = False
 
                 return render_template('winner.html', 
                     sign_name = sign_name,
@@ -149,6 +151,7 @@ def display_question():
                     question_numb = question_numb)
             else:
                 return render_template('tie.html', 
+                    sign_name = sign_name,
 
                     # These four are used in base template
                     total_forets_points = total_forets_points, 
@@ -315,7 +318,8 @@ def submit_second_answer():
 
     # calculate the number of points the player gets for the accuracy of their 
     # guess
-    player_points = 100 - abs(percent_who_answered_same_as_player - guess)*POINTS_MULTIPLIER 
+    player_points = 100 - abs(percent_who_answered_same_as_player - guess)\
+                    * POINTS_MULTIPLIER 
     # points is the distance between your guess and the answer, such that a 
     # perfect guess is worth 100 points
 
@@ -341,41 +345,42 @@ def submit_second_answer():
     return json_to_send
 
 
-# This route only exists for demonstration purposes - normally this page would 
-# be reached by winning. 
-@app.route("/winner")
-def winner():
-    return render_template('winner.html', 
-        sign_name = True,
-        # These four are for the base template
-        total_forets_points = websession['total_forets_points'], 
-        total_players_points = websession['total_players_points'], 
-        progress_bar = websession['progress_bar'], 
-        question_numb = websession['current_q_numb'])
+### COMMENTING THESE OUT NOW FOR DEPLOYMENT ####
+# # This route only exists for demonstration purposes - normally this page would 
+# # be reached by winning. 
+# @app.route("/winner")
+# def winner():
+#     return render_template('winner.html', 
+#         sign_name = True,
+#         # These four are for the base template
+#         total_forets_points = websession['total_forets_points'], 
+#         total_players_points = websession['total_players_points'], 
+#         progress_bar = websession['progress_bar'], 
+#         question_numb = websession['current_q_numb'])
 
-# This route only exists for demonstration purposes - normally this page would 
-# be reached by losing. 
-@app.route("/loser")
-def loser():
-    return render_template('loser.html', 
+# # This route only exists for demonstration purposes - normally this page would 
+# # be reached by losing. 
+# @app.route("/loser")
+# def loser():
+#     return render_template('loser.html', 
 
-        # These four are for the base template
-        total_forets_points = websession['total_forets_points'], 
-        total_players_points = websession['total_players_points'], 
-        progress_bar = websession['progress_bar'], 
-        question_numb = websession['current_q_numb'])
+#         # These four are for the base template
+#         total_forets_points = websession['total_forets_points'], 
+#         total_players_points = websession['total_players_points'], 
+#         progress_bar = websession['progress_bar'], 
+#         question_numb = websession['current_q_numb'])
 
-# This route only exists for demonstration purposes - normally this page would 
-# be reached by getting a tie. 
-@app.route("/tie")
-def tie():
-    return render_template('tie.html', 
+# # This route only exists for demonstration purposes - normally this page would 
+# # be reached by getting a tie. 
+# @app.route("/tie")
+# def tie():
+#     return render_template('tie.html', 
 
-        # These four are for the base template
-        total_forets_points = websession['total_forets_points'], 
-        total_players_points = websession['total_players_points'], 
-        progress_bar = websession['progress_bar'], 
-        question_numb = websession['current_q_numb'])
+#         # These four are for the base template
+#         total_forets_points = websession['total_forets_points'], 
+#         total_players_points = websession['total_players_points'], 
+#         progress_bar = websession['progress_bar'], 
+#         question_numb = websession['current_q_numb'])
 
 
 @app.route("/about")
@@ -395,6 +400,7 @@ def add_to_scoreboard():
 
     # Get the name the player submitted
     name = request.form.get("name")
+    name = name[:45] # max varchar for db is 50, so being conservative her
 
     # Get current playsession object out of database, using id stored in 
     # websession
@@ -412,7 +418,7 @@ def add_to_scoreboard():
 @app.route("/scoreboard")
 def scoreboard():
     top_ten = dbsession.query(PlaySession).order_by\
-              (desc(PlaySession.total_players_points)).limit(10)
+              (desc(PlaySession.total_players_points)).filter(PlaySession.total_players_points != None).limit(10)
 
     return render_template('scoreboard.html', 
         top_ten = top_ten,
