@@ -1,6 +1,6 @@
 Madame Forêt's Game
 ===============
-Play Madame Forêt's Game, where you compete against a "psychic" (aka a machine 
+<a href="http://www.madameforetsgame.com/">Play Madame Forêt's Game</a>, where you compete against a "psychic" (aka a machine 
 learning algorithm) by answering questions about yourself and the American 
 public. Madame Forêt predicts what you will answer, while you guess what 
 percentage of Americans agree with you. Both of you get points for the accuracy 
