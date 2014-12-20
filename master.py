@@ -8,16 +8,14 @@ from universals import data_dict, reversed_data_dict, \
                        full_columns_ordered_by_predictive_power
 from sqlalchemy import desc
 import json, os
+from HTMLParser import HTMLParser
 
 app = Flask(__name__)
 
 SECRET_KEY = os.environ.get("FlASK_SECRET_KEY", "PredictionFTW")
 app.secret_key = SECRET_KEY
 
-# forest = RandomForestClassifier(n_estimators = 100)
 
-# df = pd.read_csv('data cleaning and imputing/imputed.csv', header=0, 
-#                  index_col=0)
 
 aggregated_df = pd.read_csv('data cleaning and imputing/aggregated.csv', 
                 header=0)
@@ -252,7 +250,6 @@ def display_question():
         progress_bar = websession['progress_bar'])
 
 
-
 @app.route("/submitfirstanswer", methods = ["POST"])
 def submit_first_answer():
     """ Called when 'Reveal Prediction' button clicked. Reveals Mme. Foret's 
@@ -348,15 +345,15 @@ def submit_second_answer():
 ### COMMENTING THESE OUT NOW FOR DEPLOYMENT ####
 # # This route only exists for demonstration purposes - normally this page would 
 # # be reached by winning. 
-# @app.route("/winner")
-# def winner():
-#     return render_template('winner.html', 
-#         sign_name = True,
-#         # These four are for the base template
-#         total_forets_points = websession['total_forets_points'], 
-#         total_players_points = websession['total_players_points'], 
-#         progress_bar = websession['progress_bar'], 
-#         question_numb = websession['current_q_numb'])
+@app.route("/winner")
+def winner():
+    return render_template('winner.html', 
+        sign_name = True,
+        # These four are for the base template
+        total_forets_points = websession['total_forets_points'], 
+        total_players_points = websession['total_players_points'], 
+        progress_bar = websession['progress_bar'], 
+        question_numb = websession['current_q_numb'])
 
 # # This route only exists for demonstration purposes - normally this page would 
 # # be reached by losing. 
@@ -393,6 +390,26 @@ def about():
         question_numb = websession['current_q_numb'],
         progress_bar = websession['progress_bar'])
 
+class myHTMLparser(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.data = ""
+
+    def handle_starttag(self, tag, attrs):
+        if tag:
+            tag = ""
+            # print tag
+    def handle_endtag(self, tag):
+        if tag:
+            tag = ""
+    def handle_data(self, data):
+        self.data+= data + ' '
+
+def clean_html(name):
+    parser = myHTMLparser()
+    parser.feed(name)
+
+    return parser.data
 
 @app.route("/addtoscoreboard", methods = ["POST"])
 def add_to_scoreboard():
@@ -400,7 +417,11 @@ def add_to_scoreboard():
 
     # Get the name the player submitted
     name = request.form.get("name")
-    name = name[:45] # max varchar for db is 50, so being conservative her
+
+    # Sanitize the input
+    name = name[:45] # max varchar for db is 50, so being conservative here
+    name = clean_html(name)
+    name = name.strip()
 
     # Get current playsession object out of database, using id stored in 
     # websession
